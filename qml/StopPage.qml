@@ -130,11 +130,11 @@ Page {
         color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
         ListModel {
             id: mapTypeModel
-            ListElement { name: "Street"; value: Map.MobileStreetMap }
-            ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
-            ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
-            ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
-            ListElement { name: "Transit"; value: Map.MobileTransitMap }
+//            ListElement { name: "Street"; value: Map.MobileStreetMap }
+//            ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
+//            ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
+//            ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
+//            ListElement { name: "Transit"; value: Map.MobileTransitMap }
         }
 /*
 // TODO:
@@ -156,6 +156,7 @@ Page {
             width: followMode.width + UIConstants.DEFAULT_MARGIN * 2
             spacing: UIConstants.DEFAULT_MARGIN
             z: 500
+/*
             MapButton {
                 id: mapMode
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -175,6 +176,7 @@ Page {
                     appWindow.followMode = appWindow.followMode? false : true
                 }
             }
+*/
         }
         Loader {
             id: map_loader
@@ -188,7 +190,7 @@ Page {
             }
         }
     }
-
+/*
     Component {
         id: map_component
         MapElement {
@@ -196,7 +198,7 @@ Page {
             anchors.fill: parent
         }
     }
-
+*/
     states: [
         State {
             name: "map"

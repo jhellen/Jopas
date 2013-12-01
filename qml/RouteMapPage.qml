@@ -18,12 +18,12 @@ import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 
 Page {
-    tools: mapTools
+//    tools: mapTools
     anchors.fill: parent
 
     onStatusChanged: {
         if(status == Component.Ready)
-            timer.start()
+//            timer.start()
     }
 
     Timer {
@@ -33,7 +33,7 @@ Page {
         repeat: false
         onTriggered: map_loader.sourceComponent = map_component
     }
-
+/*
     ToolBarLayout {
         id: mapTools
         ToolIcon { iconId: "toolbar-back"
@@ -50,6 +50,7 @@ Page {
              onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
+*/
     Loader {
         id: map_loader
         anchors.fill: parent
@@ -59,6 +60,8 @@ Page {
         }
     }
 
+// TODO:
+/*
     Component {
         id: map_component
         MapElement {
@@ -66,6 +69,8 @@ Page {
             anchors.fill: parent
         }
     }
+*/
+
     ListModel {
         id: mapTypeModel
         ListElement { name: "Street"; value: Map.MobileStreetMap }

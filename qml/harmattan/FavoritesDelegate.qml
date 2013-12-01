@@ -15,60 +15,55 @@ import QtQuick 2.1
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
-Component {
-    id: favoritesDelegate
+Item {
+    id: delegateItem
+    signal clicked
 
-    Item {
-        id: delegateItem
-        property bool selected: index == selectedIndex;
+    height: 100 //root.platformStyle.itemHeight
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-        height: root.platformStyle.itemHeight
+    MouseArea {
+        id: delegateMouseArea
+        anchors.fill: parent;
+        onClicked: delegateItem.clicked()
+    }
+
+    Rectangle {
+        id: backgroundRect
+        anchors.fill: parent
+//            color: delegateItem.selected ? root.platformStyle.itemSelectedBackgroundColor : root.platformStyle.itemBackgroundColor
+    }
+
+    BorderImage {
+        id: background
+        anchors.fill: parent
+        border { left: UIConstants.CORNER_MARGINS; top: UIConstants.CORNER_MARGINS; right: UIConstants.CORNER_MARGINS; bottom: UIConstants.CORNER_MARGINS }
+//        source: delegateMouseArea.pressed ? root.platformStyle.itemPressedBackground :
+//        delegateItem.selected ? root.platformStyle.itemSelectedBackground :
+//            root.platformStyle.itemBackground
+    }
+
+    Image {
+        id: icon
+        source: index == 0?'qrc:/images/gps-icon-inverted.png':'qrc:/images/favorite-mark-inverse.png'
         anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        height: 40
+        width: 40
+        smooth: true
+    }
+
+    Text {
+        id: locName
+        elide: Text.ElideRight
+//        color: delegateItem.selected ? root.platformStyle.itemSelectedTextColor : root.platformStyle.itemTextColor
+        anchors.verticalCenter: delegateItem.verticalCenter
+        anchors.left: icon.right
         anchors.right: parent.right
-
-        MouseArea {
-            id: delegateMouseArea
-            anchors.fill: parent;
-            onPressed: selectedIndex = index;
-            onClicked: accept();
-        }
-
-        Rectangle {
-            id: backgroundRect
-            anchors.fill: parent
-            color: delegateItem.selected ? root.platformStyle.itemSelectedBackgroundColor : root.platformStyle.itemBackgroundColor
-        }
-
-        BorderImage {
-            id: background
-            anchors.fill: parent
-            border { left: UIConstants.CORNER_MARGINS; top: UIConstants.CORNER_MARGINS; right: UIConstants.CORNER_MARGINS; bottom: UIConstants.CORNER_MARGINS }
-            source: delegateMouseArea.pressed ? root.platformStyle.itemPressedBackground :
-            delegateItem.selected ? root.platformStyle.itemSelectedBackground :
-                root.platformStyle.itemBackground
-        }
-
-        Image {
-            id: icon
-            source: index == 0?'qrc:/images/gps-icon-inverted.png':'qrc:/images/favorite-mark-inverse.png'
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            height: 40
-            width: 40
-            smooth: true
-        }
-
-        Text {
-            id: locName
-            elide: Text.ElideRight
-            color: delegateItem.selected ? root.platformStyle.itemSelectedTextColor : root.platformStyle.itemTextColor
-            anchors.verticalCenter: delegateItem.verticalCenter
-            anchors.left: icon.right
-            anchors.right: parent.right
-            anchors.leftMargin: UIConstants.DEFAULT_MARGIN/2
-            anchors.rightMargin: UIConstants.DEFAULT_MARGIN
-            text: modelData
-            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
-        }
+        anchors.leftMargin: UIConstants.DEFAULT_MARGIN/2
+        anchors.rightMargin: UIConstants.DEFAULT_MARGIN
+        text: modelData
+        font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
     }
 }

@@ -240,7 +240,13 @@ Column {
         id: favoriteQuery
         model: favoritesModel
         titleText: qsTr("Choose location")
-        delegate: FavoritesDelegate {}
+        delegate: FavoritesDelegate {
+            onClicked: {
+                favoriteQuery.selectedIndex = index
+                favoriteQuery.accept()
+            }
+        }
+
         height: 5 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scalingFactor + UIConstants.DEFAULT_MARGIN
         onAccepted: {
             /* if positionsource used */

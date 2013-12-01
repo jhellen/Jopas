@@ -21,8 +21,6 @@ import "theme.js" as Theme
 Page {
     id: favorites_page
 
-//    FavoriteSheet { id: sheet }
-
     Component.onCompleted: {
         favoritesModel.clear()
         Favorites.initialize()
@@ -33,6 +31,7 @@ Page {
         id: favoritesModel
     }
 /*
+// TODO:
     Dialog {
         id: edit_dialog
         property alias name : editTextField.text
@@ -128,6 +127,7 @@ Page {
 */
 /*
     Dialog {
+// TODO:
         id: delete_dialog
         property string name
         title: Text {
@@ -284,6 +284,7 @@ Page {
 
 /*
     Dialog {
+// TODO:
         id: shortcut_dialog
         property string name
         property string coord
@@ -458,7 +459,7 @@ Page {
                 }
             }
 
-            ListView {
+            SilicaListView {
                 id: list
                 width: parent.width
                 height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
@@ -469,8 +470,6 @@ Page {
                     enabled: list.count == 0
                     text: qsTr("No saved favorites")
                 }
-
-
             }
         }
     }

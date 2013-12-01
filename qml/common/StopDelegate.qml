@@ -12,7 +12,7 @@
  */
 
 import QtQuick 2.1
-import QtMobility.location 1.2
+import QtPositioning 5.0
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
@@ -25,10 +25,12 @@ Component {
         width: parent.width
         opacity: 1.0
 
-        Coordinate {
+        Location {
             id: coordinate
-            latitude: model.latitude
-            longitude: model.longitude
+            coordinate {
+                latitude: model.latitude
+                longitude: model.longitude
+            }
         }
 
         Component.onCompleted: ListItemAnimation { target: stop_item }

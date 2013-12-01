@@ -12,7 +12,8 @@
  */
 
 import QtQuick 2.1
-import QtMobility.location 1.2
+import QtLocation 5.0
+import QtPositioning 5.0
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 import "helper.js" as Helper

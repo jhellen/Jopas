@@ -12,8 +12,8 @@
  */
 
 import QtQuick 2.1
-import QtMobility.location 1.2
-import com.nokia.meego 1.0
+import QtPositioning 5.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "theme.js" as Theme
@@ -42,8 +42,9 @@ Page {
         }
     }
 
-    tools: stopTools
-
+//    tools: stopTools
+/*
+// TODO:
     ToolBarLayout {
         id: stopTools
         ToolIcon { iconId: "toolbar-back"; onClicked: {
@@ -68,7 +69,7 @@ Page {
              onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
-
+*/
     PositionSource {
         id: position
         updateInterval: 500
@@ -89,7 +90,7 @@ Page {
         }
     }
 
-    ListView {
+    SilicaListView {
         id: routeList
         cacheBuffer: 100 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT
         clip: true
@@ -135,7 +136,8 @@ Page {
             ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
             ListElement { name: "Transit"; value: Map.MobileTransitMap }
         }
-
+/*
+// TODO:
         SelectionDialog {
             id: mapTypeSelection
             model: mapTypeModel
@@ -146,7 +148,7 @@ Page {
                 map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
             }
         }
-
+*/
         Column {
             anchors.left: parent.left
             anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
@@ -218,7 +220,7 @@ Page {
         id: busyIndicator
         visible: !(stopModel.done)
         running: true
-        platformStyle: BusyIndicatorStyle { size: 'large' }
+//        platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent
     }
 }

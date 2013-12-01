@@ -12,36 +12,8 @@
  */
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
 
-Item {
-    property alias checked : timeType.checked
-    width: 150
-    height: timeType.height + timeTypeText.height
-    Switch {
-        id: timeType
-//        platformStyle: customSwitch
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-    Text {
-        id: timeTypeText
-        anchors.top: timeType.bottom
-        anchors.horizontalCenter: timeType.horizontalCenter
-        font.pixelSize: UIConstants.FONT_LARGE
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-        text: timeType.checked? qsTr("arrival") : qsTr("departure")
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: timeType.checked = timeType.checked? false : true
-        }
-    }
-
-//    SwitchStyle {
-//        id: customSwitch
-//        switchOn: customSwitch.switchOff
-//    }
+TextSwitch {
+    width: Screen.width/2 // TOODO: we break without that :/
+    text: checked ? qsTr("arrival") : qsTr("departure")
 }

@@ -6,11 +6,11 @@ OTHER_FILES += \
         qml/common/* \
         qml/harmattan/*
 
-QT += declarative
+QT += qml quick dbus
 
 # Speed up launching on MeeGo/Harmattan when using applauncherd daemon
-CONFIG += qdeclarative-boostable
-LIBS += -lmdeclarativecache
+CONFIG += link_pkgconfig
+PKGCONFIG += qdeclarative5-boostable
 
 # D-Bus service
 dbusservice.path = /usr/share/dbus-1/services
@@ -32,11 +32,6 @@ HEADERS += \
     include/shortcut.h \
     include/route.h \
     include/meegopasadaptor.h
-
-# If your application uses the Qt Mobility libraries, uncomment the following
-# lines and add the respective components to the MOBILITY variable.
-CONFIG += mobility
-MOBILITY += location systeminfo
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += src/main.cpp

@@ -12,8 +12,7 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
@@ -21,14 +20,8 @@ import "theme.js" as Theme
 
 Page {
     id: favorites_page
-    tools: favoritesTools
 
-    ToolBarLayout {
-        id: favoritesTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
-    }
-
-    FavoriteSheet { id: sheet }
+//    FavoriteSheet { id: sheet }
 
     Component.onCompleted: {
         favoritesModel.clear()
@@ -39,7 +32,7 @@ Page {
     ListModel {
         id: favoritesModel
     }
-
+/*
     Dialog {
         id: edit_dialog
         property alias name : editTextField.text
@@ -96,7 +89,7 @@ Page {
                 onClicked: {
                     if("OK" == Favorites.updateFavorite(edit_dialog.name, favoritesModel.get(list.currentIndex).coord, favoritesModel)) {
 
-                        /* update shortcuts, if exists */
+*/                        /* update shortcuts, if exists *//*
                         if(Shortcut.checkIfExists(edit_dialog.old_name)) {
                             Shortcut.removeShortcut(edit_dialog.old_name)
                             Shortcut.toggleShortcut(edit_dialog.name,favoritesModel.get(list.currentIndex).coord)
@@ -132,6 +125,8 @@ Page {
             }
         }
     }
+*/
+/*
     Dialog {
         id: delete_dialog
         property string name
@@ -189,11 +184,46 @@ Page {
             }
         }
     }
+*/
+
     Dialog {
         id: add_dialog
-        property string name : ''
         property string coord : ''
-        content: LocationEntry {
+        property alias name : editTextField.text
+
+        canAccept: add_dialog.coord != '' && name.text != ''
+
+        onAccepted: {
+            if(add_dialog.name != '') {
+                if(("OK" == Favorites.addFavorite(add_dialog.name, coord))) {
+                    favoritesModel.clear()
+                    Favorites.getFavorites(favoritesModel)
+                    add_dialog.name = ''
+
+                    appWindow.banner.success = true
+                    appWindow.banner.text = qsTr("Location added to favorites")
+                    appWindow.banner.show()
+                } else {
+                    appWindow.banner.success = false
+                    appWindow.banner.text = qsTr("Location already in the favorites")
+                    appWindow.banner.show()
+                }
+            }
+            else {
+                appWindow.banner.success = false
+                appWindow.banner.text = qsTr("Name cannot be empty")
+                appWindow.banner.show()
+            }
+        }
+
+        Column {
+            anchors.fill: parent
+
+            DialogHeader {
+                acceptText: qsTr("Add favorite")
+            }
+
+            LocationEntry {
                 id: entry
                 anchors.bottomMargin: UIConstants.DEFAULT_MARGIN
                 font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
@@ -209,40 +239,50 @@ Page {
                     add_dialog.coord = coord
                 }
             }
-        buttons: Column {
-            spacing: UIConstants.DEFAULT_MARGIN
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: button_save.width
 
             Spacing {}
 
-            Button {
-                text: qsTr("Next")
-                enabled: add_dialog.coord != ''
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
-                onClicked: {
-                    sheet.name = add_dialog.name
-                    sheet.coord = add_dialog.coord
-                    sheet.open()
-                    add_dialog.close()
-                    entry.clear()
+            Text {
+                text: qsTr("Enter name for the favorite")
+                font.pixelSize: UIConstants.FONT_XLARGE
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment: Qt.AlignCenter
+                elide: Text.ElideNone
+                font.bold: true
+                font.family: UIConstants.FONT_FAMILY
+                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+            }
+
+            Spacing {}
+
+            TextField {
+                id: editTextField
+                width: parent.width
+
+                Image {
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/images/clear.png"
+                    visible: (editTextField.activeFocus)
+                    opacity: 0.8
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            editTextField.text = ''
+                        }
+                    }
+                }
+
+                Keys.onReturnPressed: {
+                    editTextField.platformCloseSoftwareInputPanel()
+                    parent.focus = true
                 }
             }
-            Button {
-                text: qsTr("Cancel")
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
-                onClicked: {
-                    add_dialog.close()
-                    entry.clear()
-                }
-            }
+
         }
     }
 
+/*
     Dialog {
         id: shortcut_dialog
         property string name
@@ -331,36 +371,25 @@ Page {
             }
         }
     }
-
-    Flickable {
-        interactive: favoritesModel.count
-
-        anchors {
-            topMargin: appWindow.inPortrait? UIConstants.HEADER_DEFAULT_TOP_SPACING_PORTRAIT : UIConstants.HEADER_DEFAULT_TOP_SPACING_LANDSCAPE
-            margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
-            fill: parent
-        }
-        flickableDirection: Flickable.VerticalFlick
-        contentHeight: content_column.height + UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
+*/
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: content_column.height
 
         Component.onCompleted: {
             Favorites.initialize()
+        }
+
+        PullDownMenu {
+            MenuItem { text: qsTr("Add favorite"); onClicked: add_dialog.open() }
         }
 
         Column {
             id: content_column
             width: parent.width
             spacing: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
-            Header {
-                text: qsTr("Manage favorites")
-            }
-
-            Button {
-                width: parent.width
-                text: qsTr("Add favorite")
-                onClicked: {
-                    add_dialog.open()
-                }
+            PageHeader {
+                title: qsTr("Manage favorites")
             }
 
             Component {
@@ -433,21 +462,16 @@ Page {
                 id: list
                 width: parent.width
                 height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
-                interactive: false
                 model: favoritesModel
                 delegate: favoritesManageDelegate
+
+                ViewPlaceholder {
+                    enabled: list.count == 0
+                    text: qsTr("No saved favorites")
+                }
+
+
             }
         }
-    }
-
-    Text {
-        anchors.centerIn: parent
-        visible: favoritesModel.count == 0
-        width: parent.width
-        text: qsTr("No saved favorites")
-        horizontalAlignment: Qt.AlignHCenter
-        wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 }

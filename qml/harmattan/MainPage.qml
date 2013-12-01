@@ -288,6 +288,7 @@ Page {
         contentHeight: content_column.height
 
         PullDownMenu {
+            MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
             MenuItem { text: qsTr("Settings"); onClicked: { pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
         }
 

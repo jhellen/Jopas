@@ -11,7 +11,7 @@
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-import QtQuick 1.1
+import QtQuick 2.1
 import QtMobility.location 1.2
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants

@@ -13,7 +13,7 @@
 
 /* Modified from the example by Clovis Scotti <scotti@ieee.org>, http://cpscotti.com/blog/?p=52, released with GPL 3.0 */
 
-import QtQuick 1.1
+import QtQuick 2.1
 import QtMobility.location 1.2
 import Qt.labs.gestures 1.0
 

@@ -11,12 +11,12 @@
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
 import QtQuick 2.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
-QueryDialog {
-    visualParent: pageStack
-    titleText: qsTr("Usage of location services")
-    message: qsTr("allow this application to use the phone location services to enhance the routing experience?\n\nThe setting can be later changed from the application preferences.")
-    acceptButtonText: qsTr("Accept")
-    rejectButtonText: qsTr("Reject")
+Dialog {
+//    visualParent: pageStack
+ //   titleText: qsTr("Usage of location services")
+ //   message: qsTr("allow this application to use the phone location services to enhance the routing experience?\n\nThe setting can be later changed from the application preferences.")
+ //   acceptButtonText: qsTr("Accept")
+ //   rejectButtonText: qsTr("Reject")
 }

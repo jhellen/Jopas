@@ -12,25 +12,16 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "storage.js" as Storage
 import "theme.js" as Theme
 
 Page {
-    tools: settingsTools
-
-    ToolBarLayout {
-        id: settingsTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
-    }
-
-    Flickable {
+    SilicaFlickable {
         id: settingsContent
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
-        contentHeight: content_column.height + 2 * UIConstants.DEFAULT_MARGIN
-        flickableDirection: Flickable.VerticalFlick
+        contentHeight: content_column.height
 
         Component.onCompleted: {
             Storage.initialize()
@@ -59,15 +50,16 @@ Page {
             id: content_column
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
-            Header {
-                text: qsTr("Settings")
+
+            PageHeader {
+                title: qsTr("Settings")
             }
 
             SectionHeader {
                 text: qsTr("Region")
             }
 
-            ButtonColumn {
+            Column {
                 id: api
                 function set_value(value) {
                     if(value == "helsinki")
@@ -83,13 +75,13 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: helsinki
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Helsinki")
                     onClicked: Storage.setSetting('api', 'helsinki')
                 }
                 Button {
                     id: tampere
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Tampere")
                     onClicked: Storage.setSetting('api', 'tampere')
                 }
@@ -132,9 +124,9 @@ Page {
                 text: qsTr("Used transports")
             }
 
-            ButtonColumn {
+            Column {
                 id: transports
-                exclusive: false
+//                exclusive: false
                 function set_value(value) {
                     if(value == "bus")
                         bus.checked = false
@@ -153,33 +145,33 @@ Page {
                 Button {
                     id: bus
                     text: qsTr("Bus")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    checkable: true
-                    checked: true
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    checkable: true
+//                    checked: true
                     onClicked: Storage.setSetting('bus_disabled', (!checked).toString())
                 }
                 Button {
                     id: train
                     text: qsTr("Train")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    checkable: true
-                    checked: true
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    checkable: true
+//                    checked: true
                     onClicked: Storage.setSetting('train_disabled', (!checked).toString())
                 }
                 Button {
                     id: metro
                     text: qsTr("Metro")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    checkable: true
-                    checked: true
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    checkable: true
+//                    checked: true
                     onClicked: Storage.setSetting('metro_disabled', (!checked).toString())
                 }
                 Button {
                     id: tram
                     text: qsTr("Tram")
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    checkable: true
-                    checked: true
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    checkable: true
+//                    checked: true
                     onClicked: {
                         Storage.setSetting('tram_disabled', (!checked).toString())
                     }
@@ -205,7 +197,7 @@ Page {
                     maximumValue: 10
                     minimumValue: 0
                     stepSize: 1
-                    valueIndicatorVisible: true
+//                    valueIndicatorVisible: true
 
                     function set_value(value) {
                         if(value != "Unknown")
@@ -231,7 +223,7 @@ Page {
                 text: qsTr("Optimize route by")
             }
 
-            ButtonColumn {
+            Column {
                 id: optimize
                 function set_value(value) {
                     if(value == "default")
@@ -247,25 +239,25 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: def
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Default")
                     onClicked: Storage.setSetting('optimize', 'default')
                 }
                 Button {
                     id: fastest
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Fastest")
                     onClicked: Storage.setSetting('optimize', 'fastest')
                 }
                 Button {
                     id: transfers
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Least transfers")
                     onClicked: Storage.setSetting('optimize', 'least_transfers')
                 }
                 Button {
                     id: lwalking
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Least walking")
                     onClicked: Storage.setSetting('optimize', 'least_walking')
                 }
@@ -274,7 +266,7 @@ Page {
             SectionHeader {
                 text: qsTr("Walking speed")
             }
-            ButtonColumn {
+            Column {
                 id: walking_speed
                 function set_value(value) {
                     if(value == "70")
@@ -290,25 +282,25 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: walking
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Walking")
                     onClicked: Storage.setSetting('walking_speed', '70')
                 }
                 Button {
                     id: fwalking
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Fast walking")
                     onClicked: Storage.setSetting('walking_speed', '100')
                 }
                 Button {
                     id: vfwalking
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Very fast walking")
                     onClicked: Storage.setSetting('walking_speed', '120')
                 }
                 Button {
                     id: running
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Running")
                     onClicked: Storage.setSetting('walking_speed', '150')
                 }
@@ -318,7 +310,7 @@ Page {
                 text: qsTr("Optimize cycling route by")
             }
 
-            ButtonColumn {
+            Column {
                 id: optimize_cycling
                 function set_value(value) {
                     if(value == "kleroweighted")
@@ -334,25 +326,25 @@ Page {
                 anchors.right: parent.right
                 Button {
                     id: cyclingDefault
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Default")
                     onClicked: Storage.setSetting('optimize_cycling', 'kleroweighted')
                 }
                 Button {
                     id: cyclingTarmac
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Tarmac")
                     onClicked: Storage.setSetting('optimize_cycling', 'klerotarmac')
                 }
                 Button {
                     id: cyclingGravel
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Gravel")
                     onClicked: Storage.setSetting('optimize_cycling', 'klerosand')
                 }
                 Button {
                     id: cyclingShortest
-                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
+//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
                     text: qsTr("Shortest")
                     onClicked: Storage.setSetting('optimize_cycling', 'kleroshortest')
                 }

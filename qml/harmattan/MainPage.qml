@@ -150,7 +150,8 @@ Page {
             var agreementDialog = agreement.createObject(mainPage)
             agreementDialog.accepted.connect(acceptCallback)
             agreementDialog.rejected.connect(rejectCallback)
-            mainTools.enabled = false
+//            mainTools.enabled = false
+// TODO:
             agreementDialog.open()
         }
         else if(allowGps == "true") {
@@ -285,6 +286,10 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: content_column.height
+
+        PullDownMenu {
+            MenuItem { text: qsTr("Settings"); onClicked: { pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
+        }
 
         Column {
             id: content_column

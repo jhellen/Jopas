@@ -12,8 +12,12 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
-SelectionDialog {
-
+Dialog {
+// TODO:
+property string titleText
+property variant delegate
+property variant model
+property int selectedIndex
 }

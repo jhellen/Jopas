@@ -118,18 +118,18 @@ function get_time_difference(earlierDate,laterDate)
 /****************************************************************************************************/
 function get_geocode(term, api_type) {
     api_type = api_type || 'helsinki'
-    this.parameters = {}
-    this.parameters.format = "xml"
-    this.parameters.request = "geocode"
-    this.parameters.key = term
-    this.parameters.disable_unique_stop_names = 0
-    this.parameters.user = API[api_type].USER
-    this.parameters.pass = API[api_type].PASS
-    this.parameters.epsg_in = "wgs84"
-    this.parameters.epsg_out = "wgs84"
+    var parameters = {}
+    parameters.format = "xml"
+    parameters.request = "geocode"
+    parameters.key = term
+    parameters.disable_unique_stop_names = 0
+    parameters.user = API[api_type].USER
+    parameters.pass = API[api_type].PASS
+    parameters.epsg_in = "wgs84"
+    parameters.epsg_out = "wgs84"
     var query = []
-    for(var p in this.parameters) {
-        query.push(p + "=" + this.parameters[p])
+    for(var p in parameters) {
+        query.push(p + "=" + parameters[p])
     }
 
     //console.debug( API[api_type].URL + '?' + query.join('&'))

@@ -12,8 +12,7 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
@@ -22,7 +21,6 @@ import "theme.js" as Theme
 
 Page {
     id: mainPage
-    tools: mainTools
 
     property date myTime
 
@@ -60,14 +58,16 @@ Page {
 
     /* Connect dbus callback to function newRoute() */
     Connections {
-        target: Route
-        onNewRoute: newRoute(name, coord)
+// TODO: crash
+//        target: Route
+//        onNewRoute: newRoute(name, coord)
     }
 
     /* Connect dbus callback to function newCycling() */
     Connections {
-        target: Route
-        onNewCycling: newCycling(name, coord)
+// TODO: crash
+//        target: Route
+//        onNewCycling: newCycling(name, coord)
     }
 
     function newRoute(name, coord) {
@@ -130,7 +130,6 @@ Page {
     }
 
     Component.onCompleted: {
-        theme.inverted = Theme.theme[appWindow.colorscheme].PLATFORM_INVERTED
         Storage.initialize()
 
         function acceptCallback() {
@@ -233,31 +232,31 @@ Page {
         parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
     }
 
-    ToolBarLayout {
-        id: mainTools
-        ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { menu.close(); pageStack.pop(); } }
-        ToolButtonRow {
-            ToolButton {
-                text: qsTr("Cycling")
-                enabled: endpointsValid
-                onClicked: {
-                    var parameters = {}
-                    setCyclingParameters(parameters)
-                    pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-                }
-            }
-            ToolButton {
-                text: qsTr("Route search")
-                enabled: endpointsValid
-                onClicked: {
-                    var parameters = {}
-                    setRouteParameters(parameters)
-                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
-                }
-            }
-        }
-        ToolIcon { iconId: "toolbar-view-menu" ; onClicked: menu.open(); }
-    }
+    // ToolBarLayout {
+    //     id: mainTools
+    //     ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { menu.close(); pageStack.pop(); } }
+    //     ToolButtonRow {
+    //         ToolButton {
+    //             text: qsTr("Cycling")
+    //             enabled: endpointsValid
+    //             onClicked: {
+    //                 var parameters = {}
+    //                 setCyclingParameters(parameters)
+    //                 pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+    //             }
+    //         }
+    //         ToolButton {
+    //             text: qsTr("Route search")
+    //             enabled: endpointsValid
+    //             onClicked: {
+    //                 var parameters = {}
+    //                 setRouteParameters(parameters)
+    //                 pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+    //             }
+    //         }
+    //     }
+    //     ToolIcon { iconId: "toolbar-view-menu" ; onClicked: menu.open(); }
+    // }
 
     Rectangle {
         id: waiting
@@ -278,36 +277,23 @@ Page {
         opacity: 0.0
         running: true
         anchors.centerIn: parent
-        platformStyle: BusyIndicatorStyle {
-            size: "large"
-        }
+    //    platformStyle: BusyIndicatorStyle {
+    //        size: "large"
+    //    }
     }
 
-    ApplicationHeader {
-        id: title
-        title: qsTr("Meegopas")
-        color: Theme.theme[appWindow.colorscheme].COLOR_APPHEADER_BACKGROUND
-    }
-
-    Flickable {
-        anchors.top: title.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        anchors {
-            margins: UIConstants.DEFAULT_MARGIN
-        }
-
-        interactive: true
-        flickableDirection: Flickable.VerticalFlick
+    SilicaFlickable {
+        anchors.fill: parent
         contentHeight: content_column.height
 
         Column {
             id: content_column
-            spacing: appWindow.inPortrait? UIConstants.DEFAULT_MARGIN : UIConstants.DEFAULT_MARGIN / 2
+    //         spacing: appWindow.inPortrait? UIConstants.DEFAULT_MARGIN : UIConstants.DEFAULT_MARGIN / 2
             width: parent.width
 
+            PageHeader {
+                title: qsTr("Meegopas")
+            }
             Spacing { height: appWindow.inPortrait? 20 : 0 }
 
             Item {
@@ -392,7 +378,7 @@ Page {
             Button {
                 id: timeDateNow
                 text: qsTr("Now")
-                font.pixelSize: UIConstants.FONT_SMALL
+    //             font.pixelSize: UIConstants.FONT_SMALL
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
                 height: 40

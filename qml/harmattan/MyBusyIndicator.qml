@@ -12,12 +12,13 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 
 BusyIndicator {
+// TODO:
     property string indicatorSize : "small"
-    platformStyle: BusyIndicatorStyle {
-        size: indicatorSize
-        spinnerFrames: "image://theme/spinner"
-    }
+//    platformStyle: BusyIndicatorStyle {
+  //      size: indicatorSize
+    //    spinnerFrames: "image://theme/spinner"
+    //}
 }

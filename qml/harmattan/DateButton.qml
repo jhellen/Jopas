@@ -11,8 +11,7 @@
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
@@ -62,17 +61,18 @@ Item {
 
     DatePickerDialog {
         id: datePicker
-        titleText: qsTr("Choose date")
+// TODO:
+//        titleText: qsTr("Choose date")
 
         onAccepted: {
             var tempDate = new Date(datePicker.year, datePicker.month-1, datePicker.day, 0, 0)
             dateContainer.dateChanged(tempDate)
             dateButton.text = Qt.formatDate(tempDate, "dd. MMMM yyyy")
         }
-        minimumYear: 2012
+//        minimumYear: 2012
 
-        acceptButtonText: qsTr("Accept")
-        rejectButtonText: qsTr("Reject")
+//        acceptButtonText: qsTr("Accept")
+//        rejectButtonText: qsTr("Reject")
     }
 }
 

@@ -12,23 +12,22 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import Sailfish.Silica 1.0
 import "storage.js" as Storage
 
-PageStackWindow {
+ApplicationWindow {
     id: appWindow
-    initialPage: MainPage {}
+
+    allowedOrientations: Orientation.All
+    initialPage: Component { MainPage {} }
 
     signal followModeEnabled
-
-    showStatusBar: appWindow.inPortrait
 
     property alias about : aboutLoader.item
     property alias menu : menuLoader.item
     property alias banner : banner
     property variant scalingFactor : 1
-    property bool positioningActive : (platformWindow.active && gpsEnabled)
+    property bool positioningActive : (Qt.application.active && gpsEnabled)
     property bool followMode : false
     property bool mapVisible : false
     property bool showStationCode : true
@@ -36,27 +35,29 @@ PageStackWindow {
     property bool gpsEnabled : false
     property string region
 
-    platformStyle: PageStackWindowStyle {
-        id: defaultStyle
-    }
-
     onFollowModeChanged: {
         if(followMode)
             followModeEnabled()
     }
 
-    Component {
-        id: aboutComponent
-            AboutDialog { id: about }
-    }
+//    Component {
+//        id: aboutComponent
+//            AboutDialog { id: about }
+//    }
 
+    Label {
+        id: banner
+    }
+/*
+// TODO:
     InfoBanner {
         id: banner
         property bool success : false
         y: 40
         iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
     }
-
+*/
+/*
     Component {
         id: menuComponent
         Menu {
@@ -69,16 +70,16 @@ PageStackWindow {
             }
         }
     }
-
+*/
     Loader {
         id: menuLoader
         anchors.fill: parent
-        sourceComponent: menuComponent
+//        sourceComponent: menuComponent
     }
     Loader {
         id: aboutLoader
         anchors.fill: parent
-        sourceComponent: aboutComponent
+//        sourceComponent: aboutComponent
     }
 
 }

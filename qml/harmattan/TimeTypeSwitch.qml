@@ -11,8 +11,7 @@
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
@@ -22,7 +21,7 @@ Item {
     height: timeType.height + timeTypeText.height
     Switch {
         id: timeType
-        platformStyle: customSwitch
+//        platformStyle: customSwitch
         anchors.horizontalCenter: parent.horizontalCenter
     }
     Text {
@@ -41,8 +40,8 @@ Item {
         }
     }
 
-    SwitchStyle {
-        id: customSwitch
-        switchOn: customSwitch.switchOff
-    }
+//    SwitchStyle {
+//        id: customSwitch
+//        switchOn: customSwitch.switchOff
+//    }
 }

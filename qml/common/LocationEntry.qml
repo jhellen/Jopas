@@ -12,7 +12,8 @@
  */
 
 import QtQuick 2.1
-import QtMobility.location 1.2
+import QtPositioning 5.0
+import QtQuick.XmlListModel 2.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
@@ -30,10 +31,13 @@ Column {
     property variant current_name : ''
     property variant current_coord : ''
 
-    Coordinate {
+    Location {
         id: previousCoord
-        latitude: 0
-        longitude: 0
+
+        coordinate {
+            latitude: 0
+            longitude: 0
+        }
     }
 
     property variant destination_name : ''
@@ -134,10 +138,10 @@ Column {
         /* wait until position is accurate enough */
         if(positionValid(positionSource.position)) {
             gpsTimer.stop()
-            previousCoord.latitude = positionSource.position.coordinate.latitude
-            previousCoord.longitude = positionSource.position.coordinate.longitude
-            currentLocationModel.source = Reittiopas.get_reverse_geocode(previousCoord.latitude.toString(),
-                                                                         previousCoord.longitude.toString(),
+            previousCoord.coordinate.latitude = positionSource.position.coordinate.latitude
+            previousCoord.coordinate.longitude = positionSource.position.coordinate.longitude
+            currentLocationModel.source = Reittiopas.get_reverse_geocode(previousCoord.coordinate.latitude.toString(),
+                                                                         previousCoord.coordinate.longitude.toString(),
                                                                          Storage.getSetting('api'))
         } else {
             /* poll again in 200ms */
@@ -151,7 +155,7 @@ Column {
         active: appWindow.positioningActive
         onPositionChanged: {
             /* if we have moved >250 meters from the previous place, update current location */
-            if(previousCoord.latitude != 0 && previousCoord.longitude != 0 &&
+            if(previousCoord.coordinate.latitude != 0 && previousCoord.coordinate.longitude != 0 &&
                     position.coordinate.distanceTo(previousCoord) > 250) {
                 getCurrentCoord()
             }

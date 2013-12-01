@@ -11,8 +11,7 @@
  * See full license at http://www.gnu.org/licenses/gpl-3.0.html
  */
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import com.nokia.extras 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
@@ -59,15 +58,16 @@ Item {
 
     TimePickerDialog {
         id: timePicker
-        titleText: qsTr("Choose time")
+//        titleText: qsTr("Choose time")
         onAccepted: {
             var tempTime = new Date(2012, 12-1, 24, timePicker.hour, timePicker.minute)
             timeContainer.timeChanged(tempTime)
             timeButton.text = Qt.formatTime(tempTime, "hh:mm")
         }
 
-        fields: DateTime.Hours | DateTime.Minutes
-        acceptButtonText: qsTr("Accept")
-        rejectButtonText: qsTr("Reject")
+// TODO:
+//        fields: DateTime.Hours | DateTime.Minutes
+//        acceptButtonText: qsTr("Accept")
+//        rejectButtonText: qsTr("Reject")
     }
 }

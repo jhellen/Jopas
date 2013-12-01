@@ -12,62 +12,33 @@
  */
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
 
-Item {
+BackgroundItem {
     id: timeContainer
     height: timeButton.height
     width: timeButton.width
+    property date storedDate
 
     signal timeChanged(variant newTime)
 
     function updateTime() {
-        var tempTime = new Date()
-
-        /* Set date for date picker */
-        timePicker.hour = Qt.formatTime(tempTime, "hh")
-        timePicker.minute = Qt.formatTime(tempTime, "mm")
-        timeButton.text = Qt.formatTime(tempTime, "hh:mm")
-
-        timeChanged(tempTime)
+        storedDate = new Date()
+        timeChanged(storedDate)
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-        z: -1
-        visible: timeMouseArea.pressed
-    }
-
-    Text {
+    Label {
         id: timeButton
-        font.pixelSize: UIConstants.FONT_XXXXLARGE
-        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
+        font.pixelSize: Theme.fontSizeExtraLarge
+        color: Theme.secondaryColor
+        text: Qt.formatTime(storedDate, "hh:mm")
     }
 
-    MouseArea {
-        id: timeMouseArea
-        anchors.fill: parent
-        onClicked: {
-            timePicker.open()
-        }
-    }
-
-    TimePickerDialog {
-        id: timePicker
-//        titleText: qsTr("Choose time")
-        onAccepted: {
-            var tempTime = new Date(2012, 12-1, 24, timePicker.hour, timePicker.minute)
-            timeContainer.timeChanged(tempTime)
-            timeButton.text = Qt.formatTime(tempTime, "hh:mm")
-        }
-
-// TODO:
-//        fields: DateTime.Hours | DateTime.Minutes
-//        acceptButtonText: qsTr("Accept")
-//        rejectButtonText: qsTr("Reject")
+    onClicked: {
+        var dialog = pageStack.push("Sailfish.Silica.TimePickerDialog",
+            {hour: storedDate.getHours(), minute: storedDate.getMinutes()})
+        dialog.accepted.connect(function() {
+            timeContainer.storedDate = dialog.time
+            timeContainer.timeChanged(timeContainer.storedDate)
+        })
     }
 }

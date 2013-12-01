@@ -17,7 +17,6 @@ import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
 import "helper.js" as Helper
-import "theme.js" as Theme
 
 Page {
     id: mainPage
@@ -262,6 +261,8 @@ Page {
         contentHeight: content_column.height
 
         PullDownMenu {
+            MenuItem { text: qsTr("About"); onClicked: pageStack.push(Qt.resolvedUrl("AboutDialog.qml")) }
+//            MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
             MenuItem { text: qsTr("Settings"); onClicked: { pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
         }
@@ -324,10 +325,6 @@ Page {
 
                 TimeButton {
                     id: timeButton
-                }
-
-                Connections {
-                    target: timeButton
                     onTimeChanged: {
                         mainPage.myTime = new Date(myTime.getFullYear()? myTime.getFullYear() : 0,
                                                 myTime.getMonth()? myTime.getMonth() : 0,
@@ -344,10 +341,6 @@ Page {
 
             DateButton {
                 id: dateButton
-            }
-
-            Connections {
-                target: dateButton
                 onDateChanged: {
                     mainPage.myTime = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(),
                                                myTime.getHours()? myTime.getHours() : 0,
@@ -358,7 +351,6 @@ Page {
             Button {
                 id: timeDateNow
                 text: qsTr("Now")
-    //             font.pixelSize: UIConstants.FONT_SMALL
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: 150
                 height: 40
@@ -369,7 +361,7 @@ Page {
             }
 
             Row {
-                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Button {
                     text: qsTr("Cycling")

@@ -40,11 +40,6 @@ ApplicationWindow {
             followModeEnabled()
     }
 
-//    Component {
-//        id: aboutComponent
-//            AboutDialog { id: about }
-//    }
-
     Label {
         id: banner
     }
@@ -55,20 +50,6 @@ ApplicationWindow {
         property bool success : false
         y: 40
         iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
-    }
-*/
-/*
-    Component {
-        id: menuComponent
-        Menu {
-            visualParent: pageStack
-            MenuLayout {
-                MenuItem { text: qsTr("Settings"); onClicked: { mapVisible = false; pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
-                MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
-                MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
-                MenuItem { text: qsTr("About"); onClicked: about.open() }
-            }
-        }
     }
 */
     Loader {

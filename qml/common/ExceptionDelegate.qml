@@ -16,7 +16,7 @@ import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "helper.js" as Helper
 import "theme.js" as Theme
-
+// TODO:
 Component {
     id: disruptionDelegate
     Item {

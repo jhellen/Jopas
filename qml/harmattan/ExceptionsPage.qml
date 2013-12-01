@@ -12,27 +12,16 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
+import QtQuick.XmlListModel 2.0
+import Sailfish.Silica 1.0
 
 Page {
-    tools: exceptionTools
+    anchors.fill: parent
 
     Component.onCompleted: {
         exceptionModel.reload()
     }
-    ToolBarLayout {
-        id: exceptionTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { pageStack.pop(); } }
-        ToolButton {
-            text: qsTr("Update")
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: { exceptionModel.reload() }
-        }
-        ToolIcon { visible: false }
-    }
+
     XmlListModel {
         id: exceptionModel
         source: "http://www.poikkeusinfo.fi/xml/v2"
@@ -43,36 +32,31 @@ Page {
         XmlRole { name: "info_en"; query: "INFO/TEXT[3]/string()" }
     }
 
-    ListView {
+    SilicaListView {
         id: list
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         model: exceptionModel
         delegate: ExceptionDelegate {}
 
-        header: Header {
-            text: qsTr("Traffic exception info")
+        header: PageHeader {
+            title: qsTr("Traffic exception info")
         }
-    }
 
-    Text {
-        anchors.centerIn: parent
-        visible: (!busyIndicator.visible && exceptionModel.count == 0)
-        width: parent.width
-        text: qsTr("No current traffic exceptions")
-        horizontalAlignment: Qt.AlignHCenter
-        wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
+        PullDownMenu {
+            MenuItem { text: qsTr("Update"); onClicked: exceptionModel.reload() }
+        }
+
+        ViewPlaceholder {
+            anchors.centerIn: parent
+            enabled: (!busyIndicator.running && exceptionModel.count == 0)
+            text: qsTr("No current traffic exceptions")
+        }
     }
 
     BusyIndicator {
         id: busyIndicator
-        visible: (exceptionModel.status != XmlListModel.Ready)
-        running: true
+        running: exceptionModel.status != XmlListModel.Ready
         anchors.centerIn: parent
-        platformStyle: BusyIndicatorStyle { size: 'large' }
+        size: BusyIndicatorSize.Large
     }
 }

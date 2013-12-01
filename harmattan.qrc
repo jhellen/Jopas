@@ -1,35 +1,35 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="qml/Bubble.qml">qml/common/Bubble.qml</file>
-        <file alias="qml/ExceptionDelegate.qml">qml/common/ExceptionDelegate.qml</file>
-        <file alias="qml/favorites.js">qml/common/favorites.js</file>
-        <file alias="qml/FavoritesDelegate.qml">qml/harmattan/FavoritesDelegate.qml</file>
-        <file alias="qml/Header.qml">qml/common/Header.qml</file>
-        <file alias="qml/helper.js">qml/common/helper.js</file>
-        <file alias="qml/MapElement.qml">qml/common/MapElement.qml</file>
-        <file alias="qml/MyButton.qml">qml/common/MyButton.qml</file>
-        <file alias="qml/reittiopas.js">qml/common/reittiopas.js</file>
-        <file alias="qml/ResultDelegate.qml">qml/common/ResultDelegate.qml</file>
-        <file alias="qml/RouteDelegate.qml">qml/common/RouteDelegate.qml</file>
-        <file alias="qml/Separator.qml">qml/common/Separator.qml</file>
-        <file alias="qml/Spacing.qml">qml/common/Spacing.qml</file>
-        <file alias="qml/StopDelegate.qml">qml/common/StopDelegate.qml</file>
-        <file alias="qml/storage.js">qml/common/storage.js</file>
-        <file alias="qml/SuggestionDelegate.qml">qml/common/SuggestionDelegate.qml</file>
-        <file alias="qml/SwitchLocation.qml">qml/common/SwitchLocation.qml</file>
-        <file alias="qml/UIConstants.js">qml/common/UIConstants.js</file>
-        <file alias="qml/AboutDialog.qml">qml/harmattan/AboutDialog.qml</file>
-        <file alias="qml/ExceptionsPage.qml">qml/harmattan/ExceptionsPage.qml</file>
-        <file alias="qml/FavoriteSheet.qml">qml/harmattan/FavoriteSheet.qml</file>
-        <file alias="qml/FavoritesPage.qml">qml/harmattan/FavoritesPage.qml</file>
-        <file alias="qml/LocationEntry.qml">qml/common/LocationEntry.qml</file>
-        <file alias="qml/main.qml">qml/harmattan/main.qml</file>
-        <file alias="qml/MainPage.qml">qml/harmattan/MainPage.qml</file>
-        <file alias="qml/ResultPage.qml">qml/harmattan/ResultPage.qml</file>
-        <file alias="qml/RouteMapPage.qml">qml/harmattan/RouteMapPage.qml</file>
-        <file alias="qml/RoutePage.qml">qml/harmattan/RoutePage.qml</file>
-        <file alias="qml/SettingsPage.qml">qml/harmattan/SettingsPage.qml</file>
-        <file alias="qml/StopPage.qml">qml/harmattan/StopPage.qml</file>
+        <file alias="qml/Bubble.qml">qml/Bubble.qml</file>
+        <file alias="qml/ExceptionDelegate.qml">qml/ExceptionDelegate.qml</file>
+        <file alias="qml/favorites.js">qml/favorites.js</file>
+        <file alias="qml/FavoritesDelegate.qml">qml/FavoritesDelegate.qml</file>
+        <file alias="qml/Header.qml">qml/Header.qml</file>
+        <file alias="qml/helper.js">qml/helper.js</file>
+        <file alias="qml/MapElement.qml">qml/MapElement.qml</file>
+        <file alias="qml/MyButton.qml">qml/MyButton.qml</file>
+        <file alias="qml/reittiopas.js">qml/reittiopas.js</file>
+        <file alias="qml/ResultDelegate.qml">qml/ResultDelegate.qml</file>
+        <file alias="qml/RouteDelegate.qml">qml/RouteDelegate.qml</file>
+        <file alias="qml/Separator.qml">qml/Separator.qml</file>
+        <file alias="qml/Spacing.qml">qml/Spacing.qml</file>
+        <file alias="qml/StopDelegate.qml">qml/StopDelegate.qml</file>
+        <file alias="qml/storage.js">qml/storage.js</file>
+        <file alias="qml/SuggestionDelegate.qml">qml/SuggestionDelegate.qml</file>
+        <file alias="qml/SwitchLocation.qml">qml/SwitchLocation.qml</file>
+        <file alias="qml/UIConstants.js">qml/UIConstants.js</file>
+        <file alias="qml/AboutDialog.qml">qml/AboutDialog.qml</file>
+        <file alias="qml/ExceptionsPage.qml">qml/ExceptionsPage.qml</file>
+        <file alias="qml/FavoriteSheet.qml">qml/FavoriteSheet.qml</file>
+        <file alias="qml/FavoritesPage.qml">qml/FavoritesPage.qml</file>
+        <file alias="qml/LocationEntry.qml">qml/LocationEntry.qml</file>
+        <file alias="qml/main.qml">qml/main.qml</file>
+        <file alias="qml/MainPage.qml">qml/MainPage.qml</file>
+        <file alias="qml/ResultPage.qml">qml/ResultPage.qml</file>
+        <file alias="qml/RouteMapPage.qml">qml/RouteMapPage.qml</file>
+        <file alias="qml/RoutePage.qml">qml/RoutePage.qml</file>
+        <file alias="qml/SettingsPage.qml">qml/SettingsPage.qml</file>
+        <file alias="qml/StopPage.qml">qml/StopPage.qml</file>
         <file>images/banner_green.png</file>
         <file>images/banner_red.png</file>
         <file>images/boat.png</file>
@@ -47,36 +47,36 @@
         <file>images/tram.png</file>
         <file>images/walk.png</file>
         <file>images/gps-icon-inverted.png</file>
-        <file alias="qml/FlickableMap.qml">qml/common/FlickableMap.qml</file>
-        <file alias="qml/ApplicationHeader.qml">qml/common/ApplicationHeader.qml</file>
-        <file alias="qml/theme.js">qml/common/theme.js</file>
-        <file alias="qml/RouteStationDelegate.qml">qml/common/RouteStationDelegate.qml</file>
-        <file alias="qml/ListItemAnimation.qml">qml/common/ListItemAnimation.qml</file>
-        <file alias="qml/SettingsItem.qml">qml/common/SettingsItem.qml</file>
-        <file alias="qml/MySelectionDialog.qml">qml/harmattan/MySelectionDialog.qml</file>
-        <file alias="qml/MyTextfield.qml">qml/harmattan/MyTextfield.qml</file>
-        <file alias="qml/MyBusyIndicator.qml">qml/harmattan/MyBusyIndicator.qml</file>
-        <file alias="qml/SectionHeader.qml">qml/common/SectionHeader.qml</file>
-        <file alias="qml/CyclingPage.qml">qml/harmattan/CyclingPage.qml</file>
+        <file alias="qml/FlickableMap.qml">qml/FlickableMap.qml</file>
+        <file alias="qml/ApplicationHeader.qml">qml/ApplicationHeader.qml</file>
+        <file alias="qml/theme.js">qml/theme.js</file>
+        <file alias="qml/RouteStationDelegate.qml">qml/RouteStationDelegate.qml</file>
+        <file alias="qml/ListItemAnimation.qml">qml/ListItemAnimation.qml</file>
+        <file alias="qml/SettingsItem.qml">qml/SettingsItem.qml</file>
+        <file alias="qml/MySelectionDialog.qml">qml/MySelectionDialog.qml</file>
+        <file alias="qml/MyTextfield.qml">qml/MyTextfield.qml</file>
+        <file alias="qml/MyBusyIndicator.qml">qml/MyBusyIndicator.qml</file>
+        <file alias="qml/SectionHeader.qml">qml/SectionHeader.qml</file>
+        <file alias="qml/CyclingPage.qml">qml/CyclingPage.qml</file>
         <file>images/home-mark.png</file>
         <file>images/home-mark-inverse.png</file>
         <file>images/home-unmark.png</file>
         <file>images/home-unmark-inverse.png</file>
-        <file alias="qml/MapButton.qml">qml/common/MapButton.qml</file>
+        <file alias="qml/MapButton.qml">qml/MapButton.qml</file>
         <file>images/current.png</file>
         <file>images/surface.png</file>
         <file>images/maptype.png</file>
-        <file alias="qml/SelectionDialogDelegate.qml">qml/harmattan/SelectionDialogDelegate.qml</file>
-        <file alias="qml/translations.js">qml/common/translations.js</file>
+        <file alias="qml/SelectionDialogDelegate.qml">qml/SelectionDialogDelegate.qml</file>
+        <file alias="qml/translations.js">qml/translations.js</file>
         <file>images/finish.png</file>
         <file>images/start.png</file>
         <file>images/stop.png</file>
         <file>images/position.png</file>
         <file>images/station.png</file>
-        <file alias="qml/Agreement.qml">qml/harmattan/Agreement.qml</file>
-        <file alias="qml/ApiDialog.qml">qml/harmattan/ApiDialog.qml</file>
-        <file alias="qml/DateButton.qml">qml/harmattan/DateButton.qml</file>
-        <file alias="qml/TimeButton.qml">qml/harmattan/TimeButton.qml</file>
-        <file alias="qml/TimeTypeSwitch.qml">qml/harmattan/TimeTypeSwitch.qml</file>
+        <file alias="qml/Agreement.qml">qml/Agreement.qml</file>
+        <file alias="qml/ApiDialog.qml">qml/ApiDialog.qml</file>
+        <file alias="qml/DateButton.qml">qml/DateButton.qml</file>
+        <file alias="qml/TimeButton.qml">qml/TimeButton.qml</file>
+        <file alias="qml/TimeTypeSwitch.qml">qml/TimeTypeSwitch.qml</file>
     </qresource>
 </RCC>

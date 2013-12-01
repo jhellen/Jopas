@@ -1,10 +1,8 @@
 # Additional import path used to resolve QML modules in Creator code model
-QML_IMPORT_PATH = qml qml/common qml/harmattan
+QML_IMPORT_PATH = qml
 
 # qml files to be visible in the project
-OTHER_FILES += \
-        qml/common/* \
-        qml/harmattan/*
+OTHER_FILES += qml/*
 
 QT += qml quick dbus
 

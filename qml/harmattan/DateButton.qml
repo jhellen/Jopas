@@ -27,9 +27,7 @@ Item {
         var tempDate = new Date()
 
         /* Set date for date picker */
-        datePicker.day = Qt.formatDate(tempDate, "dd")
-        datePicker.month = Qt.formatDate(tempDate, "MM")
-        datePicker.year = Qt.formatDate(tempDate, "yyyy")
+        datePicker.date = tempDate
         dateButton.text = Qt.formatDate(tempDate, "dd. MMMM yyyy")
 
         dateChanged(tempDate)
@@ -61,18 +59,12 @@ Item {
 
     DatePickerDialog {
         id: datePicker
-// TODO:
-//        titleText: qsTr("Choose date")
 
         onAccepted: {
             var tempDate = new Date(datePicker.year, datePicker.month-1, datePicker.day, 0, 0)
             dateContainer.dateChanged(tempDate)
             dateButton.text = Qt.formatDate(tempDate, "dd. MMMM yyyy")
         }
-//        minimumYear: 2012
-
-//        acceptButtonText: qsTr("Accept")
-//        rejectButtonText: qsTr("Reject")
     }
 }
 

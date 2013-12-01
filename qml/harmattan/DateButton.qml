@@ -12,59 +12,33 @@
  */
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
 
-Item {
+BackgroundItem {
     id: dateContainer
     width: dateButton.width
     height: dateButton.height
     anchors.horizontalCenter: parent.horizontalCenter
-
+    property date storedDate
     signal dateChanged(variant newDate)
 
+    onClicked: {
+        var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {date: storedDate})
+        dialog.accepted.connect(function() {
+            dateContainer.storedDate = dialog.date
+            dateContainer.dateChanged(dateContainer.storedDate)
+        })
+    }
+
     function updateDate() {
-        var tempDate = new Date()
-
-        /* Set date for date picker */
-        datePicker.date = tempDate
-        dateButton.text = Qt.formatDate(tempDate, "dd. MMMM yyyy")
-
-        dateChanged(tempDate)
+        storedDate = new Date()
+        dateChanged(storedDate)
     }
 
-
-    Rectangle {
-        anchors.fill: parent
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-        z: -1
-        visible: dateMouseArea.pressed
-    }
-    Text {
+    Label {
         id: dateButton
-        height: UIConstants.SIZE_BUTTON
-        font.pixelSize: UIConstants.FONT_XXLARGE
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
-    }
-
-    MouseArea {
-        id: dateMouseArea
-        anchors.fill: parent
-        onClicked: {
-            datePicker.open()
-        }
-    }
-
-    DatePickerDialog {
-        id: datePicker
-
-        onAccepted: {
-            var tempDate = new Date(datePicker.year, datePicker.month-1, datePicker.day, 0, 0)
-            dateContainer.dateChanged(tempDate)
-            dateButton.text = Qt.formatDate(tempDate, "dd. MMMM yyyy")
-        }
+        font.pixelSize: Theme.fontSizeLarge
+        color: Theme.secondaryColor
+        text: Qt.formatDate(storedDate, "dd. MMMM yyyy")
     }
 }
 

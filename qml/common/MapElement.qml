@@ -69,15 +69,19 @@ Item {
         value: positionSource.position.coordinate
     }
 
-    MapImage {
+    MapQuickItem {
         id: current_position
-        smooth: true
-        source: "qrc:/images/position.png"
+        sourceItem: Image {
+            smooth: true
+            source: "qrc:/images/position.png"
+            width: 30 * appWindow.scalingFactor
+            height: 30 * appWindow.scalingFactor
+        }
+
         visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid && appWindow.positioningActive
-        width: 30 * appWindow.scalingFactor
-        height: 30 * appWindow.scalingFactor
-        offset.y: -30  * appWindow.scalingFactor / 2
-        offset.x: -30  * appWindow.scalingFactor / 2
+// TODO:
+//        offset.y: -30  * appWindow.scalingFactor / 2
+//        offset.x: -30  * appWindow.scalingFactor / 2
         z: 49
     }
 
@@ -88,7 +92,7 @@ Item {
     Component {
         id: coord_component
 
-        Coordinate {
+        Location {
             id: coord
         }
     }
@@ -96,26 +100,32 @@ Item {
     Component {
         id: stop
 
-        MapImage {
+        MapQuickItem {
             id: stop_circle
-            smooth: true
-            source: "qrc:/images/station.png"
-            height: 20 * appWindow.scalingFactor
-            width: 20 * appWindow.scalingFactor
-            offset.y: -20 * appWindow.scalingFactor / 2
-            offset.x: -20 * appWindow.scalingFactor / 2
+            sourceItem: Image {
+                smooth: true
+                source: "qrc:/images/station.png"
+                height: 20 * appWindow.scalingFactor
+                width: 20 * appWindow.scalingFactor
+            }
+// TODO:
+//            offset.y: -20 * appWindow.scalingFactor / 2
+//            offset.x: -20 * appWindow.scalingFactor / 2
             z: 45
         }
     }
 
     Component {
         id: endpoint
-        MapImage {
-            smooth: true
-            height: 50 * appWindow.scalingFactor
-            width: 50 * appWindow.scalingFactor
-            offset.y: -50 * appWindow.scalingFactor + 5
-            offset.x: -50 * appWindow.scalingFactor / 2
+        MapQuickItem {
+            sourceItem: Image {
+                smooth: true
+                height: 50 * appWindow.scalingFactor
+                width: 50 * appWindow.scalingFactor
+            }
+// TODO:
+//            offset.y: -50 * appWindow.scalingFactor + 5
+//            offset.x: -50 * appWindow.scalingFactor / 2
             z: 50
         }
     }
@@ -137,14 +147,18 @@ Item {
                 offset.y: 18
                 z: 48
             }
+
             MapImage {
                 id: station
-                smooth: true
-                source: "qrc:/images/stop.png"
-                height: 30 * appWindow.scalingFactor
-                width: 30 * appWindow.scalingFactor
-                offset.y: -30 * appWindow.scalingFactor / 2
-                offset.x: -30 * appWindow.scalingFactor / 2
+                sourceItem: Image {
+                    smooth: true
+                    source: "qrc:/images/stop.png"
+                    height: 30 * appWindow.scalingFactor
+                    width: 30 * appWindow.scalingFactor
+                }
+// TODO:
+//                offset.y: -30 * appWindow.scalingFactor / 2
+//                offset.x: -30 * appWindow.scalingFactor / 2
                 z: 45
             }
             MapPolyline {
@@ -174,8 +188,8 @@ Item {
                 var first_station = group.createObject(appWindow)
 
                 coord = coord_component.createObject(appWindow)
-                coord.latitude = endpointdata.from.latitude
-                coord.longitude = endpointdata.from.longitude
+                coord.coordinate.latitude = endpointdata.from.latitude
+                coord.coordinate.longitude = endpointdata.from.longitude
 
                 add_station(coord, endpointdata.from.name, first_station)
                 Helper.push_to_objects(first_station)
@@ -186,8 +200,8 @@ Item {
                 Helper.push_to_objects(endpoint_object)
             }
             coord = coord_component.createObject(appWindow)
-            coord.latitude = endpointdata.to.latitude
-            coord.longitude = endpointdata.to.longitude
+            coord.coordinate.latitude = endpointdata.to.latitude
+            coord.coordinate.longitude = endpointdata.to.longitude
 
             add_station(coord, endpointdata.to.name, map_group)
 
@@ -220,6 +234,7 @@ Item {
 
             Helper.push_to_objects(map_group)
         }
+
         Helper.set_group_objects(root_group)
         flickable_map.map.addMapObject(root_group)
     }

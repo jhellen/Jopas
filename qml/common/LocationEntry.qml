@@ -247,7 +247,6 @@ Column {
             }
         }
 
-        height: 5 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scalingFactor + UIConstants.DEFAULT_MARGIN
         onAccepted: {
             /* if positionsource used */
             if(selectedIndex == 0) {
@@ -268,7 +267,6 @@ Column {
                                favoritesModel.get(selectedIndex).coord)
             }
         }
-        onRejected: {}
     }
 
     Timer {

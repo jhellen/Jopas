@@ -12,8 +12,8 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import QtMobility.location 1.2
+import Sailfish.Silica 1.0
+import QtPositioning 5.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
@@ -21,7 +21,6 @@ import "theme.js" as Theme
 
 Page {
     id: cyclingPage
-    tools: mapTools
 
     signal configChanged
     signal positionChanged
@@ -74,7 +73,7 @@ Page {
         ListElement { name: QT_TR_NOOP("Gravel"); value: "klerosand" }
         ListElement { name: QT_TR_NOOP("Shortest"); value: "kleroshortest" }
     }
-
+/*
     SelectionDialog {
         id: surfaceSelection
         model: surfaceOptions
@@ -87,7 +86,7 @@ Page {
             configChanged()
         }
         Component.onCompleted: {
-            /* mark pre-configured value as selected */
+*/            /* mark pre-configured value as selected *//*
             var optimize = Storage.getSetting("optimize_cycling")
             switch(optimize) {
             case "kleroweighted":
@@ -108,7 +107,7 @@ Page {
             }
         }
     }
-
+*/
     ListModel {
         id: mapTypeModel
         ListElement { name: "Street"; value: Map.MobileStreetMap }
@@ -117,7 +116,7 @@ Page {
         ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
         ListElement { name: "Transit"; value: Map.MobileTransitMap }
     }
-
+/*
     SelectionDialog {
         id: mapTypeSelection
         model: mapTypeModel
@@ -128,7 +127,7 @@ Page {
             map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
         }
     }
-
+*/
     Column {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
@@ -164,7 +163,7 @@ Page {
             }
         }
     }
-
+/*
     ToolBarLayout {
         id: mapTools
         ToolIcon {
@@ -176,7 +175,7 @@ Page {
              onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
         }
     }
-
+*/
     Item {
         id: doneIndicator
         property bool done : false

@@ -12,24 +12,13 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
+import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
 import "theme.js" as Theme
 
 Page {
-    tools: resultTools
-
-    ToolBarLayout {
-        id: resultTools
-        ToolIcon { iconId: "toolbar-back"; onClicked: { menu.close(); pageStack.pop(); } }
-        ToolIcon { platformIconId: "toolbar-view-menu";
-             anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
-        }
-    }
-
     property variant search_parameters : 0
 
     onStatusChanged: {
@@ -90,7 +79,7 @@ Page {
     }
 
 
-    ListView {
+    SilicaListView {
         id: list
         anchors.fill: parent
         anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
@@ -157,7 +146,7 @@ Page {
         id: busyIndicator
         visible: !(routeModel.done)
         running: true
-        platformStyle: BusyIndicatorStyle { size: 'large' }
+//        platformStyle: BusyIndicatorStyle { size: 'large' }
         anchors.centerIn: parent
     }
 }

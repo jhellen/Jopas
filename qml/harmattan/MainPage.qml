@@ -233,32 +233,6 @@ Page {
         parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
     }
 
-    // ToolBarLayout {
-    //     id: mainTools
-    //     ToolIcon { iconId: "toolbar-back"; visible: false; onClicked: { menu.close(); pageStack.pop(); } }
-    //     ToolButtonRow {
-    //         ToolButton {
-    //             text: qsTr("Cycling")
-    //             enabled: endpointsValid
-    //             onClicked: {
-    //                 var parameters = {}
-    //                 setCyclingParameters(parameters)
-    //                 pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-    //             }
-    //         }
-    //         ToolButton {
-    //             text: qsTr("Route search")
-    //             enabled: endpointsValid
-    //             onClicked: {
-    //                 var parameters = {}
-    //                 setRouteParameters(parameters)
-    //                 pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
-    //             }
-    //         }
-    //     }
-    //     ToolIcon { iconId: "toolbar-view-menu" ; onClicked: menu.open(); }
-    // }
-
     Rectangle {
         id: waiting
         color: "black"
@@ -391,6 +365,30 @@ Page {
                 onClicked: {
                     timeButton.updateTime()
                     dateButton.updateDate()
+                }
+            }
+
+            Row {
+                width: parent.width
+
+                Button {
+                    text: qsTr("Cycling")
+                    enabled: endpointsValid
+                    onClicked: {
+                        var parameters = {}
+                        setCyclingParameters(parameters)
+                        pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+                    }
+                }
+
+                Button {
+                    text: qsTr("Route search")
+                    enabled: endpointsValid
+                    onClicked: {
+                        var parameters = {}
+                        setRouteParameters(parameters)
+                        pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+                    }
                 }
             }
         }

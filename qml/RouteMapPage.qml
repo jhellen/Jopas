@@ -117,11 +117,13 @@ Page {
             }
         }
     }
+*/
+
     BusyIndicator {
         id: busyIndicator
         visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading
         running: true
-        platformStyle: BusyIndicatorStyle { size: 'large' }
+        size: BusyIndicatorSize.Large
         anchors.centerIn: parent
     }
 }

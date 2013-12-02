@@ -46,7 +46,7 @@ Page {
         Item {
             height: 35
             width: parent.width
-            visible: !busyIndicator.visible
+            visible: !busyIndicator.running
             Label {
                 anchors.top: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -86,7 +86,7 @@ Page {
         model: routeModel
         footer: footer
         delegate: ResultDelegate {}
-        interactive: !busyIndicator.visible
+        interactive: !busyIndicator.running
         header: Column {
             width: parent.width
             Header {
@@ -98,7 +98,7 @@ Page {
             Item {
                 height: 35
                 width: parent.width
-                visible: !busyIndicator.visible
+                visible: !busyIndicator.running
                 Label {
                     anchors.top: parent.top
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -133,7 +133,7 @@ Page {
 
     Text {
         anchors.centerIn: parent
-        visible: (!busyIndicator.visible && routeModel.count == 0)
+        visible: (!busyIndicator.running && routeModel.count == 0)
         width: parent.width
         text: qsTr("No results")
         horizontalAlignment: Qt.AlignHCenter
@@ -144,9 +144,8 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        visible: !(routeModel.done)
-        running: true
-//        platformStyle: BusyIndicatorStyle { size: 'large' }
+        running: !routeModel.done
+        size: BusyIndicatorSize.Large
         anchors.centerIn: parent
     }
 }

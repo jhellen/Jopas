@@ -72,26 +72,25 @@ Page {
             text: header
             subtext: subheader
         }
-    }
 
-    Text {
-        anchors.centerIn: parent
-        visible: (!busyIndicator.visible && routeModel.count == 0)
-        width: parent.width
-        text: qsTr("No results")
-        horizontalAlignment: Qt.AlignHCenter
-        wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
+        ViewPlaceholder {
+            enabled: (!busyIndicator.visible && routeModel.count == 0)
+            text: qsTr("No results")
+        }
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Map")
+                onClicked: { pageStack.push(Qt.resolvedUrl("RouteMapPage.qml")) }
+            }
+        }
     }
 
     BusyIndicator {
         id: busyIndicator
         visible: !(routeModel.done)
         running: true
-//        platformStyle: BusyIndicatorStyle { size: 'large' }
+        size: BusyIndicatorSize.Large
         anchors.centerIn: parent
     }
 }

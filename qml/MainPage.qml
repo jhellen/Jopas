@@ -172,25 +172,15 @@ Page {
     states: [
         State {
             name: "normal"
-            PropertyChanges { target: waiting; opacity: 0.0 }
-            PropertyChanges { target: busyIndicator; opacity: 0.0 }
         },
         State {
             name: "waiting_route"
-            PropertyChanges { target: waiting; opacity: 0.7 }
-            PropertyChanges { target: busyIndicator; opacity: 1.0 }
         },
         State {
             name: "waiting_cycling"
-            PropertyChanges { target: waiting; opacity: 0.7 }
-            PropertyChanges { target: busyIndicator; opacity: 1.0 }
         }
     ]
-    transitions: [
-        Transition {
-            PropertyAnimation { property: opacity; duration: 200 }
-        }
-    ]
+
     state: "normal"
 
     function setRouteParameters(parameters) {
@@ -236,7 +226,12 @@ Page {
         id: waiting
         color: "black"
         z: 250
-        opacity: 0.0
+        opacity: mainPage.state == "normal" ? 0.0 : 0.7
+
+        Behavior on opacity {
+            PropertyAnimation { duration: 200 }
+        }
+
         anchors.fill: parent
         MouseArea {
             anchors.fill: parent
@@ -248,12 +243,9 @@ Page {
     BusyIndicator {
         id: busyIndicator
         z: 260
-        opacity: 0.0
-        running: true
+        running: mainPage.state != "normal"
         anchors.centerIn: parent
-    //    platformStyle: BusyIndicatorStyle {
-    //        size: "large"
-    //    }
+        size: BusyIndicatorSize.Large
     }
 
     SilicaFlickable {

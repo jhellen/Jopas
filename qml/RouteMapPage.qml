@@ -13,13 +13,21 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-//import QtMobility.location 1.2
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 
 Page {
-//    tools: mapTools
+//  TODO:
+    backNavigation: false
+    showNavigationIndicator: false
+
     anchors.fill: parent
+    Button {
+        id: backButton
+        text: qsTr("<< Back")
+        anchors.top: parent.top
+        onClicked: pageStack.pop()
+    }
 
     onStatusChanged: {
         if(status == Component.Ready)
@@ -66,6 +74,7 @@ Page {
         MapElement {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.fill: parent
+            anchors.topMargin: backButton.height
         }
     }
 

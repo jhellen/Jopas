@@ -267,6 +267,28 @@ Page {
             MenuItem { text: qsTr("Settings"); onClicked: { pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
         }
 
+        PushUpMenu {
+            enabled: endpointsValid
+
+            MenuItem {
+                text: qsTr("Route search");
+                onClicked: {
+                    var parameters = {}
+                    setRouteParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
+                }
+            }
+
+            MenuItem {
+                text: qsTr("Cycling")
+                onClicked: {
+                    var parameters = {}
+                    setCyclingParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+                }
+            }
+        }
+
         Column {
             id: content_column
     //         spacing: appWindow.inPortrait? UIConstants.DEFAULT_MARGIN : UIConstants.DEFAULT_MARGIN / 2
@@ -357,30 +379,6 @@ Page {
                 onClicked: {
                     timeButton.updateTime()
                     dateButton.updateDate()
-                }
-            }
-
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Button {
-                    text: qsTr("Cycling")
-                    enabled: endpointsValid
-                    onClicked: {
-                        var parameters = {}
-                        setCyclingParameters(parameters)
-                        pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-                    }
-                }
-
-                Button {
-                    text: qsTr("Route search")
-                    enabled: endpointsValid
-                    onClicked: {
-                        var parameters = {}
-                        setRouteParameters(parameters)
-                        pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
-                    }
                 }
             }
         }

@@ -150,6 +150,7 @@ Item {
 
     }
 
+    // Route
     Component {
         id: polyline_component
 
@@ -335,7 +336,7 @@ Item {
 
     function initialize_cycling() {
         flickable_map.addMapItem(current_position)
-
+// TODO:
         // Helper.clear_objects()
 
         // var route_coord = []

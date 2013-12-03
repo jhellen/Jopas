@@ -37,7 +37,7 @@ Page {
     property variant fromCoord: ''
     property variant fromName: ''
 
-    property bool endpointsValid : (toCoord && (fromCoord || currentCoord))
+    property bool endpointsValid: (toCoord && (fromCoord || currentCoord))
 
     onEndpointsValidChanged: {
         /* if we receive coordinates we are waiting for, start route search */
@@ -289,6 +289,7 @@ Page {
             PageHeader {
                 title: qsTr("Meegopas")
             }
+
             Spacing { height: appWindow.inPortrait? 20 : 0 }
 
             Item {

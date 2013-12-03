@@ -51,10 +51,6 @@ Item {
     }
 
     ListModel {
-        id: routeModel
-    }
-
-    ListModel {
         id: stopModel
     }
 
@@ -99,19 +95,6 @@ Item {
                 anchorPoint.y: 18
                 anchorPoint.x: -(width/2)
                 z: 48
-            }
-        }
-
-        // TODO: ?
-        MapItemView {
-            id: routeView
-            model: routeModel
-            delegate: MapPolyline {
-                line.color: routeColor
-                line.width: 8 * appWindow.scalingFactor
-                path: routePath
-                z: 30
-                smooth: true
             }
         }
 
@@ -165,6 +148,16 @@ Item {
             z: 50
         }
 
+    }
+
+    Component {
+        id: polyline_component
+
+        MapPolyline {
+            line.width: 8 * appWindow.scalingFactor
+            z: 30
+            smooth: true
+        }
     }
 
     PositionSource {
@@ -324,7 +317,10 @@ Item {
                 paths.push({"longitude": shapedata.x, "latitude": shapedata.y})
             }
 
-            routeModel.append({"routePath": paths, "routeColor": Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]})
+            var p = polyline_component.createObject(flickable_map)
+            p.line.color = Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]
+            p.path = paths
+            flickable_map.addMapItem(p)
 
             if(endpointdata.type != "walk") {
                 for(var stopindex in endpointdata.locs) {

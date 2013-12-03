@@ -72,7 +72,6 @@ Page {
     Component {
         id: map_component
         MapElement {
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.fill: parent
             anchors.topMargin: backButton.height
         }

@@ -22,6 +22,17 @@ import "theme.js" as Theme
 Page {
     id: cyclingPage
 
+//  TODO:
+    backNavigation: false
+    showNavigationIndicator: false
+
+    Button {
+        id: backButton
+        text: qsTr("<< Back")
+        anchors.top: parent.top
+        onClicked: pageStack.pop()
+    }
+
     signal configChanged
     signal positionChanged
 
@@ -68,10 +79,10 @@ Page {
 
     ListModel {
         id: surfaceOptions
-        ListElement { name: QT_TR_NOOP("Default"); value: "kleroweighted" }
-        ListElement { name: QT_TR_NOOP("Tarmac"); value: "klerotarmac" }
-        ListElement { name: QT_TR_NOOP("Gravel"); value: "klerosand" }
-        ListElement { name: QT_TR_NOOP("Shortest"); value: "kleroshortest" }
+//        ListElement { name: QT_TR_NOOP("Default"); value: "kleroweighted" }
+//        ListElement { name: QT_TR_NOOP("Tarmac"); value: "klerotarmac" }
+//        ListElement { name: QT_TR_NOOP("Gravel"); value: "klerosand" }
+//        ListElement { name: QT_TR_NOOP("Shortest"); value: "kleroshortest" }
     }
 /*
     SelectionDialog {
@@ -110,11 +121,11 @@ Page {
 */
     ListModel {
         id: mapTypeModel
-        ListElement { name: "Street"; value: Map.MobileStreetMap }
-        ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
-        ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
-        ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
-        ListElement { name: "Transit"; value: Map.MobileTransitMap }
+//        ListElement { name: "Street"; value: Map.MobileStreetMap }
+//        ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
+//        ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
+//        ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
+//        ListElement { name: "Transit"; value: Map.MobileTransitMap }
     }
 /*
     SelectionDialog {
@@ -211,7 +222,8 @@ Page {
     Component {
         id: map_component
         MapElement {
-            anchors.fill: cyclingPage
+            anchors.fill: parent
+            anchors.topMargin: backButton.height
         }
     }
 

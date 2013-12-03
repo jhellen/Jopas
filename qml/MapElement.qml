@@ -27,15 +27,14 @@ Item {
     signal newCycling(int length)
 
     function next_station() {
-                console.log(current_position.coordinate + "LLLLLLL66")
         flickable_map.panToCoordinate(Helper.next_station())
     }
+
     function previous_station() {
-                console.log(current_position.coordinate + "LLLLLLL77")
         flickable_map.panToCoordinate(Helper.previous_station())
     }
+
     function first_station() {
-                console.log(current_position.coordinate + "LLLLLLL88")
         flickable_map.panToCoordinate(Helper.first_station())
     }
 
@@ -43,9 +42,129 @@ Item {
         flickable_map.map.removeMapObject(root_group)
     }
 
+    ListModel {
+        id: stationModel
+    }
+
+    ListModel {
+        id: stationTextModel
+    }
+
+    ListModel {
+        id: routeModel
+    }
+
+    ListModel {
+        id: stopModel
+    }
+
     FlickableMap {
         id: flickable_map
+        property alias start_point: startPoint
+        property alias end_point: endPoint
+
         anchors.fill: parent
+
+        // TODO: ?
+        MapItemView {
+            id: stationView
+            model: stationModel
+            delegate: MapQuickItem {
+                coordinate.longitude: lng
+                coordinate.latitude: lat
+                sourceItem: Image {
+                    smooth: true
+                    height: 30
+                    width: 30
+                    source: "qrc:/images/stop.png"
+                }
+                anchorPoint.y: -30 * appWindow.scalingFactor / 2
+                anchorPoint.x: -30 * appWindow.scalingFactor / 2
+                z: 45
+            }
+        }
+
+        // TODO: ?
+        MapItemView {
+            id: stationTextView
+            model: stationTextModel
+            delegate: MapQuickItem {
+                coordinate.longitude: lng
+                coordinate.latitude: lat
+                sourceItem: Text {
+                    // TODO: width and height?
+                    font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
+                    text: name
+                }
+                anchorPoint.y: 18
+                anchorPoint.x: -(width/2)
+                z: 48
+            }
+        }
+
+        // TODO: ?
+        MapItemView {
+            id: routeView
+            model: routeModel
+            delegate: MapPolyline {
+                line.color: routeColor
+                line.width: 8 * appWindow.scalingFactor
+                path: routePath
+                z: 30
+                smooth: true
+            }
+        }
+
+        // This is the yellow squares representing stops
+        MapItemView {
+            id: stopView
+            model: stopModel
+            delegate: MapQuickItem {
+                coordinate.longitude: lng
+                coordinate.latitude: lat
+                sourceItem: Image {
+                    smooth: true
+                    height: 20
+                    width: 20
+                    source: "qrc:/images/station.png"
+                }
+
+                anchorPoint.y: -20 * appWindow.scalingFactor / 2
+                anchorPoint.x: -20 * appWindow.scalingFactor / 2
+                z: 45
+            }
+        }
+
+        // Trip start
+        MapQuickItem {
+            id: startPoint
+            sourceItem: Image {
+                smooth: true
+                source: "qrc:/images/start.png"
+                height: 50
+                width: 50
+            }
+
+            anchorPoint.y: -50 * appWindow.scalingFactor + 5
+            anchorPoint.x: -50 * appWindow.scalingFactor / 2
+            z: 50
+        }
+
+        // Trip end
+        MapQuickItem {
+            id: endPoint
+            sourceItem: Image {
+                smooth: true
+                source: "qrc:/images/finish.png"
+                height: 50
+                width: 50
+            }
+
+            anchorPoint.y: -50 * appWindow.scalingFactor + 5
+            anchorPoint.x: -50 * appWindow.scalingFactor / 2
+            z: 50
+        }
+
     }
 
     PositionSource {
@@ -54,7 +173,6 @@ Item {
         active: appWindow.positioningActive
         onPositionChanged: {
             if(appWindow.followMode) {
-                console.log(current_position.coordinate + "LLLLLLL")
                 flickable_map.panToCoordinate(current_position.coordinate)
             }
         }
@@ -63,7 +181,6 @@ Item {
     Connections {
         target: appWindow
         onFollowModeEnabled: {
-                console.log(current_position.coordinate + "LLLLLLL1")
             flickable_map.panToCoordinate(positionSource.position.coordinate)
         }
     }
@@ -79,8 +196,8 @@ Item {
         sourceItem: Image {
             smooth: true
             source: "qrc:/images/position.png"
-            width: 30 * appWindow.scalingFactor
-            height: 30 * appWindow.scalingFactor
+            width: 30
+            height: 30
         }
 
         visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid && appWindow.positioningActive
@@ -117,7 +234,7 @@ Item {
             z: 45
         }
     }
-
+/*
     Component {
         id: endpoint
         MapQuickItem {
@@ -131,6 +248,7 @@ Item {
             z: 50
         }
     }
+*/
 /*
     Component {
         id: group
@@ -176,127 +294,116 @@ Item {
         flickable_map.addMapItem(current_position)
 
         Helper.clear_objects()
-        var coord
         var endpoint_object
         var route_coord = []
         var current_route = Reittiopas.get_route_instance()
         current_route.dump_route(route_coord)
 
         for (var index in route_coord) {
-            var map_group = group.createObject(appWindow)
+//            var map_group = group.createObject(appWindow)
             var endpointdata = route_coord[index]
+            var paths = []
 
             if(index == 0) {
-                var first_station = group.createObject(appWindow)
-
-                coord = coord_component.createObject(appWindow)
-                coord.coordinate.latitude = endpointdata.from.latitude
-                coord.coordinate.longitude = endpointdata.from.longitude
-
-                add_station(coord, endpointdata.from.name, first_station)
-                Helper.push_to_objects(first_station)
-
-                endpoint_object = endpoint.createObject(appWindow)
-                endpoint_object.coordinate = coord
-                endpoint_object.source = "qrc:/images/start.png"
-                Helper.push_to_objects(endpoint_object)
+                add_station2(endpointdata.from, endpointdata.from.name)
+                flickable_map.start_point.coordinate.longitude = endpointdata.from.longitude
+                flickable_map.start_point.coordinate.latitude = endpointdata.from.latitude
             }
-            coord = coord_component.createObject(appWindow)
-            coord.coordinate.latitude = endpointdata.to.latitude
-            coord.coordinate.longitude = endpointdata.to.longitude
 
-            add_station(coord, endpointdata.to.name, map_group)
+            add_station2(endpointdata.to, endpointdata.to.name)
 
             if(index == route_coord.length - 1) {
-                endpoint_object = endpoint.createObject(appWindow)
-                endpoint_object.coordinate = coord
-                endpoint_object.source = "qrc:/images/finish.png"
-                Helper.push_to_objects(endpoint_object)
+                  flickable_map.end_point.coordinate.longitude = endpointdata.to.longitude
+                  flickable_map.end_point.coordinate.latitude = endpointdata.to.latitude
             }
 
-            map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]
+//            map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]
 
             for(var shapeindex in endpointdata.shape) {
                 var shapedata = endpointdata.shape[shapeindex]
-
-                var shape_coord = coord_component.createObject(appWindow)
-                shape_coord.latitude = shapedata.y
-                shape_coord.longitude = shapedata.x
-
-                map_group.route.addCoordinate(shape_coord)
+                paths.push({"longitude": shapedata.x, "latitude": shapedata.y})
             }
+
+            routeModel.append({"routePath": paths, "routeColor": Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]})
+
             if(endpointdata.type != "walk") {
                 for(var stopindex in endpointdata.locs) {
                     var loc = endpointdata.locs[stopindex]
 
                     if(stopindex != 0 && stopindex != endpointdata.locs.length - 1)
-                        add_stop(loc.latitude, loc.longitude)
+                        add_stop2(loc.latitude, loc.longitude)
                 }
             }
-
-            Helper.push_to_objects(map_group)
         }
-
-        Helper.set_group_objects(root_group)
-        flickable_map.map.addMapObject(root_group)
     }
 
     function initialize_cycling() {
-        flickable_map.map.addMapObject(current_position)
+        flickable_map.addMapItem(current_position)
 
-        Helper.clear_objects()
+        // Helper.clear_objects()
 
-        var route_coord = []
-        var current_route = Reittiopas.get_cycling_instance()
+        // var route_coord = []
+        // var current_route = Reittiopas.get_cycling_instance()
 
-        var last_result = current_route.last_result
+        // var last_result = current_route.last_result
 
-        map_element.newCycling(last_result.length)
+        // map_element.newCycling(last_result.length)
 
-        for(var index in last_result.path) {
-            var leg = last_result.path[index]
-            var map_group = group.createObject(appWindow)
-            map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[leg.type]
+        // for(var index in last_result.path) {
+        //     var leg = last_result.path[index]
+        //     var map_group = group.createObject(appWindow)
+        //     map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[leg.type]
 
-            for(var pointindex in leg.points) {
-                var point = leg.points[pointindex]
-                if(point.y && point.x) {
-                    var shape_coord = coord_component.createObject(appWindow)
-                    shape_coord.latitude = point.y
-                    shape_coord.longitude = point.x
-                    map_group.route.addCoordinate(shape_coord)
-                    Helper.add_station(shape_coord)
+        //     for(var pointindex in leg.points) {
+        //         var point = leg.points[pointindex]
+        //         if(point.y && point.x) {
+        //             var shape_coord = coord_component.createObject(appWindow)
+        //             shape_coord.latitude = point.y
+        //             shape_coord.longitude = point.x
+        //             map_group.route.addCoordinate(shape_coord)
+        //             Helper.add_station(shape_coord)
 
-                    var endpoint_object
-                    var stop_object
-                    if(index == 0 && pointindex == 0) {
-                        endpoint_object = endpoint.createObject(appWindow)
-                        endpoint_object.coordinate = shape_coord
-                        endpoint_object.source = "qrc:/images/start.png"
-                        Helper.push_to_objects(endpoint_object)
+        //             var endpoint_object
+        //             var stop_object
+        //             if(index == 0 && pointindex == 0) {
+        //                 endpoint_object = endpoint.createObject(appWindow)
+        //                 endpoint_object.coordinate = shape_coord
+        //                 endpoint_object.source = "qrc:/images/start.png"
+        //                 Helper.push_to_objects(endpoint_object)
 
-                        stop_object = stop.createObject(appWindow)
-                        stop_object.coordinate = shape_coord
-                        Helper.push_to_objects(stop_object)
-                    } else if(index == last_result.path.length - 1 && pointindex == leg.points.length - 1) {
-                        endpoint_object = endpoint.createObject(appWindow)
-                        endpoint_object.coordinate = shape_coord
-                        endpoint_object.source = "qrc:/images/finish.png"
-                        Helper.push_to_objects(endpoint_object)
+        //                 stop_object = stop.createObject(appWindow)
+        //                 stop_object.coordinate = shape_coord
+        //                 Helper.push_to_objects(stop_object)
+        //             } else if(index == last_result.path.length - 1 && pointindex == leg.points.length - 1) {
+        //                 endpoint_object = endpoint.createObject(appWindow)
+        //                 endpoint_object.coordinate = shape_coord
+        //                 endpoint_object.source = "qrc:/images/finish.png"
+        //                 Helper.push_to_objects(endpoint_object)
 
-                        stop_object = stop.createObject(appWindow)
-                        stop_object.coordinate = shape_coord
-                        Helper.push_to_objects(stop_object)
-                    }
-                }
-            }
+        //                 stop_object = stop.createObject(appWindow)
+        //                 stop_object.coordinate = shape_coord
+        //                 Helper.push_to_objects(stop_object)
+        //             }
+        //         }
+        //     }
 
-            Helper.push_to_objects(map_group)
+        //     Helper.push_to_objects(map_group)
+        // }
+
+        // Helper.set_group_objects(root_group)
+        // flickable_map.map.addMapObject(root_group)
+        // first_station()
+    }
+
+    function add_station2(coord, name) {
+        if (name != "") {
+            // Append to name model
+            stationModel.append({"lng": coord.longitude, "lat": coord.latitude, "name": name})
         }
 
-        Helper.set_group_objects(root_group)
-        flickable_map.map.addMapObject(root_group)
-        first_station()
+        // Add the normal point for the station
+        stationModel.append({"lng": coord.longitude, "lat": coord.latitude})
+        Helper.add_station(coord)
     }
 
     function add_station(coord, name, map_group) {
@@ -305,6 +412,10 @@ Item {
         map_group.station.coordinate = coord
 
         Helper.add_station(coord)
+    }
+
+    function add_stop2(latitude, longitude) {
+        stopModel.append({"lng": longitude, "lat": latitude})
     }
 
     function add_stop(latitude, longitude) {

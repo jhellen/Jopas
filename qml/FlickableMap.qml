@@ -52,7 +52,15 @@ import QtLocation 5.0
         plugin: Plugin {
             name: "nokia"
 
+            PluginParameter {
+                name: "app_id"
+                value: "ETjZnV1eZZ5o0JmN320V"
+            }
 
+            PluginParameter {
+                name: "token"
+                value: "QYpeZ4z7gwhQr7iW0hOTUQ%3D%3D"
+            }
         }
 
 //        mapType: Map.MobileStreetMap

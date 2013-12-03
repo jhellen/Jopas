@@ -27,12 +27,15 @@ Item {
     signal newCycling(int length)
 
     function next_station() {
+                console.log(current_position.coordinate + "LLLLLLL66")
         flickable_map.panToCoordinate(Helper.next_station())
     }
     function previous_station() {
+                console.log(current_position.coordinate + "LLLLLLL77")
         flickable_map.panToCoordinate(Helper.previous_station())
     }
     function first_station() {
+                console.log(current_position.coordinate + "LLLLLLL88")
         flickable_map.panToCoordinate(Helper.first_station())
     }
 
@@ -51,6 +54,7 @@ Item {
         active: appWindow.positioningActive
         onPositionChanged: {
             if(appWindow.followMode) {
+                console.log(current_position.coordinate + "LLLLLLL")
                 flickable_map.panToCoordinate(current_position.coordinate)
             }
         }
@@ -59,6 +63,7 @@ Item {
     Connections {
         target: appWindow
         onFollowModeEnabled: {
+                console.log(current_position.coordinate + "LLLLLLL1")
             flickable_map.panToCoordinate(positionSource.position.coordinate)
         }
     }
@@ -79,15 +84,14 @@ Item {
         }
 
         visible: positionSource.position.latitudeValid && positionSource.position.longitudeValid && appWindow.positioningActive
-// TODO:
-//        offset.y: -30  * appWindow.scalingFactor / 2
-//        offset.x: -30  * appWindow.scalingFactor / 2
+        anchorPoint.y: -30  * appWindow.scalingFactor / 2
+        anchorPoint.x: -30  * appWindow.scalingFactor / 2
         z: 49
     }
 
-    MapGroup {
-        id: root_group
-    }
+//    MapGroup {
+//        id: root_group
+//    }
 
     Component {
         id: coord_component
@@ -108,9 +112,8 @@ Item {
                 height: 20 * appWindow.scalingFactor
                 width: 20 * appWindow.scalingFactor
             }
-// TODO:
-//            offset.y: -20 * appWindow.scalingFactor / 2
-//            offset.x: -20 * appWindow.scalingFactor / 2
+            anchorPoint.y: -20 * appWindow.scalingFactor / 2
+            anchorPoint.x: -20 * appWindow.scalingFactor / 2
             z: 45
         }
     }
@@ -123,13 +126,12 @@ Item {
                 height: 50 * appWindow.scalingFactor
                 width: 50 * appWindow.scalingFactor
             }
-// TODO:
-//            offset.y: -50 * appWindow.scalingFactor + 5
-//            offset.x: -50 * appWindow.scalingFactor / 2
+            anchorPoint.y: -50 * appWindow.scalingFactor + 5
+            anchorPoint.x: -50 * appWindow.scalingFactor / 2
             z: 50
         }
     }
-
+/*
     Component {
         id: group
 
@@ -169,9 +171,9 @@ Item {
             }
         }
     }
-
+*/
     function initialize() {
-        flickable_map.map.addMapObject(current_position)
+        flickable_map.addMapItem(current_position)
 
         Helper.clear_objects()
         var coord

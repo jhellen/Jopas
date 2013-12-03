@@ -14,89 +14,79 @@
 /* Modified from the example by Clovis Scotti <scotti@ieee.org>, http://cpscotti.com/blog/?p=52, released with GPL 3.0 */
 
 import QtQuick 2.1
-import QtMobility.location 1.2
-import Qt.labs.gestures 1.0
+import QtLocation 5.0
 
-Flickable {
-    id: mapFlickable
-    property alias map: map
-    property double defaultLatitude: 60.1687069096
-    property double defaultLongitude: 24.9407379411
-    property int  defaultZoomLevel: 16
+// Flickable {
+//     id: mapFlickable
+//     property alias map: map
+//     property double defaultLatitude: 60.1687069096
+//     property double defaultLongitude: 24.9407379411
+//     property int  defaultZoomLevel: 16
 
-    property double centeredContentX: map.size.width*0.75
-    property double centeredContentY: map.size.height*0.75
+//     property double centeredContentX: map.size.width*0.75
+//     property double centeredContentY: map.size.height*0.75
 
-    interactive: !appWindow.followMode
+//     interactive: !appWindow.followMode
 
-    contentWidth: map.size.width * 2
-    contentHeight: map.size.height * 2
-    flickableDirection: Flickable.HorizontalAndVerticalFlick
-    boundsBehavior: Flickable.DragAndOvershootBounds
-    flickDeceleration: 4000
-    maximumFlickVelocity: 1000
-    pressDelay: 500
+//     contentWidth: map.size.width * 2
+//     contentHeight: map.size.height * 2
+//     flickableDirection: Flickable.HorizontalAndVerticalFlick
+//     boundsBehavior: Flickable.DragAndOvershootBounds
+//     flickDeceleration: 4000
+//     maximumFlickVelocity: 1000
+//     pressDelay: 500
 
-    function updateSizes()
-    {
-        centeredContentY = map.size.height*0.75
-        centeredContentX = map.size.width*0.75
-        map.pos.x = map.size.width/2
-        map.pos.y = map.size.height/2
-        map.transformOrigin = Item.Center
-        map.scenter.x = map.width/2.0
-        map.scenter.y = map.height/2.0
-    }
-
-    function updateViewPort() {
-        map.pan((contentX-centeredContentX)/map.getScale,(contentY-centeredContentY)/map.getScale)
-
-        contentX = centeredContentX
-        contentY = centeredContentY
-    }
-
-    onMovementEnded: {
-        updateSizes()
-        updateViewPort()
-    }
+//     onMovementEnded: {
+//         updateSizes()
+//         updateViewPort()
+//     }
 
     Map {
         id: map
-        size.width: mapFlickable.width * 2
-        size.height: mapFlickable.height * 2
+        anchors.fill: parent
+        property double defaultLatitude: 60 //.1687069096
+        property double defaultLongitude: 24 //.9407379411
+        property int  defaultZoomLevel: 16
+
+//        size.width: mapFlickable.width * 2
+//        size.height: mapFlickable.height * 2
         zoomLevel: defaultZoomLevel
         clip: true
 
         plugin: Plugin {
             name: "nokia"
+
+
         }
-        mapType: Map.MobileStreetMap
-        connectivityMode: Map.HybridMode
-        center: Coordinate {
+
+//        mapType: Map.MobileStreetMap
+//        connectivityMode: Map.HybridMode
+        center {
             latitude: defaultLatitude
             longitude:defaultLongitude
         }
-        property alias scenter: tform.origin
-        property alias getScale: tform.xScale
+//        property alias scenter: tform.origin
+//        property alias getScale: tform.xScale
         function setScale(v) {
             tform.xScale = v
             tform.yScale = v
         }
-        transform: Scale {
-            id: tform
-        }
+
+//        transform: Scale {
+//            id: tform
+//        }
 
         Component.onCompleted: {
-            mapFlickable.updateSizes()
-            mapFlickable.updateViewPort()
+            updateSizes()
+            updateViewPort()
         }
-    }
+//    }
 
     function panToCoordinate(coordinate) {
         updateSizes()
         updateViewPort()
-        map.center.latitude = coordinate.latitude
-        map.center.longitude = coordinate.longitude
+        center.latitude = coordinate.latitude
+        center.longitude = coordinate.longitude
     }
 
     function panToLatLong(latitude,longitude) {
@@ -106,6 +96,27 @@ Flickable {
         map.center.longitude = longitude
     }
 
+    function updateSizes()
+    {
+// // TODO:
+// //        centeredContentY = map.size.height*0.75
+// //        centeredContentX = map.size.width*0.75
+// //        map.pos.x = map.size.width/2
+// //        map.pos.y = map.size.height/2
+// //        map.transformOrigin = Item.Center
+// //        map.scenter.x = map.width/2.0
+// //        map.scenter.y = map.height/2.0
+    }
+
+    function updateViewPort() {
+// // TODO:
+// //        map.pan((contentX-centeredContentX)/map.getScale,(contentY-centeredContentY)/map.getScale)
+
+//         contentX = centeredContentX
+//         contentY = centeredContentY
+    }
+
+/*
     PinchArea {
         id: pincharea
         anchors.fill: parent
@@ -150,4 +161,6 @@ Flickable {
             }
         }
     }
+*/
+//}
 }

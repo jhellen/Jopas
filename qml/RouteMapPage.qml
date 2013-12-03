@@ -12,8 +12,8 @@
  */
 
 import QtQuick 2.1
-import com.nokia.meego 1.0
-import QtMobility.location 1.2
+import Sailfish.Silica 1.0
+//import QtMobility.location 1.2
 import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 
@@ -23,7 +23,7 @@ Page {
 
     onStatusChanged: {
         if(status == Component.Ready)
-//            timer.start()
+            timer.start()
     }
 
     Timer {
@@ -34,6 +34,7 @@ Page {
         onTriggered: map_loader.sourceComponent = map_component
     }
 /*
+// TODO:
     ToolBarLayout {
         id: mapTools
         ToolIcon { iconId: "toolbar-back"
@@ -60,8 +61,6 @@ Page {
         }
     }
 
-// TODO:
-/*
     Component {
         id: map_component
         MapElement {
@@ -69,17 +68,18 @@ Page {
             anchors.fill: parent
         }
     }
-*/
 
     ListModel {
         id: mapTypeModel
-        ListElement { name: "Street"; value: Map.MobileStreetMap }
-        ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
-        ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
-        ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
-        ListElement { name: "Transit"; value: Map.MobileTransitMap }
+// TODO:
+//        ListElement { name: "Street"; value: Map.MobileStreetMap }
+//        ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
+//        ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
+//        ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
+//        ListElement { name: "Transit"; value: Map.MobileTransitMap }
     }
-
+/*
+// TODO:
     SelectionDialog {
         id: mapTypeSelection
         model: mapTypeModel
@@ -90,7 +90,9 @@ Page {
             map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
         }
     }
-
+*/
+/*
+// TODO:
     Column {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter

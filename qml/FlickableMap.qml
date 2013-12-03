@@ -44,13 +44,9 @@ import QtLocation 5.0
     Map {
         id: map
         anchors.fill: parent
-        property double defaultLatitude: 60 //.1687069096
-        property double defaultLongitude: 24 //.9407379411
-        property int  defaultZoomLevel: 16
-
 //        size.width: mapFlickable.width * 2
 //        size.height: mapFlickable.height * 2
-        zoomLevel: defaultZoomLevel
+        zoomLevel: 16
         clip: true
 
         plugin: Plugin {
@@ -62,8 +58,8 @@ import QtLocation 5.0
 //        mapType: Map.MobileStreetMap
 //        connectivityMode: Map.HybridMode
         center {
-            latitude: defaultLatitude
-            longitude:defaultLongitude
+            latitude: 60.1687069096
+            longitude: 24.9407379411
         }
 //        property alias scenter: tform.origin
 //        property alias getScale: tform.xScale

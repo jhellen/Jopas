@@ -46,7 +46,6 @@ ApplicationWindow {
     property bool positioningActive : (Qt.application.active && gpsEnabled)
     property bool followMode : false
     property bool mapVisible : false
-    property bool showStationCode : true
     property string colorscheme : "default"
     property bool gpsEnabled : false
 

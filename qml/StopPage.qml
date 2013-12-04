@@ -20,10 +20,9 @@ import "theme.js" as Theme
 
 Page {
     id: stop_page
-    property string leg_code : ""
-    property int leg_index : 0
-    property alias position : position
-    property alias list : routeList
+    property string leg_code: ""
+    property int leg_index: 0
+    property alias position: position
 
     state: (appWindow.mapVisible && appWindow.inPortrait)? "map" : "normal"
 
@@ -42,7 +41,6 @@ Page {
         }
     }
 
-//    tools: stopTools
 /*
 // TODO:
     ToolBarLayout {
@@ -78,31 +76,28 @@ Page {
 
     ListModel {
         id: stopModel
-        property bool done : false
-    }
-
-    Component {
-        id: highlight_component
-        Rectangle {
-            color: Theme.theme[appWindow.colorscheme].COLOR_HIGHLIGHT
-            width: stop_page.width + 2 * UIConstants.DEFAULT_MARGIN
-            height: 25
-        }
+        property bool done: false // used by reittiopas.js
     }
 
     SilicaListView {
         id: routeList
-        cacheBuffer: 100 * UIConstants.LIST_ITEM_HEIGHT_DEFAULT
         clip: true
         anchors.top: parent.top
-        height: parent.height/2
+        height: parent.height/2 // TODO:
         width: parent.width
-        z: 200
         model: stopModel
-        delegate: StopDelegate {}
+        // TODO: I have no idea what is going on but I really cannot understand why currentIndex
+        // is not working :/
+        property int currentStop: -1
+        delegate: StopDelegate {
+            highlight: routeList.currentStop == index
+            onNear: {
+                routeList.currentStop = index
+            }
+        }
+
         interactive: !busyIndicator.running
         highlightFollowsCurrentItem: true
-        highlight: highlight_component
         currentIndex: -1
         header: PageHeader {
             title: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")

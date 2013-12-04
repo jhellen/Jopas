@@ -12,132 +12,87 @@
  */
 
 import QtQuick 2.1
+import Sailfish.Silica 1.0
 import QtPositioning 5.0
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
 
-Component {
-    id: stopDelegate
+ListItem {
+    id: stop_item
+    signal near
+    contentHeight: Theme.itemSizeMedium
+    property bool highlight: false
 
-    Item {
-        id: stop_item
-        height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT * appWindow.scalingFactor
-        width: parent.width
-        opacity: 1.0
+    onClicked: {
+        // show map if currently hidden
+        appWindow.mapVisible = true
 
-        Location {
-            id: coordinate
-            coordinate {
-                latitude: model.latitude
-                longitude: model.longitude
-            }
+        // follow mode disables panning to location
+        if(!appWindow.followMode)
+            map.map_loader.item.flickable_map.panToLatLong(model.latitude,model.longitude)
+    }
+
+    Location {
+        id: coordinate
+
+        coordinate {
+            latitude: model.latitude
+            longitude: model.longitude
         }
+    }
 
-        Component.onCompleted: ListItemAnimation { target: stop_item }
+    Component.onCompleted: ListItemAnimation { target: stop_item }
 
-        onStateChanged: {
-            if(state == "there")
-                stop_page.list.selectedIndex = index
+    onStateChanged: {
+        if (state == "near")
+            stop_item.near()
+    }
+
+    state: (coordinate.coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.coordinate.distanceTo(stop_page.position.position.coordinate) < 150)? "near": "far"
+
+    states: [
+        State {
+            name: "far"
+        },
+        State {
+            name: "near"
         }
-        state: (coordinate.coordinate.distanceTo(stop_page.position.position.coordinate) && coordinate.coordinate.distanceTo(stop_page.position.position.coordinate) < 150)? "near": "far"
+    ]
 
-        states: [
-            State {
-                name: "far"
-                PropertyChanges { target: routeList; currentIndex: routeList.currentIndex }
-            },
-            State {
-                name: "near"
-                PropertyChanges { target: routeList; currentIndex: index }
-            }
-        ]
-        transitions: [
-            Transition {
-                ParallelAnimation {
-                    ColorAnimation { duration: 300 }
-                    NumberAnimation { properties: "opacity"; duration: 500 }
-                }
-            }
-        ]
+    Label {
+        id: diff
+        anchors.top: parent.top
+        anchors.left: parent.left
+        horizontalAlignment: Qt.AlignLeft
+        text: "+" + time_diff + " min"
+        font.pixelSize: Theme.fontSizeSmall
+        color: Theme.secondaryColor
+    }
 
-        Rectangle {
-            height: parent.height
-            width: appWindow.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-            z: -1
-            visible: mouseArea.pressed
-        }
-        Column {
-            id: time_column
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            width: 100 * appWindow.scalingFactor
-            Text {
-                id: diff
-                anchors.right: time.right
-                horizontalAlignment: Qt.AlignRight
-                text: "+" + time_diff + " min"
-                elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
-            Text {
-                id: time
-                text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
-                elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
-        }
-        Row {
-            anchors.left: time_column.right
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            layoutDirection: Qt.RightToLeft
-            spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scalingFactor
-            clip: true
+    Label {
+        id: time
+        anchors.top: diff.bottom
+        anchors.left: parent.left
+        horizontalAlignment: Qt.AlignLeft
+        text: (index === 0)? Qt.formatTime(depTime, "hh:mm") : Qt.formatTime(arrTime, "hh:mm")
+        font.pixelSize: Theme.fontSizeMedium
+        color: stop_item.highlight ? Theme.highlightColor : Theme.primaryColor
+    }
 
-            Text {
-                text: name
-                horizontalAlignment: Qt.AlignRight
-                anchors.verticalCenter: parent.verticalCenter
-                elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
-            Text {
-                id: station_code
-                visible: appWindow.showStationCode
-                horizontalAlignment: Qt.AlignRight
-                anchors.verticalCenter: parent.verticalCenter
-                text: shortCode? "(" + shortCode + ")" : ""
-                elide: Text.ElideRight
-                font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
-        }
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
+    Label {
+        id: station_code
+        anchors.right: parent.right
+        anchors.top: parent.top
+        horizontalAlignment: Qt.AlignRight
+        text: shortCode ? "(" + shortCode + ")" : ""
+        font.pixelSize: Theme.fontSizeSmall
+        color: Theme.secondaryColor
+    }
 
-            onClicked: {
-                // show map if currently hidden
-                if(appWindow.mapVisible == false)
-                    appWindow.mapVisible = true
-
-                // follow mode disables panning to location
-                if(!appWindow.followMode)
-                    map.map_loader.item.flickable_map.panToLatLong(model.latitude,model.longitude)
-            }
-        }
+    Label {
+        text: name
+        horizontalAlignment: Qt.AlignRight
+        anchors.right: parent.right
+        anchors.top: station_code.bottom
+        font.pixelSize: Theme.fontSizeMedium
+        color: stop_item.highlight ? Theme.highlightColor : Theme.primaryColor
     }
 }

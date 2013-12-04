@@ -226,7 +226,13 @@ Column {
     MySelectionDialog {
         id: query
         model: suggestionModel
-        delegate: SuggestionDelegate {}
+        delegate: SuggestionDelegate {
+            onClicked: {
+                query.selectedIndex = index
+                query.accept()
+            }
+        }
+
         titleText: qsTr("Choose location")
         onAccepted: {
             updateLocation(suggestionModel.get(selectedIndex).name,

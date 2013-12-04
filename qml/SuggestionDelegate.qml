@@ -12,49 +12,33 @@
  */
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
+import Sailfish.Silica 1.0
 
-Component {
+ListItem {
     id: suggestionDelegate
+    width: ListView.view.width
+    contentHeight: Theme.itemSizeMedium
 
-    Item {
-        id: delegateItem
-        property bool selected: index == selectedIndex;
-
-        height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
+    Label {
+        id: locName
+        elide: Text.ElideRight
+        color: Theme.primaryColor
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
+        anchors.right: locType.left
+        text: name + " " + housenumber
+        font.pixelSize: Theme.fontSizeMedium
+    }
+
+    Label {
+        id: locType
+        width: 100
+        elide: Text.ElideRight
+        color: Theme.secondaryColor
+        horizontalAlignment: Text.AlignRight
+        anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
-        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
-        anchors.rightMargin: UIConstants.DEFAULT_MARGIN
-
-        MouseArea {
-            id: delegateMouseArea
-            anchors.fill: parent;
-            onPressed: selectedIndex = index;
-            onClicked: accept();
-        }
-
-        Text {
-            id: locName
-            elide: Text.ElideRight
-            color: UIConstants.COLOR_INVERTED_FOREGROUND
-            anchors.verticalCenter: delegateItem.verticalCenter
-            anchors.left: parent.left
-            anchors.right: locType.left
-            text: name + " " + housenumber
-            font.pixelSize: UIConstants.FONT_LARGE * appWindow.scalingFactor
-        }
-        Text {
-            id: locType
-            width: 100
-            elide: Text.ElideRight
-            color: UIConstants.COLOR_INVERTED_SECONDARY_FOREGROUND
-            horizontalAlignment: Text.AlignRight
-            anchors.verticalCenter: delegateItem.verticalCenter
-            anchors.right: parent.right
-            text: city
-            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-        }
+        text: city
+        font.pixelSize: Theme.fontSizeSmall
     }
 }

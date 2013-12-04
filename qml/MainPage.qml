@@ -129,40 +129,9 @@ Page {
     }
 
     Component.onCompleted: {
-        Storage.initialize()
-
-        function acceptCallback() {
-            Storage.setSetting('gps', 'true')
-            appWindow.gpsEnabled = true
-            mainTools.enabled = true
-        }
-
-        function rejectCallback() {
-            Storage.setSetting('gps', 'false')
-            appWindow.gpsEnabled = false
-            mainTools.enabled = true
-        }
-
         var allowGps = Storage.getSetting("gps")
-        if(allowGps === "Unknown") {
-            var agreement = Qt.createComponent("Agreement.qml")
-            var agreementDialog = agreement.createObject(mainPage)
-            agreementDialog.accepted.connect(acceptCallback)
-            agreementDialog.rejected.connect(rejectCallback)
-//            mainTools.enabled = false
-// TODO:
-            agreementDialog.open()
-        }
-        else if(allowGps == "true") {
+        if(allowGps == "true") {
             appWindow.gpsEnabled = true
-        }
-
-        var apiValue = Storage.getSetting("api")
-        if(apiValue === "Unknown") {
-            Storage.setSetting("api", "helsinki")
-            var apiComponent = Qt.createComponent("ApiDialog.qml")
-            var apiDialog = apiComponent.createObject(mainPage)
-            apiDialog.open()
         }
 
         timeButton.updateTime()

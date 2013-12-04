@@ -73,10 +73,9 @@
         <file>images/stop.png</file>
         <file>images/position.png</file>
         <file>images/station.png</file>
-        <file alias="qml/Agreement.qml">qml/Agreement.qml</file>
-        <file alias="qml/ApiDialog.qml">qml/ApiDialog.qml</file>
         <file alias="qml/DateButton.qml">qml/DateButton.qml</file>
         <file alias="qml/TimeButton.qml">qml/TimeButton.qml</file>
         <file alias="qml/TimeTypeSwitch.qml">qml/TimeTypeSwitch.qml</file>
+        <file alias="qml/StartupDialog.qml">qml/StartupDialog.qml</file>
     </qresource>
 </RCC>

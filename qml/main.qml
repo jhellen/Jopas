@@ -19,7 +19,25 @@ ApplicationWindow {
     id: appWindow
 
     allowedOrientations: Orientation.All
-    initialPage: Component { MainPage {} }
+
+    Component.onCompleted: {
+        Storage.initialize()
+
+        var allowGps = Storage.getSetting("gps")
+        var apiValue = Storage.getSetting("api")
+        if (allowGps === "Unknown" || apiValue === "Unknown") {
+            var dialog = pageStack.push(Qt.resolvedUrl("StartupDialog.qml"))
+            dialog.onAccepted.connect(function() {
+                pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+            })
+            dialog.onRejected.connect(function() {
+                pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+            })
+        }
+        else {
+            pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+        }
+    }
 
     signal followModeEnabled
 

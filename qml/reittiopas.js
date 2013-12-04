@@ -141,18 +141,18 @@ function get_geocode(term, api_type) {
 /****************************************************************************************************/
 function get_reverse_geocode(latitude, longitude, api_type) {
     api_type = api_type || 'helsinki'
-    this.parameters = {}
-    this.parameters.format = "xml"
-    this.parameters.request = 'reverse_geocode'
-    this.parameters.coordinate = longitude + ',' + latitude
-    this.parameters.user = API[api_type].USER
-    this.parameters.pass = API[api_type].PASS
-    this.parameters.epsg_in = "wgs84"
-    this.parameters.epsg_out = "wgs84"
+    var parameters = {}
+    parameters.format = "xml"
+    parameters.request = 'reverse_geocode'
+    parameters.coordinate = longitude + ',' + latitude
+    parameters.user = API[api_type].USER
+    parameters.pass = API[api_type].PASS
+    parameters.epsg_in = "wgs84"
+    parameters.epsg_out = "wgs84"
 
     var query = []
-    for(var p in this.parameters) {
-        query.push(p + "=" + this.parameters[p])
+    for(var p in parameters) {
+        query.push(p + "=" + parameters[p])
     }
 
     //console.debug( API[api_type].URL + '?' + query.join('&'))

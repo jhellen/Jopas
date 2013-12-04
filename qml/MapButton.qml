@@ -16,8 +16,13 @@ import "UIConstants.js" as UIConstants
 import "theme.js" as Theme
 
 Rectangle {
+    id: button
+
     property int imageSize: 50
     property bool selected: false
+
+    signal clicked
+
     width: 50
     height: 50
     radius: 10
@@ -38,5 +43,6 @@ Rectangle {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+        onClicked: button.clicked()
     }
 }

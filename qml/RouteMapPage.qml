@@ -116,16 +116,6 @@ Page {
                 mapTypeSelection.open()
             }
         }
-        MapButton {
-            id: followMode
-            anchors.horizontalCenter: parent.horizontalCenter
-            source: "qrc:/images/current.png"
-            z: 500
-            selected: appWindow.followMode
-            mouseArea.onClicked: {
-                appWindow.followMode = appWindow.followMode? false : true
-            }
-        }
     }
 */
 

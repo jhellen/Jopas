@@ -55,4 +55,20 @@ Map {
         map.center.latitude = latitude
         map.center.longitude = longitude
     }
+
+    MapQuickItem {
+        width: 50 // width of MapButton
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+
+        sourceItem: Column {
+            width: parent.width
+
+            MapButton {
+                source: "qrc:/images/current.png"
+                selected: appWindow.followMode
+                onClicked: appWindow.followMode = !appWindow.followMode
+            }
+        }
+    }
 }

@@ -12,6 +12,7 @@
  */
 
 import QtQuick 2.1
+import Sailfish.Silica 1.0
 import QtPositioning 5.0
 import QtQuick.XmlListModel 2.0
 import "UIConstants.js" as UIConstants
@@ -367,7 +368,7 @@ Column {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 source: "qrc:/images/clear.png"
-                visible: ((textfield.activeFocus) && !busyIndicator.visible)
+                visible: ((textfield.activeFocus) && !busyIndicator.running)
                 MouseArea {
                     id: locationInputMouseArea
                     anchors.fill: parent
@@ -377,14 +378,13 @@ Column {
                 }
             }
 
-            MyBusyIndicator {
+            BusyIndicator {
                 id: busyIndicator
-                visible: suggestionModel.status == XmlListModel.Loading
-                running: true
+                running: suggestionModel.status == XmlListModel.Loading
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: 15
-
+                size: BusyIndicatorSize.Small
                 MouseArea {
                     id: spinnerMouseArea
                     anchors.fill: parent

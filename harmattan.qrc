@@ -55,7 +55,6 @@
         <file alias="qml/SettingsItem.qml">qml/SettingsItem.qml</file>
         <file alias="qml/MySelectionDialog.qml">qml/MySelectionDialog.qml</file>
         <file alias="qml/MyTextfield.qml">qml/MyTextfield.qml</file>
-        <file alias="qml/MyBusyIndicator.qml">qml/MyBusyIndicator.qml</file>
         <file alias="qml/SectionHeader.qml">qml/SectionHeader.qml</file>
         <file alias="qml/CyclingPage.qml">qml/CyclingPage.qml</file>
         <file>images/home-mark.png</file>

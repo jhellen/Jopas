@@ -229,7 +229,7 @@ Page {
 
     Text {
         anchors.centerIn: parent
-        visible: (!busyIndicator.visible && false)
+        visible: (!busyIndicator.running && false)
         width: parent.width
         text: qsTr("No results")
         anchors.horizontalCenter: parent.horizontalCenter
@@ -239,11 +239,10 @@ Page {
         color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 
-    MyBusyIndicator {
+    BusyIndicator {
         id: busyIndicator
-        visible: !(doneIndicator.done)
-        running: true
-        indicatorSize: "large"
+        running: !(doneIndicator.done)
+        size: BusyIndicatorSize.Large
         anchors.centerIn: parent
     }
 }

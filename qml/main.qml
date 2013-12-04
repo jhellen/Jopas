@@ -41,8 +41,6 @@ ApplicationWindow {
 
     signal followModeEnabled
 
-    property alias about : aboutLoader.item
-    property alias menu : menuLoader.item
     property alias banner : banner
     property variant scalingFactor : 1
     property bool positioningActive : (Qt.application.active && gpsEnabled)
@@ -51,7 +49,6 @@ ApplicationWindow {
     property bool showStationCode : true
     property string colorscheme : "default"
     property bool gpsEnabled : false
-    property string region
 
     onFollowModeChanged: {
         if(followMode)
@@ -70,15 +67,4 @@ ApplicationWindow {
         iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
     }
 */
-    Loader {
-        id: menuLoader
-        anchors.fill: parent
-//        sourceComponent: menuComponent
-    }
-    Loader {
-        id: aboutLoader
-        anchors.fill: parent
-//        sourceComponent: aboutComponent
-    }
-
 }

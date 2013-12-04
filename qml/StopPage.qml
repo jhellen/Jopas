@@ -100,24 +100,13 @@ Page {
         z: 200
         model: stopModel
         delegate: StopDelegate {}
-        interactive: !busyIndicator.visible
+        interactive: !busyIndicator.running
         highlightFollowsCurrentItem: true
         highlight: highlight_component
         currentIndex: -1
-        header: Header {
-            text: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
+        header: PageHeader {
+            title: leg_code ? qsTr("Stops for line ") + leg_code : qsTr("Walking route")
         }
-    }
-
-    Rectangle {
-        id: map_clipper
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        z: 100
-        width: parent.width + UIConstants.DEFAULT_MARGIN * 2
-        anchors.top: parent.top
-        anchors.bottom: map.top
-        anchors.topMargin: -UIConstants.DEFAULT_MARGIN
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Rectangle {
@@ -204,13 +193,11 @@ Page {
             name: "map"
             PropertyChanges { target: map; opacity: 1.0 }
             PropertyChanges { target: routeList; height: parent.height/2 }
-            PropertyChanges { target: map_clipper; height: parent.height/2 }
         },
         State {
             name: "normal"
             PropertyChanges { target: map; opacity: 0.0 }
             PropertyChanges { target: routeList; height: parent.height }
-            PropertyChanges { target: map_clipper; height: parent.height }
         }
     ]
     transitions: Transition {
@@ -220,9 +207,8 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        visible: !(stopModel.done)
-        running: true
-//        platformStyle: BusyIndicatorStyle { size: 'large' }
+        running: !stopModel.done
+        size: BusyIndicatorSize.Large
         anchors.centerIn: parent
     }
 }

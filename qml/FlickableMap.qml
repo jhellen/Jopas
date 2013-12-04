@@ -16,155 +16,49 @@
 import QtQuick 2.1
 import QtLocation 5.0
 
-// Flickable {
-//     id: mapFlickable
-//     property alias map: map
-//     property double defaultLatitude: 60.1687069096
-//     property double defaultLongitude: 24.9407379411
-//     property int  defaultZoomLevel: 16
-
-//     property double centeredContentX: map.size.width*0.75
-//     property double centeredContentY: map.size.height*0.75
-
-//     interactive: !appWindow.followMode
-
-//     contentWidth: map.size.width * 2
-//     contentHeight: map.size.height * 2
-//     flickableDirection: Flickable.HorizontalAndVerticalFlick
-//     boundsBehavior: Flickable.DragAndOvershootBounds
-//     flickDeceleration: 4000
+// TODO:
 //     maximumFlickVelocity: 1000
 //     pressDelay: 500
 
-//     onMovementEnded: {
-//         updateSizes()
-//         updateViewPort()
-//     }
+Map {
+    id: map
+    anchors.fill: parent
+    zoomLevel: 16
+    clip: true
+    gesture.enabled: !appWindow.followMode
+    gesture.flickDeceleration: 4000
 
-    Map {
-        id: map
-        anchors.fill: parent
-//        size.width: mapFlickable.width * 2
-//        size.height: mapFlickable.height * 2
-        zoomLevel: 16
-        clip: true
+    plugin: Plugin {
+        name: "nokia"
 
-        plugin: Plugin {
-            name: "nokia"
-
-            PluginParameter {
-                name: "app_id"
-                value: "ETjZnV1eZZ5o0JmN320V"
-            }
-
-            PluginParameter {
-                name: "token"
-                value: "QYpeZ4z7gwhQr7iW0hOTUQ%3D%3D"
-            }
+        PluginParameter {
+            name: "app_id"
+            value: "ETjZnV1eZZ5o0JmN320V"
         }
 
+        PluginParameter {
+            name: "token"
+            value: "QYpeZ4z7gwhQr7iW0hOTUQ%3D%3D"
+        }
+    }
+
+// TODO:
 //        mapType: Map.MobileStreetMap
 //        connectivityMode: Map.HybridMode
-        center {
-            latitude: 60.1687069096
-            longitude: 24.9407379411
-        }
-//        property alias scenter: tform.origin
-//        property alias getScale: tform.xScale
-        function setScale(v) {
-            tform.xScale = v
-            tform.yScale = v
-        }
-
-//        transform: Scale {
-//            id: tform
-//        }
-
-        Component.onCompleted: {
-            updateSizes()
-            updateViewPort()
-        }
-//    }
+    center {
+        latitude: 60.1687069096
+        longitude: 24.9407379411
+    }
 
     function panToCoordinate(coordinate) {
-        updateSizes()
-        updateViewPort()
+// TODO:
         center.latitude = coordinate.latitude
         center.longitude = coordinate.longitude
     }
 
     function panToLatLong(latitude,longitude) {
-        updateSizes()
-        updateViewPort()
+// TODO:
         map.center.latitude = latitude
         map.center.longitude = longitude
     }
-
-    function updateSizes()
-    {
-// // TODO:
-// //        centeredContentY = map.size.height*0.75
-// //        centeredContentX = map.size.width*0.75
-// //        map.pos.x = map.size.width/2
-// //        map.pos.y = map.size.height/2
-// //        map.transformOrigin = Item.Center
-// //        map.scenter.x = map.width/2.0
-// //        map.scenter.y = map.height/2.0
-    }
-
-    function updateViewPort() {
-// // TODO:
-// //        map.pan((contentX-centeredContentX)/map.getScale,(contentY-centeredContentY)/map.getScale)
-
-//         contentX = centeredContentX
-//         contentY = centeredContentY
-    }
-
-/*
-    PinchArea {
-        id: pincharea
-        anchors.fill: parent
-        property double initScale
-        property double p1toC_X
-        property double p1toC_Y
-        property double contentInitX
-        property double contentInitY
-        onPinchStarted: {
-            initScale = map.getScale
-            p1toC_X = (pinch.center.x-map.size.width)
-            p1toC_Y = (pinch.center.y-map.size.height)
-            contentInitX = mapFlickable.contentX
-            contentInitY = mapFlickable.contentY
-        }
-        onPinchFinished: {
-            mapFlickable.updateViewPort()
-        }
-        onPinchUpdated: {
-            var contentDriftX = ((1-pinch.scale)*p1toC_X)
-            var contentDriftY = ((1-pinch.scale)*p1toC_Y)
-            //pinch.center.(x|y) drifts from to content, term in parenthesis offsets this back
-            //startCenter does not drift.
-            var tCenterDriftX = (pinch.center.x-(mapFlickable.contentX-contentInitX) - pinch.startCenter.x)
-            var tCenterDriftY = (pinch.center.y-(mapFlickable.contentY-contentInitY) - pinch.startCenter.y)
-            //test all two!
-            mapFlickable.contentX = contentInitX-contentDriftX-tCenterDriftX
-            mapFlickable.contentY = contentInitY-contentDriftY-tCenterDriftY
-            if(initScale*pinch.scale <= 0.75 && map.zoomLevel > 2) {
-                map.zoomLevel -= 1
-                map.setScale(1.5)
-                initScale = map.getScale/pinch.scale
-            } else if(initScale*pinch.scale >= 1.5 && map.zoomLevel < 18) {
-                map.zoomLevel += 1
-                map.setScale(0.75)
-                initScale = map.getScale/pinch.scale
-            } else {
-                if(! ((map.zoomLevel == 18 && (initScale*pinch.scale) > 2.0)
-                      || (map.zoomLevel == 2 && (initScale*pinch.scale) < 0.85))) {
-                    map.setScale(initScale*pinch.scale)
-                }
-            }
-        }
-    }
-*/
-//}
 }

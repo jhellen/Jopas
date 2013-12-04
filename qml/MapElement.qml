@@ -294,7 +294,6 @@ Item {
         current_route.dump_route(route_coord)
 
         for (var index in route_coord) {
-//            var map_group = group.createObject(appWindow)
             var endpointdata = route_coord[index]
             var paths = []
 
@@ -310,8 +309,6 @@ Item {
                   flickable_map.end_point.coordinate.longitude = endpointdata.to.longitude
                   flickable_map.end_point.coordinate.latitude = endpointdata.to.latitude
             }
-
-//            map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[endpointdata.type]
 
             for(var shapeindex in endpointdata.shape) {
                 var shapedata = endpointdata.shape[shapeindex]

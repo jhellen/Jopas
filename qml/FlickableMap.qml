@@ -16,10 +16,6 @@
 import QtQuick 2.1
 import QtLocation 5.0
 
-// TODO:
-//     maximumFlickVelocity: 1000
-//     pressDelay: 500
-
 Map {
     id: map
     anchors.fill: parent
@@ -44,16 +40,14 @@ Map {
 
 // TODO:
 //        mapType: Map.MobileStreetMap
-//        connectivityMode: Map.HybridMode
+
     center {
         latitude: 60.1687069096
         longitude: 24.9407379411
     }
 
     function panToCoordinate(coordinate) {
-// TODO:
-        center.latitude = coordinate.latitude
-        center.longitude = coordinate.longitude
+        map.panToLatLong(coordinate.latitude, coordinate.longitude)
     }
 
     function panToLatLong(latitude,longitude) {

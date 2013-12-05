@@ -12,57 +12,49 @@
  */
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
-import "reittiopas.js" as Reittiopas
-import "theme.js" as Theme
+import Sailfish.Silica 1.0
 
 Component {
     id: routeDelegate
-    Item {
+
+    BackgroundItem {
         id: delegate_item
         width: parent.width
-        height: 110 * appWindow.scalingFactor
-        opacity: 0.0
+        height: Theme.itemSizeLarge
+
+        onClicked: {
+            pageStack.push(Qt.resolvedUrl("RoutePage.qml"), { route_index: index,
+                               header: search_parameters.from_name + " - " + search_parameters.to_name,
+                               duration: duration,
+                               walking: Math.floor(walk/100)/10
+                           })
+        }
 
         Component.onCompleted: ListItemAnimation { target: delegate_item }
-
-        Rectangle {
-            height: parent.height
-            width: appWindow.width
-            anchors.horizontalCenter: parent.horizontalCenter
-            color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-            z: -1
-            visible: mouseArea.pressed
-        }
 
         Column {
             anchors.verticalCenter: parent.verticalCenter
 
-            Text {
+            Label {
                 text: "(" + Qt.formatTime(start, "hh:mm") + ")"
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeSmall
             }
 
-            Text {
+            Label {
                 text: first_transport ? Qt.formatTime(first_transport, "hh:mm") : Qt.formatTime(start, "hh:mm")
                 width: 75
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
             }
 
-            Text {
+            Label {
                 text: duration + " min"
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeSmall
             }
         }
+
         Flow {
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -71,63 +63,48 @@ Component {
                 id: repeater
                 model: legs
                 Column {
-                    visible: repeater.count == 1? true : (type == "walk")? false : true
+                    visible: repeater.count == 1 ? true : (type == "walk") ? false : true
                     Image {
                         id: transportIcon
                         source: "qrc:/images/" + type + ".png"
                         smooth: true
-                        height: 50 * appWindow.scalingFactor
+                        height: 50
                         width: height
                     }
-                    Text {
-                        text: type == "walk"? Math.floor(length/100)/10 + ' km' : code
-                        visible: true
-                        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+
+                    Label {
+                        text: type == "walk" ? Math.floor(length/100)/10 + ' km' : code
+                        font.pixelSize: Theme.fontSizeSmall
+                        color: Theme.primaryColor
                         anchors.horizontalCenter: transportIcon.horizontalCenter
-                        lineHeightMode: Text.FixedHeight
-                        lineHeight: font.pixelSize * 1.2
                     }
                 }
             }
         }
+
         Column {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            Text {
+
+            Label {
                 text: "(" + Qt.formatTime(finish, "hh:mm") + ")"
                 anchors.right: parent.right
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeSmall
             }
-            Text {
+
+            Label {
                 text: last_transport ? Qt.formatTime(last_transport, "hh:mm") : Qt.formatTime(finish, "hh:mm")
                 anchors.right: parent.right
-                font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-                color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
+                font.pixelSize: Theme.fontSizeMedium
+                color: Theme.primaryColor
             }
-            Text {
+
+            Label {
                 text: qsTr("Walk ") + Math.floor(walk/100)/10 + ' km'
                 horizontalAlignment: Qt.AlignRight
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 1.2
-            }
-        }
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("RoutePage.qml"), { route_index: index,
-                                   header: search_parameters.from_name + " - " + search_parameters.to_name,
-                                   duration: duration,
-                                   walking: Math.floor(walk/100)/10
-                               })
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeSmall
             }
         }
     }

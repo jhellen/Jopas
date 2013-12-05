@@ -15,6 +15,7 @@
 
 import QtQuick 2.1
 import QtLocation 5.0
+import Sailfish.Silica 1.0
 
 Map {
     id: map
@@ -23,6 +24,20 @@ Map {
     clip: true
     gesture.enabled: !appWindow.followMode
     gesture.flickDeceleration: 4000
+
+    Rectangle {
+        anchors.fill: map
+        // TODO: bad color
+        color: "black"
+        opacity: mapTypeMenu.active ? 1.0 : 0.0
+        Behavior on opacity {
+            NumberAnimation { duration: 250 }
+        }
+        MouseArea {
+            anchors.fill: parent
+            enabled: mapTypeMenu.active
+        }
+    }
 
     plugin: Plugin {
         name: "nokia"
@@ -62,7 +77,31 @@ Map {
         anchors.verticalCenter: parent.verticalCenter
 
         sourceItem: Column {
+            id: col
             width: parent.width
+            spacing: 16
+
+            MapButton {
+                id: mapType
+                visible: map.supportedMapTypes.length > 1
+                source: "qrc:/images/maptype.png"
+                onClicked: {
+                    mapTypeMenu.show(map)
+                }
+
+                ContextMenu {
+                    id: mapTypeMenu
+
+                    Repeater {
+                        model: map.supportedMapTypes.length
+                        MenuItem {
+                            text: map.supportedMapTypes[modelData].description
+                            visible: map.supportedMapTypes[modelData].mobile
+                            onClicked: map.activeMapType = map.supportedMapTypes[modelData]
+                        }
+                    }
+                }
+            }
 
             MapButton {
                 source: "qrc:/images/current.png"

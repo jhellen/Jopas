@@ -77,48 +77,6 @@ Page {
         }
     }
 
-    ListModel {
-        id: mapTypeModel
-// TODO:
-//        ListElement { name: "Street"; value: Map.MobileStreetMap }
-//        ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
-//        ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
-//        ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
-//        ListElement { name: "Transit"; value: Map.MobileTransitMap }
-    }
-/*
-// TODO:
-    SelectionDialog {
-        id: mapTypeSelection
-        model: mapTypeModel
-        delegate: SelectionDialogDelegate {}
-        selectedIndex: 0
-        titleText: qsTr("Map type")
-        onAccepted: {
-            map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
-        }
-    }
-*/
-/*
-// TODO:
-    Column {
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        width: followMode.width + UIConstants.DEFAULT_MARGIN * 2
-        spacing: UIConstants.DEFAULT_MARGIN
-        z: 500
-        MapButton {
-            id: mapMode
-            anchors.horizontalCenter: parent.horizontalCenter
-            source: "qrc:/images/maptype.png"
-            z: 500
-            mouseArea.onClicked: {
-                mapTypeSelection.open()
-            }
-        }
-    }
-*/
-
     BusyIndicator {
         id: busyIndicator
         visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading

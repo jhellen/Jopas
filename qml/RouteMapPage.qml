@@ -17,72 +17,51 @@ import "reittiopas.js" as Reittiopas
 import "UIConstants.js" as UIConstants
 
 Page {
-//  TODO:
     backNavigation: false
-    showNavigationIndicator: false
-
     anchors.fill: parent
-    Button {
-        id: backButton
-        text: qsTr("<< Back")
-        anchors.top: parent.top
-        onClicked: pageStack.pop()
-    }
 
-    onStatusChanged: {
-        if(status == Component.Ready)
-            timer.start()
-    }
+    MapElement {
+        id: map
 
-    Timer {
-        id: timer
-        interval: 500
-        triggeredOnStart: false
-        repeat: false
-        onTriggered: map_loader.sourceComponent = map_component
-    }
-/*
-// TODO:
-    ToolBarLayout {
-        id: mapTools
-        ToolIcon { iconId: "toolbar-back"
-            onClicked: {
-                pageStack.pop();
-            }
+        anchors {
+            top: parent.top
+            left: parent.left
+            bottom: tools.top
+            right: parent.right
         }
-        ToolButtonRow {
-            ToolIcon { iconId: "toolbar-mediacontrol-previous"; enabled: !appWindow.followMode; onClicked: { map_loader.item.previous_station(); } }
-            ToolIcon { iconId: "toolbar-mediacontrol-next"; enabled: !appWindow.followMode; onClicked: { map_loader.item.next_station(); } }
-        }
-        ToolIcon { platformIconId: "toolbar-view-menu";
-             anchors.right: parent===undefined ? undefined : parent.right
-             onClicked: (menu.status == DialogStatus.Closed) ? menu.open() : menu.close()
-        }
-    }
-*/
-    Loader {
-        id: map_loader
-        anchors.fill: parent
-        onLoaded: {
-            map_loader.item.initialize()
-            map_loader.item.first_station()
+
+        Component.onCompleted: {
+            initialize()
+            first_station()
         }
     }
 
-    Component {
-        id: map_component
-        MapElement {
-            anchors.fill: parent
-            anchors.topMargin: backButton.height
-        }
-    }
+    Row {
+        id: tools
 
-    BusyIndicator {
-        id: busyIndicator
-        visible: !map_loader.sourceComponent || map_loader.status == Loader.Loading
-        running: true
-        size: BusyIndicatorSize.Large
-        anchors.centerIn: parent
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        height: back.height
+
+        IconButton {
+            id: back
+            icon.source: "image://theme/icon-m-back"
+            onClicked: pageStack.pop()
+        }
+
+        IconButton {
+            icon.source: "image://theme/icon-m-previous"
+            onClicked: map.previous_station()
+            enabled: !appWindow.followMode
+        }
+
+        IconButton {
+            icon.source: "image://theme/icon-m-next"
+            onClicked: map.next_station()
+            enabled: !appWindow.followMode
+        }
+
     }
 }
 

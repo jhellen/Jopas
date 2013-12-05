@@ -53,9 +53,6 @@ Map {
         }
     }
 
-// TODO:
-//        mapType: Map.MobileStreetMap
-
     center {
         latitude: 60.1687069096
         longitude: 24.9407379411
@@ -66,7 +63,6 @@ Map {
     }
 
     function panToLatLong(latitude,longitude) {
-// TODO:
         map.center.latitude = latitude
         map.center.longitude = longitude
     }

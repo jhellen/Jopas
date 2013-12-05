@@ -31,6 +31,7 @@ BackgroundItem {
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.secondaryColor
         anchors.verticalCenter: parent.verticalCenter
+        width: Theme.itemSizeMedium
     }
 
     Column {

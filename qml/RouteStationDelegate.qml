@@ -12,17 +12,12 @@
  */
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
+import Sailfish.Silica 1.0
 import "reittiopas.js" as Reittiopas
-import "theme.js" as Theme
-
 
 Item {
     id: stationDelegate
-    height: UIConstants.LIST_ITEM_HEIGHT_DEFAULT / 2 * appWindow.scalingFactor
-    opacity: 0.0
-
-    Component.onCompleted: ListItemAnimation { target: stationDelegate }
+    height: Theme.itemSizeSmall
 
     Column {
         id: time_column
@@ -30,14 +25,13 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: 100
 
-        Text {
+        Label {
             text: Qt.formatTime(time, "hh:mm")
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-            lineHeightMode: Text.FixedHeight
-            lineHeight: font.pixelSize * 1.2
+            font.pixelSize: Theme.fontSizeMedium
+            color: Theme.primaryColor
         }
     }
+
     Row {
         height: parent.height
         anchors.left: time_column.right
@@ -45,29 +39,21 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         layoutDirection: Qt.RightToLeft
 
-        spacing: UIConstants.DEFAULT_MARGIN / 2 * appWindow.scalingFactor
-        clip: true
-
-        Text {
+        Label {
             text: name
             horizontalAlignment: Qt.AlignRight
             anchors.verticalCenter: parent.verticalCenter
-            elide: Text.ElideRight
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-            lineHeightMode: Text.FixedHeight
-            lineHeight: font.pixelSize * 1.2
+            font.pixelSize: Theme.fontSizeMedium
+            color: Theme.primaryColor
         }
-        Text {
+
+        Label {
             id: station_code
             horizontalAlignment: Qt.AlignRight
             anchors.verticalCenter: parent.verticalCenter
-            text: shortCode? "(" + shortCode + ")" : ""
-            elide: Text.ElideRight
-            font.pixelSize: UIConstants.FONT_SMALL * appWindow.scalingFactor
-            color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-            lineHeightMode: Text.FixedHeight
-            lineHeight: font.pixelSize * 1.2
+            text: shortCode ? "(" + shortCode + ")" : ""
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.secondaryColor
         }
     }
 }

@@ -13,29 +13,26 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
-import "theme.js" as Theme
 
 Page {
     property int route_index
     property string from_name
     property string to_name
     property string header
-    property string subheader
+    property string duration
+    property string walking
 
-    onStatusChanged: {
-        if(status == Component.Ready && !routeModel.count) {
-            var route = Reittiopas.get_route_instance()
-            route.dump_legs(route_index, routeModel)
-            from_name = route.from_name
-            to_name = route.to_name
-        }
+    Component.onCompleted: {
+        var route = Reittiopas.get_route_instance()
+        route.dump_legs(route_index, routeModel)
+        from_name = route.from_name
+        to_name = route.to_name
     }
 
     ListModel {
         id: routeModel
-        property bool done : false
+        property bool done: false
     }
 
     Component {
@@ -52,9 +49,27 @@ Page {
         model: routeModel
         delegate: delegate
         interactive: !busyIndicator.visible
-        header: Header {
-            text: header
-            subtext: subheader
+        header: Column {
+            width: parent.width
+            PageHeader {
+                title: qsTr("%1 minutes").arg(duration)
+            }
+
+            Label {
+                width: parent.width
+                text: qsTr("Walking %1 km").arg(walking)
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
+                wrapMode: Text.WordWrap
+            }
+
+            Label {
+                width: parent.width
+                text: header
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
+                wrapMode: Text.WordWrap
+            }
         }
 
         ViewPlaceholder {

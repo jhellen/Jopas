@@ -4,7 +4,6 @@
         <file alias="qml/ExceptionDelegate.qml">qml/ExceptionDelegate.qml</file>
         <file alias="qml/favorites.js">qml/favorites.js</file>
         <file alias="qml/FavoritesDelegate.qml">qml/FavoritesDelegate.qml</file>
-        <file alias="qml/Header.qml">qml/Header.qml</file>
         <file alias="qml/helper.js">qml/helper.js</file>
         <file alias="qml/MapElement.qml">qml/MapElement.qml</file>
         <file alias="qml/MyButton.qml">qml/MyButton.qml</file>
@@ -50,6 +49,7 @@
         <file alias="qml/FlickableMap.qml">qml/FlickableMap.qml</file>
         <file alias="qml/ApplicationHeader.qml">qml/ApplicationHeader.qml</file>
         <file alias="qml/theme.js">qml/theme.js</file>
+        <file alias="qml/colors.js">qml/colors.js</file>
         <file alias="qml/RouteStationDelegate.qml">qml/RouteStationDelegate.qml</file>
         <file alias="qml/ListItemAnimation.qml">qml/ListItemAnimation.qml</file>
         <file alias="qml/SettingsItem.qml">qml/SettingsItem.qml</file>

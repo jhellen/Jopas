@@ -370,8 +370,8 @@ route_search.prototype.dump_legs = function(index, model) {
         station.time = legdata.locs[0].depTime
         station.code = ""
         station.shortCode = legdata.locs[0].shortCode
-        station.length = ""
-        station.duration = ""
+        station.length = 0
+        station.duration = 0
         station.leg_number = ""
         station.locs = []
         model.append(station)

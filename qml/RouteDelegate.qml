@@ -12,39 +12,27 @@
  */
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
+import Sailfish.Silica 1.0
 import "reittiopas.js" as Reittiopas
-import "theme.js" as Theme
+import "colors.js" as Colors
 
-
-Item {
+BackgroundItem {
     id: routeDelegate
-    height: type != "walk"? UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scalingFactor :
-                            UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
+    height: type != "walk" ? Theme.itemSizeMedium : Theme.itemSizeExtraSmall
     width: parent.width
-    opacity: 0.0
 
-    Component.onCompleted: ListItemAnimation { target: routeDelegate }
-
-    Rectangle {
-        height: parent.height
-        width: appWindow.width
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-        z: -1
-        visible: mouseArea.pressed
+    onClicked: {
+        pageStack.push(Qt.resolvedUrl("StopPage.qml"),{ leg_index: leg_number, leg_code: code })
     }
 
-    Text {
+    Label {
         id: length_text
-        width: 80 * appWindow.scalingFactor
-        text: type == "walk"? Math.floor(length/100)/10 + " km": duration + " min"
-        font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+        text: type == "walk"? Math.floor(length/100)/10 + " km" : duration + " min"
+        font.pixelSize: Theme.fontSizeSmall
+        color: Theme.secondaryColor
         anchors.verticalCenter: parent.verticalCenter
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
     }
+
     Column {
         id: rect
         anchors.left: length_text.right
@@ -54,20 +42,21 @@ Item {
             anchors.right: parent.right
             width: 15
             height: 5
-            color: Theme.theme['general'].TRANSPORT_COLORS[type]
+            color: Colors.colors[type]
         }
+
         Rectangle {
             anchors.right: parent.right
             width: 5
-            height: (routeDelegate.height +
-                     UIConstants.DEFAULT_MARGIN) * appWindow.scalingFactor
-            color: Theme.theme['general'].TRANSPORT_COLORS[type]
+            height: routeDelegate.height + Theme.paddingSmall
+            color: Colors.colors[type]
         }
+
         Rectangle {
             anchors.right: parent.right
             width: 15
             height: 5
-            color: Theme.theme['general'].TRANSPORT_COLORS[type]
+            color: Colors.colors[type]
         }
     }
 
@@ -75,32 +64,25 @@ Item {
         id: transportColumn
         anchors.left: rect.left
         anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: UIConstants.DEFAULT_MARGIN
+        anchors.leftMargin: Theme.paddingLarge
         width: 100
+
         Image {
             visible: type != "walk"
             anchors.horizontalCenter: parent.horizontalCenter
             source: "qrc:/images/" + type + ".png"
-            smooth: true
-            height: 50 * appWindow.scalingFactor
+            height: 50
             width: height
+            smooth: true
         }
-        Text {
+
+        Label {
             visible: type != "walk"
             text: code
-            font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.primaryColor
             anchors.horizontalCenter: parent.horizontalCenter
-            lineHeightMode: Text.FixedHeight
-            lineHeight: font.pixelSize * 1.2
         }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: routeDelegate
-        onClicked: {
-            pageStack.push(Qt.resolvedUrl("StopPage.qml"),{ leg_index: leg_number, leg_code: code })
-        }
-    }
 }

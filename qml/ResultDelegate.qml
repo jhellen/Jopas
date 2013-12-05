@@ -125,7 +125,8 @@ Component {
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("RoutePage.qml"), { route_index: index,
                                    header: search_parameters.from_name + " - " + search_parameters.to_name,
-                                   subheader: qsTr("total duration") + " " + duration + " min - " + qsTr("amount of walking") + " " + Math.floor(walk/100)/10 + ' km'
+                                   duration: duration,
+                                   walking: Math.floor(walk/100)/10
                                })
             }
         }

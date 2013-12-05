@@ -13,17 +13,17 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "storage.js" as Storage
-import "theme.js" as Theme
 
 Page {
-    property variant search_parameters : 0
+    property variant search_parameters
 
-    onStatusChanged: {
-        if(status == Component.Ready && !routeModel.count)
-            Reittiopas.new_route_instance(search_parameters, routeModel, Storage.getSetting('api'))
+    Component.onCompleted: startSearch()
+
+    function startSearch() {
+        routeModel.clear()
+        Reittiopas.new_route_instance(search_parameters, routeModel, Storage.getSetting('api'))
     }
 
     ListModel {
@@ -31,49 +31,29 @@ Page {
         property bool done : false
     }
 
-    Timer {
-        id: newSearchTimer
-        triggeredOnStart: false
-        interval: 500
-        onTriggered: {
-            routeModel.clear()
-            Reittiopas.new_route_instance(search_parameters, routeModel, Storage.getSetting('api'))
-        }
-    }
-
     Component {
         id: footer
-        Item {
-            height: 35
-            width: parent.width
+
+        ListItem {
+            height: Theme.itemSizeExtraSmall
             visible: !busyIndicator.running
+
+            onClicked: {
+                /* workaround to modify qml array is to make a copy of it,
+                   modify the copy and assign the copy back to the original */
+                var new_parameters = search_parameters
+                new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 15)
+                search_parameters = new_parameters
+
+                startSearch()
+            }
+
             Label {
-                anchors.top: parent.top
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("...")
-                lineHeightMode: Text.FixedHeight
-                lineHeight: font.pixelSize * 0.8
-                color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-            }
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                onClicked: {
-                    /* workaround to modify qml array is to make a copy of it,
-                       modify the copy and assign the copy back to the original */
-                    var new_parameters = search_parameters
-                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() + 15)
-                    search_parameters = new_parameters
-                    newSearchTimer.restart()
-                }
-            }
-            Rectangle {
-                height: parent.height
-                width: appWindow.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-                z: -1
-                visible: mouseArea.pressed
+                text: qsTr("Next")
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                anchors.verticalCenter: parent.verticalCenter
+                color: Theme.secondaryColor
             }
         }
     }
@@ -82,64 +62,54 @@ Page {
     SilicaListView {
         id: list
         anchors.fill: parent
-        anchors.margins: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
         model: routeModel
         footer: footer
         delegate: ResultDelegate {}
         interactive: !busyIndicator.running
         header: Column {
             width: parent.width
-            Header {
-                text: search_parameters.from_name + " - " + search_parameters.to_name
-                subtext: search_parameters.timetype == "departure"?
-                             qsTr("Departure time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm") :
-                             qsTr("Arrival time ") + Qt.formatDateTime(search_parameters.time,"dd.MM.yyyy hh:mm")
+            PageHeader {
+                title: search_parameters.timetype == "departure" ?
+                             qsTr("Departure ") + Qt.formatDateTime(search_parameters.time,"dd.MM hh:mm") :
+                             qsTr("Arrival ") + Qt.formatDateTime(search_parameters.time,"dd.MM hh:mm")
             }
-            Item {
-                height: 35
+
+            Label {
                 width: parent.width
+                text: search_parameters.from_name + " - " + search_parameters.to_name
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
+            }
+
+            ListItem {
+                height: Theme.itemSizeExtraSmall
                 visible: !busyIndicator.running
+
+                onClicked: {
+                    /* workaround to modify qml array is to make a copy of it,
+                       modify the copy and assign the copy back to the original */
+                    var new_parameters = search_parameters
+                    new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 15)
+                    search_parameters = new_parameters
+
+                    startSearch()
+                }
+
                 Label {
-                    anchors.top: parent.top
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("...")
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 0.8
-                    color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
-                }
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    onClicked: {
-                        /* workaround to modify qml array is to make a copy of it,
-                           modify the copy and assign the copy back to the original */
-                        var new_parameters = search_parameters
-                        new_parameters.time.setMinutes(new_parameters.time.getMinutes() - 15)
-                        search_parameters = new_parameters
-                        newSearchTimer.restart()
-                    }
-                }
-                Rectangle {
-                    height: parent.height
-                    width: appWindow.width
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
-                    z: -1
-                    visible: mouseArea.pressed
+                    text: qsTr("Previous")
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: Theme.secondaryColor
                 }
             }
         }
-    }
 
-    Text {
-        anchors.centerIn: parent
-        visible: (!busyIndicator.running && routeModel.count == 0)
-        width: parent.width
-        text: qsTr("No results")
-        horizontalAlignment: Qt.AlignHCenter
-        wrapMode: Text.WordWrap
-        font.pixelSize: UIConstants.FONT_XXXLARGE * appWindow.scalingFactor
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+        ViewPlaceholder {
+            anchors.centerIn: parent
+            visible: (!busyIndicator.running && routeModel.count == 0)
+            text: qsTr("No results")
+        }
     }
 
     BusyIndicator {

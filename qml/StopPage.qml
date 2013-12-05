@@ -23,8 +23,8 @@ Page {
     property string leg_code: ""
     property int leg_index: 0
     property alias position: position
-
-    state: (appWindow.mapVisible && appWindow.inPortrait)? "map" : "normal"
+    backNavigation: !appWindow.mapVisible ? true : appWindow.followMode ? true : false
+    state: appWindow.mapVisible ? "map" : "normal"
 
     onStateChanged: {
         if(state == "map") {
@@ -32,13 +32,12 @@ Page {
         }
     }
 
-    onStatusChanged: {
-        if(status == Component.Ready && !stopModel.count) {
-            var route = Reittiopas.get_route_instance()
-            route.dump_stops(leg_index, stopModel)
-            if(appWindow.mapVisible)
-                map_loader.sourceComponent = map_component
-        }
+    Component.onCompleted: {
+        var route = Reittiopas.get_route_instance()
+        route.dump_stops(leg_index, stopModel)
+
+        if(appWindow.mapVisible)
+            map_loader.sourceComponent = map_component
     }
 
 /*
@@ -109,59 +108,10 @@ Page {
         property alias map_loader : map_loader
         anchors.top: routeList.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        height: parent.height/2 + UIConstants.DEFAULT_MARGIN
-        width: parent.width + UIConstants.DEFAULT_MARGIN * 2
+        height: parent.height/2
+        width: parent.width
         color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND
-        ListModel {
-            id: mapTypeModel
-//            ListElement { name: "Street"; value: Map.MobileStreetMap }
-//            ListElement { name: "Satellite"; value: Map.SatelliteMapDay }
-//            ListElement { name: "Hybrid"; value: Map.MobileHybridMap }
-//            ListElement { name: "Terrain"; value: Map.MobileTerrainMap }
-//            ListElement { name: "Transit"; value: Map.MobileTransitMap }
-        }
-/*
-// TODO:
-        SelectionDialog {
-            id: mapTypeSelection
-            model: mapTypeModel
-            delegate: SelectionDialogDelegate {}
-            selectedIndex: 0
-            titleText: qsTr("Map type")
-            onAccepted: {
-                map_loader.item.flickable_map.map.mapType = mapTypeModel.get(selectedIndex).value
-            }
-        }
-*/
-        Column {
-            anchors.left: parent.left
-            anchors.leftMargin: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
-            anchors.verticalCenter: parent.verticalCenter
-            width: followMode.width + UIConstants.DEFAULT_MARGIN * 2
-            spacing: UIConstants.DEFAULT_MARGIN
-            z: 500
-/*
-            MapButton {
-                id: mapMode
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/images/maptype.png"
-                z: 500
-                mouseArea.onClicked: {
-                    mapTypeSelection.open()
-                }
-            }
-            MapButton {
-                id: followMode
-                anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/images/current.png"
-                z: 500
-                selected: appWindow.followMode
-                mouseArea.onClicked: {
-                    appWindow.followMode = appWindow.followMode? false : true
-                }
-            }
-*/
-        }
+
         Loader {
             id: map_loader
             anchors.fill: parent
@@ -174,15 +124,23 @@ Page {
             }
         }
     }
-/*
+
     Component {
         id: map_component
         MapElement {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.fill: parent
+            MapButton {
+                anchors.top: parent.top
+                anchors.right: parent.right
+                source: "image://theme/icon-m-close"
+                onClicked: {
+                    appWindow.mapVisible = false
+                }
+            }
         }
     }
-*/
+
     states: [
         State {
             name: "map"

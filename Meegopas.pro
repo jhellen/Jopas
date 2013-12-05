@@ -1,3 +1,5 @@
+TARGET = Meegopas
+
 # Additional import path used to resolve QML modules in Creator code model
 QML_IMPORT_PATH = qml
 
@@ -10,6 +12,8 @@ QT += qml quick dbus
 CONFIG += link_pkgconfig
 PKGCONFIG += qdeclarative5-boostable
 
+target.path = /usr/bin/
+
 # D-Bus service
 dbusservice.path = /usr/share/dbus-1/services
 dbusservice.files = com.juknousi.meegopas.service
@@ -17,7 +21,7 @@ icons.path = /usr/share/themes/jolla-ambient/meegotouch/icons/
 icons.files = MeegopasCycling80.png MeegopasRoute80.png Meegopas.png
 desktop.path = /usr/share/applications
 desktop.files = Meegopas.desktop
-INSTALLS += dbusservice icons desktop
+INSTALLS += dbusservice icons desktop target
 
 RESOURCES += \
     harmattan.qrc
@@ -44,14 +48,3 @@ OTHER_FILES += \
     com.juknousi.meegopas.service \
     com.juknousi.meegopas.xml \
     Meegopas.desktop
-
-
-
-
-
-
-
-
-
-
-

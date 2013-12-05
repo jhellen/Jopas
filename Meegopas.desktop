@@ -4,5 +4,5 @@ Version=1.0
 Type=Application
 Terminal=false
 Name=Meegopas
-Exec=/usr/bin/invoker --single-instance --type=d -s /opt/Meegopas/bin/Meegopas
-Icon=/usr/share/icons/hicolor/80x80/apps/Meegopas80.png
+Exec=/usr/bin/invoker -s --type=silica-qt5 /usr/bin/Meegopas
+Icon=/usr/share/themes/jolla-ambient/meegotouch/icons/Meegopas.png

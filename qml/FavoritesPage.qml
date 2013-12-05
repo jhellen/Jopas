@@ -16,13 +16,11 @@ import Sailfish.Silica 1.0
 import "UIConstants.js" as UIConstants
 import "reittiopas.js" as Reittiopas
 import "favorites.js" as Favorites
-import "theme.js" as Theme
 
 Page {
     id: favorites_page
 
     Component.onCompleted: {
-        favoritesModel.clear()
         Favorites.initialize()
         Favorites.getFavorites(favoritesModel)
     }
@@ -122,104 +120,126 @@ Page {
         }
     }
 */
-    SilicaFlickable {
-        anchors.fill: parent
-        contentHeight: content_column.height
 
-        Component.onCompleted: {
-            Favorites.initialize()
+    SilicaListView {
+        id: list
+        anchors.fill: parent
+        property Item contextMenu
+        model: favoritesModel
+        delegate: favoritesManageDelegate
+
+        header: PageHeader {
+            title: qsTr("Manage favorites")
         }
 
         PullDownMenu {
-            MenuItem { text: qsTr("Add favorite"); onClicked: add_dialog.open() }
+            MenuItem { text: qsTr("Add favorite"); onClicked: pageStack.push(Qt.resolvedUrl("AddFavoriteDialog.qml"), {favoritesModel: favoritesModel}) }
         }
 
-        Column {
-            id: content_column
+        ViewPlaceholder {
+            enabled: list.count == 0
+            text: qsTr("No saved favorites")
+        }
+
+        Component {
+            id: contextMenuComponent
+
+            ContextMenu {
+                id: menu
+                property Item currentItem
+                MenuItem {
+                    text: qsTr("Edit")
+                    onClicked: menu.currentItem.edit()
+                }
+
+                MenuItem {
+                    text: qsTr("Remove")
+                    onClicked: menu.currentItem.remove()
+                }
+            }
+        }
+    }
+
+    Component {
+        id: favoritesManageDelegate
+
+        BackgroundItem {
+            id: rootItem
             width: parent.width
-            spacing: UIConstants.DEFAULT_MARGIN * appWindow.scalingFactor
-            PageHeader {
-                title: qsTr("Manage favorites")
+            height: menuOpen ? Theme.itemSizeSmall + list.contextMenu.height : Theme.itemSizeSmall
+            property bool menuOpen: list.contextMenu != null && list.contextMenu.parent === rootItem
+            function edit() {
+                pageStack.push(Qt.resolvedUrl("EditFavoriteDialog.qml"), {favoritesModel: favoritesModel, name: modelData, old_name: modelData, coord: coord})
             }
 
-            Component {
-                id: favoritesManageDelegate
-                Item {
-                    width: parent.width
-                    height: UIConstants.LIST_ITEM_HEIGHT_SMALL * appWindow.scalingFactor
+            function remove() {
+                remorse.execute(rootItem, "Deleting", function() {
+                        Favorites.deleteFavorite(coord, favoritesModel)
+                        Shortcut.removeShortcut(modelData)
+                        Shortcut.removeCyclingShortcut(modelData)
+                })
 
-                    Text {
-                        text: modelData
-                        anchors.left: parent.left
-                        anchors.right: shortcut_button.left
-                        anchors.verticalCenter: parent.verticalCenter
-                        color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                        font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-                        elide: Text.ElideRight
-                        lineHeightMode: Text.FixedHeight
-                        lineHeight: font.pixelSize * 1.2
-                    }
-                    MyButton {
-                        id: shortcut_button
-                        property bool toggled : false
+            }
 
-                        Connections {
-                            target: shortcut_dialog
-                            onShortcutsChanged: shortcut_button.toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
-                        }
-
-                        imageSize: 40
-                        Component.onCompleted: {
-                            toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
-                        }
-                        anchors.right: edit_button.left
-                        source: toggled?
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-mark-inverse.png':'qrc:/images/home-mark.png' :
-                                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-unmark-inverse.png':'qrc:/images/home-unmark.png'
-                        mouseArea.onClicked: {
-                            shortcut_dialog.name = modelData
-                            shortcut_dialog.coord = coord
-                            shortcut_dialog.open()
-                        }
-                    }
-
-                    MyButton {
-                        id: edit_button
-                        source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-edit-white':'image://theme/icon-m-toolbar-edit'
-                        anchors.right: remove_button.left
-                        mouseArea.onClicked: {
-                            list.currentIndex = index
-                            edit_dialog.name = modelData
-                            edit_dialog.old_name = modelData
-                            edit_dialog.coord = coord
-                            edit_dialog.open()
-                        }
-                    }
-                    MyButton {
-                        id: remove_button
-                        source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-delete-white':'image://theme/icon-m-toolbar-delete'
-                        anchors.right: parent.right
-                        mouseArea.onClicked: {
-                            list.currentIndex = index
-                            delete_dialog.name = modelData
-                            delete_dialog.open()
-                        }
-                    }
+            onPressAndHold: {
+                if (!list.contextMenu) {
+                    list.contextMenu = contextMenuComponent.createObject(list)
                 }
+
+                list.contextMenu.currentItem = rootItem
+                list.contextMenu.show(rootItem)
             }
 
-            SilicaListView {
-                id: list
+            Label {
+                id: label
+                height: Theme.itemSizeSmall
+                text: modelData
+                anchors.left: parent.left
                 width: parent.width
-                height: favoritesModel.count * UIConstants.LIST_ITEM_HEIGHT_SMALL + UIConstants.DEFAULT_MARGIN * 3
-                model: favoritesModel
-                delegate: favoritesManageDelegate
+                color: Theme.primaryColor
+                verticalAlignment: Text.AlignVCenter
+            }
 
-                ViewPlaceholder {
-                    enabled: list.count == 0
-                    text: qsTr("No saved favorites")
+            RemorseItem { id: remorse }
+
+/*
+            MyButton {
+                id: shortcut_button
+                property bool toggled : false
+
+                Connections {
+                    target: shortcut_dialog
+                    onShortcutsChanged: shortcut_button.toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
+                }
+
+                imageSize: 40
+                Component.onCompleted: {
+                    toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
+                }
+                anchors.right: edit_button.left
+                source: toggled?
+                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-mark-inverse.png':'qrc:/images/home-mark.png' :
+                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-unmark-inverse.png':'qrc:/images/home-unmark.png'
+                mouseArea.onClicked: {
+                    shortcut_dialog.name = modelData
+                    shortcut_dialog.coord = coord
+                    shortcut_dialog.open()
                 }
             }
+
+            MyButton {
+                id: edit_button
+                source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-edit-white':'image://theme/icon-m-toolbar-edit'
+                anchors.right: remove_button.left
+                mouseArea.onClicked: {
+                    list.currentIndex = index
+                    edit_dialog.name = modelData
+                    edit_dialog.old_name = modelData
+                    edit_dialog.coord = coord
+                    edit_dialog.open()
+                }
+            }
+*/
         }
     }
 }

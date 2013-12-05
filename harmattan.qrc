@@ -4,7 +4,7 @@
         <file alias="qml/ExceptionDelegate.qml">qml/ExceptionDelegate.qml</file>
         <file alias="qml/favorites.js">qml/favorites.js</file>
         <file alias="qml/FavoritesDelegate.qml">qml/FavoritesDelegate.qml</file>
-        <file alias="qml/FavoriteDialog.qml">qml/FavoriteDialog.qml</file>
+        <file alias="qml/AddFavoriteDialog.qml">qml/AddFavoriteDialog.qml</file>
         <file alias="qml/helper.js">qml/helper.js</file>
         <file alias="qml/MapElement.qml">qml/MapElement.qml</file>
         <file alias="qml/MyButton.qml">qml/MyButton.qml</file>

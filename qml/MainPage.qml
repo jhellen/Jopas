@@ -229,6 +229,7 @@ Page {
 
         PullDownMenu {
             MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
+/*
             MenuItem {
                 enabled: endpointsValid
                 text: qsTr("Cycling")
@@ -238,7 +239,7 @@ Page {
                     pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
                 }
             }
-
+*/
             MenuItem {
                 enabled: endpointsValid
                 text: qsTr("Route search");

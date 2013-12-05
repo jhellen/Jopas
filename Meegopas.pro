@@ -13,9 +13,11 @@ PKGCONFIG += qdeclarative5-boostable
 # D-Bus service
 dbusservice.path = /usr/share/dbus-1/services
 dbusservice.files = com.juknousi.meegopas.service
-icons.path = /usr/share/icons/hicolor/80x80/apps/
-icons.files = MeegopasCycling80.png MeegopasRoute80.png
-INSTALLS += dbusservice icons
+icons.path = /usr/share/themes/jolla-ambient/meegotouch/icons/
+icons.files = MeegopasCycling80.png MeegopasRoute80.png Meegopas.png
+desktop.path = /usr/share/applications
+desktop.files = Meegopas.desktop
+INSTALLS += dbusservice icons desktop
 
 RESOURCES += \
     harmattan.qrc

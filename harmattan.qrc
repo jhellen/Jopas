@@ -51,7 +51,6 @@
         <file alias="qml/theme.js">qml/theme.js</file>
         <file alias="qml/colors.js">qml/colors.js</file>
         <file alias="qml/RouteStationDelegate.qml">qml/RouteStationDelegate.qml</file>
-        <file alias="qml/ListItemAnimation.qml">qml/ListItemAnimation.qml</file>
         <file alias="qml/SettingsItem.qml">qml/SettingsItem.qml</file>
         <file alias="qml/MySelectionDialog.qml">qml/MySelectionDialog.qml</file>
         <file alias="qml/MyTextfield.qml">qml/MyTextfield.qml</file>

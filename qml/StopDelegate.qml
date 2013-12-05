@@ -39,8 +39,6 @@ ListItem {
         }
     }
 
-    Component.onCompleted: ListItemAnimation { target: stop_item }
-
     onStateChanged: {
         if (state == "near")
             stop_item.near()

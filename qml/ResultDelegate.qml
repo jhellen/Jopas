@@ -30,8 +30,6 @@ Component {
                            })
         }
 
-        Component.onCompleted: ListItemAnimation { target: delegate_item }
-
         Column {
             anchors.verticalCenter: parent.verticalCenter
 

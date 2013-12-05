@@ -23,9 +23,6 @@ Component {
         id: delegate_item
         width: parent.width
         height: column.height + UIConstants.DEFAULT_MARGIN
-        opacity: 0.0
-
-        Component.onCompleted: ListItemAnimation { target: delegate_item }
 
         Column {
             id: column

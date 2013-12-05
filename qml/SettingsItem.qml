@@ -29,9 +29,6 @@ Item {
 
     height: UIConstants.LIST_ITEM_HEIGHT_LARGE * appWindow.scalingFactor
     width: parent.width
-    opacity: 0.0
-
-    Component.onCompleted: ListItemAnimation { target: settings_item }
 
     ListModel {
         id: settingModel

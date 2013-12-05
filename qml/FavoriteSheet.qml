@@ -56,7 +56,7 @@ Dialog {
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:/images/clear.png"
                     visible: (editTextField.activeFocus)
-                    opacity: 0.8
+
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {

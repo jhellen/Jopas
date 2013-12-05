@@ -221,31 +221,31 @@ Page {
         anchors.fill: parent
         contentHeight: content_column.height
 
-        PullDownMenu {
-            MenuItem { text: qsTr("About"); onClicked: pageStack.push(Qt.resolvedUrl("AboutDialog.qml")) }
-            MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
+        PushUpMenu {
             MenuItem { text: qsTr("Manage favorites"); onClicked: pageStack.push(Qt.resolvedUrl("FavoritesPage.qml")) }
             MenuItem { text: qsTr("Settings"); onClicked: { pageStack.push(Qt.resolvedUrl("SettingsPage.qml")) } }
+            MenuItem { text: qsTr("About"); onClicked: pageStack.push(Qt.resolvedUrl("AboutDialog.qml")) }
         }
 
-        PushUpMenu {
-            enabled: endpointsValid
-
+        PullDownMenu {
+            MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
             MenuItem {
-                text: qsTr("Route search");
-                onClicked: {
-                    var parameters = {}
-                    setRouteParameters(parameters)
-                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
-                }
-            }
-
-            MenuItem {
+                enabled: endpointsValid
                 text: qsTr("Cycling")
                 onClicked: {
                     var parameters = {}
                     setCyclingParameters(parameters)
                     pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
+                }
+            }
+
+            MenuItem {
+                enabled: endpointsValid
+                text: qsTr("Route search");
+                onClicked: {
+                    var parameters = {}
+                    setRouteParameters(parameters)
+                    pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
                 }
             }
         }

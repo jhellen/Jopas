@@ -1,4 +1,4 @@
-Name:       meegopas
+Name:       harbour-meegopas
 Summary:    Journey planner for Helsinki metropolitan area
 Version:    1.5.1
 Release:    1
@@ -28,16 +28,14 @@ make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/harbour-meegopas
 
 %qmake5_install
 
-desktop-file-install --delete-original                   \
-  --dir %{buildroot}%{_datadir}/applications             \
-   %{buildroot}%{_datadir}/applications/*.desktop
-
 %files
 %defattr(-,root,root,-)
-%{_bindir}/Meegopas
-%{_datadir}/applications/Meegopas.desktop
-%{_datadir}/themes/jolla-ambient/meegotouch/icons/*
+%{_bindir}/harbour-meegopas
+%{_datadir}/applications/harbour-meegopas.desktop
+%{_datadir}/icons/hicolor/86x86/apps/*
 %{_datadir}/dbus-1/services/*
+%{_datadir}/harbour-meegopas/*

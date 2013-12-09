@@ -28,10 +28,10 @@ ApplicationWindow {
         if (allowGps === "Unknown" || apiValue === "Unknown") {
             var dialog = pageStack.push(Qt.resolvedUrl("StartupDialog.qml"))
             dialog.onAccepted.connect(function() {
-                pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+                pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
             })
             dialog.onRejected.connect(function() {
-                pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+                pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
             })
         }
         else {

@@ -76,7 +76,7 @@ Page {
 
             Label {
                 width: parent.width
-                text: search_parameters.from_name + " - " + search_parameters.to_name
+                text: search_parameters.from_name + " - " + search_parameters.to_name + " "
                 color: Theme.highlightColor
                 horizontalAlignment: Text.AlignRight
                 wrapMode: Text.WordWrap

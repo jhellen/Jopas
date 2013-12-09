@@ -32,6 +32,8 @@ Component {
 
         Column {
             anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: Theme.paddingSmall
 
             Label {
                 text: "(" + Qt.formatTime(start, "hh:mm") + ")"
@@ -83,6 +85,8 @@ Component {
         Column {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: Theme.paddingSmall
+            anchors.leftMargin: Theme.paddingSmall
 
             Label {
                 text: "(" + Qt.formatTime(finish, "hh:mm") + ")"

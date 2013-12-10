@@ -14,6 +14,15 @@ BuildRequires:  desktop-file-utils
 Requires:  qt5-plugin-geoservices-nokia
 Requires:  sailfishsilica-qt5
 Requires:  mapplauncherd-booster-silica-qt5
+Requires:  qt5-qtdeclarative-import-xmllistmodel
+Requires:  qt5-qtdeclarative-import-positioning
+
+# >> macros
+%{!?qtc_qmake5:%define qtc_qmake5 qmake}
+%{!?qtc_qmake:%define qtc_qmake5 qmake}
+%{!?qtc_make:%define qtc_make make}
+%{?qtc_builddir:%define _builddir %qtc_builddir}
+# << macros
 
 %description
 Journey planner for Helsinki metropolitan area

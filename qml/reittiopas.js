@@ -16,8 +16,8 @@
 var API = {}
 API['helsinki'] = {}
 API['helsinki'].URL = 'http://api.reittiopas.fi/hsl/prod/'
-API['helsinki'].USER = 'junousia'
-API['helsinki'].PASS = 'p3ndolino'
+API['helsinki'].USER = 'JollaOpas'
+API['helsinki'].PASS = 'J_0P4s'
 
 API['tampere'] = {}
 API['tampere'].URL = 'http://api.publictransport.tampere.fi/prod/'

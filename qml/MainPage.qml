@@ -55,19 +55,7 @@ Page {
         }
     }
 
-    /* Connect dbus callback to function newRoute() */
-    Connections {
-// TODO: crash
-//        target: Route
-//        onNewRoute: newRoute(name, coord)
-    }
 
-    /* Connect dbus callback to function newCycling() */
-    Connections {
-// TODO: crash
-//        target: Route
-//        onNewCycling: newCycling(name, coord)
-    }
 
     function newRoute(name, coord) {
         /* clear all other pages from the stack */

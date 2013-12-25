@@ -31,7 +31,7 @@ Journey planner for Helsinki metropolitan area
 %setup -q
 
 %build
-%qmake5
+%qtc_qmake5
 
 make %{?jobs:-j%jobs}
 

@@ -14,6 +14,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QGuiApplication> app(MDeclarativeCache::qApplication(argc, argv));
     QScopedPointer<QQuickView> viewer(MDeclarativeCache::qQuickView());
 
+    viewer->setDefaultAlphaBuffer(true);
+
     QFont newFont;
     newFont.setFamily("Nokia Pure Text Light");
     newFont.setWeight(QFont::Light);

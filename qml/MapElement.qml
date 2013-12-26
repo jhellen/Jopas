@@ -11,8 +11,6 @@ Item {
     property bool positioningActive : true
     property alias flickable_map : flickable_map
 
-    signal newCycling(int length)
-
     function next_station() {
         flickable_map.panToCoordinate(Helper.next_station())
     }
@@ -316,64 +314,6 @@ Item {
                 }
             }
         }
-    }
-
-    function initialize_cycling() {
-        flickable_map.addMapItem(current_position)
-// TODO:
-        // Helper.clear_objects()
-
-        // var route_coord = []
-        // var current_route = Reittiopas.get_cycling_instance()
-
-        // var last_result = current_route.last_result
-
-        // map_element.newCycling(last_result.length)
-
-        // for(var index in last_result.path) {
-        //     var leg = last_result.path[index]
-        //     var map_group = group.createObject(appWindow)
-        //     map_group.route.border.color = Theme.theme['general'].TRANSPORT_COLORS[leg.type]
-
-        //     for(var pointindex in leg.points) {
-        //         var point = leg.points[pointindex]
-        //         if(point.y && point.x) {
-        //             var shape_coord = coord_component.createObject(appWindow)
-        //             shape_coord.latitude = point.y
-        //             shape_coord.longitude = point.x
-        //             map_group.route.addCoordinate(shape_coord)
-        //             Helper.add_station(shape_coord)
-
-        //             var endpoint_object
-        //             var stop_object
-        //             if(index == 0 && pointindex == 0) {
-        //                 endpoint_object = endpoint.createObject(appWindow)
-        //                 endpoint_object.coordinate = shape_coord
-        //                 endpoint_object.source = "qrc:/images/start.png"
-        //                 Helper.push_to_objects(endpoint_object)
-
-        //                 stop_object = stop.createObject(appWindow)
-        //                 stop_object.coordinate = shape_coord
-        //                 Helper.push_to_objects(stop_object)
-        //             } else if(index == last_result.path.length - 1 && pointindex == leg.points.length - 1) {
-        //                 endpoint_object = endpoint.createObject(appWindow)
-        //                 endpoint_object.coordinate = shape_coord
-        //                 endpoint_object.source = "qrc:/images/finish.png"
-        //                 Helper.push_to_objects(endpoint_object)
-
-        //                 stop_object = stop.createObject(appWindow)
-        //                 stop_object.coordinate = shape_coord
-        //                 Helper.push_to_objects(stop_object)
-        //             }
-        //         }
-        //     }
-
-        //     Helper.push_to_objects(map_group)
-        // }
-
-        // Helper.set_group_objects(root_group)
-        // flickable_map.map.addMapObject(root_group)
-        // first_station()
     }
 
     function add_station2(coord, name) {

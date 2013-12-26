@@ -20,11 +20,6 @@ Dialog {
                 Shortcut.toggleShortcut(edit_dialog.name, edit_dialog.coord)
             }
 
-            if(Shortcut.checkIfCyclingExists(edit_dialog.old_name)) {
-                Shortcut.removeCyclingShortcut(edit_dialog.old_name)
-                Shortcut.toggleCyclingShortcut(edit_dialog.name, edit_dialog.coord)
-            }
-
             favoritesModel.clear()
             Favorites.getFavorites(favoritesModel)
 

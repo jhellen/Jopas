@@ -63,29 +63,6 @@ Page {
                         }
                     }
                 }
-                Row {
-                    CheckBox {
-                        id: shortcut_cycling_checkbox
-                        Connections {
-                            target: shortcut_dialog
-                            onNameChanged: shortcut_cycling_checkbox.checked = Shortcut.checkIfCyclingExists(shortcut_dialog.name)
-                        }
-                        text: qsTr("Cycling")
-                        onClicked: {
-                            Shortcut.toggleCyclingShortcut(shortcut_dialog.name, shortcut_dialog.coord)
-                            shortcut_dialog.shortcutsChanged()
-                            if(checked) {
-                                appWindow.banner.success = true
-                                appWindow.banner.text = qsTr("Favorite added to application menu")
-                                appWindow.banner.show()
-                            } else {
-                                appWindow.banner.success = false
-                                appWindow.banner.text = qsTr("Favorite removed from application menu")
-                                appWindow.banner.show()
-                            }
-                        }
-                    }
-                }
             }
         buttons: Column {
             spacing: UIConstants.DEFAULT_MARGIN
@@ -163,7 +140,6 @@ Page {
                 remorse.execute(rootItem, "Deleting", function() {
                         Favorites.deleteFavorite(coord, favoritesModel)
                         Shortcut.removeShortcut(modelData)
-                        Shortcut.removeCyclingShortcut(modelData)
                 })
 
             }
@@ -196,12 +172,12 @@ Page {
 
                 Connections {
                     target: shortcut_dialog
-                    onShortcutsChanged: shortcut_button.toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
+                    onShortcutsChanged: shortcut_button.toggled = (Shortcut.checkIfExists(modelData))
                 }
 
                 imageSize: 40
                 Component.onCompleted: {
-                    toggled = (Shortcut.checkIfExists(modelData) || Shortcut.checkIfCyclingExists(modelData))
+                    toggled = (Shortcut.checkIfExists(modelData))
                 }
                 anchors.right: edit_button.left
                 source: toggled?

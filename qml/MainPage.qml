@@ -34,12 +34,6 @@ Page {
             pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
             state = "normal"
         }
-        if(state == "waiting_cycling" && endpointsValid) {
-            var parameters = {}
-            setCyclingParameters(parameters)
-            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-            state = "normal"
-        }
     }
 
 
@@ -78,31 +72,6 @@ Page {
         }
     }
 
-    function newCycling(name, coord) {
-        /* clear all other pages from the stack */
-        while(pageStack.depth > 1)
-            pageStack.pop(null, true)
-
-        /* bring application to front */
-        QmlApplicationViewer.showFullScreen()
-
-        to.updateLocation(name, 0, coord)
-
-        if(currentCoord != "") {
-            var parameters = {}
-            setCyclingParameters(parameters)
-            pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-        }
-        else if(appWindow.gpsEnabled == false) {
-            appWindow.banner.success = false
-            appWindow.banner.text = qsTr("Positioning service disabled from application settings")
-            appWindow.banner.show()
-        }
-        else {
-            state = "waiting_cycling"
-        }
-    }
-
     Component.onCompleted: {
         var allowGps = Storage.getSetting("gps")
         if(allowGps == "true") {
@@ -119,9 +88,6 @@ Page {
         },
         State {
             name: "waiting_route"
-        },
-        State {
-            name: "waiting_cycling"
         }
     ]
 
@@ -154,16 +120,6 @@ Page {
             parameters.transport_types.push("metro")
         if(Storage.getSetting("tram_disabled") != "true")
             parameters.transport_types.push("tram")
-    }
-
-    function setCyclingParameters(parameters) {
-        var optimize_cycling = Storage.getSetting("optimize_cycling")
-
-        parameters.from_name = fromName ? fromName : currentName
-        parameters.from = fromCoord ? fromCoord : currentCoord
-        parameters.to_name = toName
-        parameters.to = toCoord
-        parameters.profile = optimize_cycling == "Unknown"?"default":optimize_cycling
     }
 
     Rectangle {
@@ -204,17 +160,6 @@ Page {
 
         PullDownMenu {
             MenuItem { text: qsTr("Exception info"); onClicked: pageStack.push(Qt.resolvedUrl("ExceptionsPage.qml")) }
-/*
-            MenuItem {
-                enabled: endpointsValid
-                text: qsTr("Cycling")
-                onClicked: {
-                    var parameters = {}
-                    setCyclingParameters(parameters)
-                    pageStack.push(Qt.resolvedUrl("CyclingPage.qml"), { search_parameters: parameters })
-                }
-            }
-*/
             MenuItem {
                 enabled: endpointsValid
                 text: qsTr("Route search");

@@ -16,7 +16,6 @@ Page {
             optimize.set_value(Storage.getSetting("optimize"))
             walking_speed.set_value(Storage.getSetting("walking_speed"))
             change_margin.set_value(Storage.getSetting("change_margin"))
-            optimize_cycling.set_value(Storage.getSetting("optimize_cycling"))
             api.set_value(Storage.getSetting("api"))
 
             if(Storage.getSetting("train_disabled") == "true") {

@@ -1,16 +1,3 @@
-/*
- * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
- *
- * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * See full license at http://www.gnu.org/licenses/gpl-3.0.html
- */
-
 .pragma library
 
 var API = {}
@@ -21,8 +8,8 @@ API['helsinki'].PASS = 'J_0P4s'
 
 API['tampere'] = {}
 API['tampere'].URL = 'http://api.publictransport.tampere.fi/prod/'
-API['tampere'].USER = 'meegopas'
-API['tampere'].PASS = 'abc123'
+API['tampere'].USER = 'JollaOpas'
+API['tampere'].PASS = 'J_0P4s'
 
 var transType = {}
 transType[1] = "bus"

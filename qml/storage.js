@@ -1,16 +1,3 @@
-/*
- * This file is part of the Meegopas, more information at www.gitorious.org/meegopas
- *
- * Author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * See full license at http://www.gnu.org/licenses/gpl-3.0.html
- */
-
 // Adapted from:http://www.developer.nokia.com/Community/Wiki/How-to_create_a_persistent_settings_database_in_Qt_Quick_%28QML%29
 
 .import QtQuick.LocalStorage 2.0 as Sql
@@ -18,7 +5,7 @@
 //storage.js
 // First, let's create a short helper function to get the database connection
 function getDatabase() {
-     return Sql.LocalStorage.openDatabaseSync("Meegopas", "1.0", "StorageDatabase", 100000);
+     return Sql.LocalStorage.openDatabaseSync("Jopas", "1.0", "StorageDatabase", 100000);
 }
 
 // At the start of the application, we can initialize the tables we need if they haven't been created yet

@@ -1,10 +1,10 @@
-Name:       harbour-meegopas
-Summary:    Journey planner for Helsinki metropolitan area
-Version:    1.5.1
+Name:       harbour-jopas
+Summary:    Journey planner for Helsinki & Tampere area
+Version:    0.1
 Release:    1
 Group:      Applications
 License:    GPLv3
-URL:        https://github.com/foolab/Meegopas
+URL:        https://github.com/rasjani/Jopas
 Source0:    %{name}-%{version}.tar.bz2
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
@@ -24,7 +24,7 @@ Requires:  qt5-qtdeclarative-import-positioning
 # << macros
 
 %description
-Journey planner for Helsinki metropolitan area
+Journey planner for Helsinki & Tampere area
 
 %prep
 %setup -q
@@ -36,13 +36,13 @@ make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/harbour-meegopas
+mkdir -p %{buildroot}/usr/share/harbour-jopas
 
 %qmake5_install
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}/harbour-meegopas
-%{_datadir}/applications/harbour-meegopas.desktop
+%{_bindir}/harbour-jopas
+%{_datadir}/applications/harbour-jopas.desktop
 %{_datadir}/icons/hicolor/86x86/apps/*
-%{_datadir}/harbour-meegopas/*
+%{_datadir}/harbour-jopas/*

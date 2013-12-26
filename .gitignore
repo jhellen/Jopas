@@ -2,4 +2,4 @@
 *.pro.user
 Makefile
 .gitignore
-Jopas.spec
+harbour-jopas.spec

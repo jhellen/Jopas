@@ -8,9 +8,9 @@ PKGCONFIG     += qdeclarative5-boostable
 QML_IMPORT_PATH = qml
 
 OTHER_FILES += \
-  qml/* \
-  harbour-jopas.desktop \
-  rpm/Jopas.yaml
+    qml/* \
+    harbour-jopas.desktop \
+    rpm/harbour-jopas.yaml
 
 RESOURCES += \
     harmattan.qrc
@@ -26,4 +26,3 @@ icon.path = /usr/share/icons/hicolor/86x86/apps/
 icon.files = harbour-jopas.png
 desktop.path = /usr/share/applications
 desktop.files = harbour-jopas.desktop
-

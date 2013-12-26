@@ -76,19 +76,13 @@ Dialog {
                         Favorites.getFavorites(favoritesModel)
                         add_dialog.name = ''
 
-                        appWindow.banner.success = true
-                        appWindow.banner.text = qsTr("Location added to favorites")
-                        appWindow.banner.show()
+                        infoBanner.displayError(qsTr("Location added to favorites"))
                     } else {
-                        appWindow.banner.success = false
-                        appWindow.banner.text = qsTr("Location already in the favorites")
-                        appWindow.banner.show()
+                        infoBanner.displayError(qsTr("Location already in the favorites"))
                     }
                 }
                 else {
-                    appWindow.banner.success = false
-                    appWindow.banner.text = qsTr("Name cannot be empty")
-                    appWindow.banner.show()
+                    infoBanner.displayError(qsTr("Name cannot be empty"))
                 }
                 add_dialog.close()
             }

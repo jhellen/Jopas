@@ -188,9 +188,7 @@ Column {
                                    suggestionModel.get(0).housenumber,
                                    suggestionModel.get(0).coord)
                 } else if (suggestionModel.count == 0) {
-                    appWindow.banner.success = false
-                    appWindow.banner.text = qsTr("No results")
-                    appWindow.banner.show()
+                    infoBanner.displayError( qsTr("No results") )
                 } else {
                     /* just update the first result to main page */
                     locationDone(suggestionModel.get(0).name.split(',', 1).toString(),suggestionModel.get(0).coord)
@@ -200,9 +198,7 @@ Column {
                 suggestionModel.source = ""
                 locationDone("", 0, "")
                 locationError()
-                appWindow.banner.success = false
-                appWindow.banner.text = qsTr("Could not find location")
-                appWindow.banner.show()
+                infoBanner.displayError( qsTr("Could not find location") )
             }
         }
     }
@@ -251,9 +247,7 @@ Column {
                 }
                 else {
                     favoriteQuery.selectedIndex = -1
-                    appWindow.banner.success = false
-                    appWindow.banner.text = qsTr("Positioning service disabled from application settings")
-                    appWindow.banner.show()
+                    infoBanner.displayError( qsTr("Positioning service disabled from application settings") )
                 }
             } else {
                 updateLocation(favoritesModel.get(selectedIndex).modelData,
@@ -408,13 +402,9 @@ Column {
                         favoritesModel.clear()
                         Favorites.getFavorites(favoritesModel)
                         favoriteQuery.selectedIndex = favoritesModel.count
-                        appWindow.banner.success = true
-                        appWindow.banner.text = qsTr("Location added to favorites")
-                        appWindow.banner.show()
+                        infoBanner.displayError( qsTr("Location added to favorites") )
                     } else {
-                        appWindow.banner.success = false
-                        appWindow.banner.text = qsTr("Location already in the favorites")
-                        appWindow.banner.show()
+                        infoBanner.displayError(qsTr("Location already in the favorites"))
                     }
 
                 }

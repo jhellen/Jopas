@@ -52,13 +52,9 @@ Page {
                             Shortcut.toggleShortcut(shortcut_dialog.name, shortcut_dialog.coord)
                             shortcut_dialog.shortcutsChanged()
                             if(checked) {
-                                appWindow.banner.success = true
-                                appWindow.banner.text = qsTr("Favorite added to application menu")
-                                appWindow.banner.show()
+                                infoBanner.displayError(qsTr("Favorite added to application menu"))
                             } else {
-                                appWindow.banner.success = false
-                                appWindow.banner.text = qsTr("Favorite removed from application menu")
-                                appWindow.banner.show()
+                                infoBanner.displayError(qsTr("Favorite removed from application menu"))
                             }
                         }
                     }

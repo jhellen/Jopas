@@ -63,9 +63,7 @@ Page {
             pageStack.push(Qt.resolvedUrl("ResultPage.qml"), { search_parameters: parameters })
         }
         else if(appWindow.gpsEnabled == false) {
-            appWindow.banner.success = false
-            appWindow.banner.text = qsTr("Positioning service disabled from application settings")
-            appWindow.banner.show()
+            infoBanner.displayError( qsTr("Positioning service disabled from application settings") )
         }
         else {
             state = "waiting_route"

@@ -4,6 +4,11 @@ import "storage.js" as Storage
 
 ApplicationWindow {
     id: appWindow
+    // cover: Qt.resolvedUrl("CoverPage.qml")
+
+    InfoBanner {
+        id: infoBanner
+    }
 
     allowedOrientations: Orientation.All
 

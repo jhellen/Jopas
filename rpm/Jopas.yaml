@@ -1,0 +1,29 @@
+Name: Jopas
+Summary: Journey planner for Helsinki & Tampere area
+Version: 0.1
+Release: 1
+Group: Applications
+URL: http://example.org/
+License: "GPLv3\t"
+Sources:
+- '%{name}-%{version}.tar.bz2'
+Description: "Journey planner for Helsinki & Tampere area - based on Meegopas. "
+Configure: none
+Builder: qtc5
+PkgConfigBR:
+- Qt5Quick
+- Qt5Qml
+- Qt5Core
+- sailfishapp >= 0.0.10
+Requires:
+- sailfishsilica-qt5 >= 0.10.9
+Files:
+- '%{_bindir}'
+- '%{_datadir}/%{name}/qml'
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+- /usr/bin
+- /usr/share/%{name}
+- /usr/share/applications
+- /usr/share/icons/hicolor/86x86/apps
+PkgBR: []

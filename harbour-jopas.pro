@@ -10,7 +10,7 @@ QML_IMPORT_PATH = qml
 OTHER_FILES += \
   qml/* \
   harbour-jopas.desktop \
-  rpm/jopas.spec
+  rpm/Jopas.yaml
 
 RESOURCES += \
     harmattan.qrc

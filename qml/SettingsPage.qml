@@ -12,27 +12,19 @@ Page {
 
         Component.onCompleted: {
             Storage.initialize()
-            gps.set_value(Storage.getSetting("gps"))
-            optimize.set_value(Storage.getSetting("optimize"))
-            walking_speed.set_value(Storage.getSetting("walking_speed"))
-            change_margin.set_value(Storage.getSetting("change_margin"))
-            api.set_value(Storage.getSetting("api"))
-
-            if(Storage.getSetting("train_disabled") == "true") {
-                transports.set_value("train")
-            }
-            if(Storage.getSetting("bus_disabled") == "true") {
-                transports.set_value("bus")
-            }
-            if(Storage.getSetting("metro_disabled") == "true") {
-                transports.set_value("metro")
-            }
-            if(Storage.getSetting("tram_disabled") == "true") {
-                transports.set_value("tram")
-            }
+            currentApi.set_value(Storage.getSetting("api"))
+            gpsSwitch.set_value(Storage.getSetting("gps"))
+            tramSwitch.set_value(Storage.getSetting("tram_disabled"))
+            busSwitch.set_value(Storage.getSetting("bus_disabled"))
+            metroSwitch.set_value(Storage.getSetting("metro_disabled"))
+            trainSwitch.set_value(Storage.getSetting("train_disabled"))
+            optimizeRoute.set_value(Storage.getSetting("optimize"))
+            walkingSpeed.set_value(Storage.getSetting("walking_speed"))
+            changeMargin.set_value(Storage.getSetting("change_margin"))
         }
 
-        Column {
+        Grid {
+            columns: 1
             id: content_column
             spacing: UIConstants.DEFAULT_MARGIN
             width: parent.width
@@ -45,250 +37,211 @@ Page {
                 text: qsTr("Region")
             }
 
-            Column {
-                id: api
+            ComboBox {
+                id: currentApi
                 function set_value(value) {
-                    if(value == "helsinki")
-                        helsinki.checked = true
-                    else if(value == "tampere")
-                        tampere.checked = true
-                    else if(value == "Unknown") {
-                        helsinki.checked = true
-                        Storage.setSetting('api', 'helsinki')
+                    var val = {"helsinki": 0, "tampere": 1}[value]
+                    currentApi.currentIndex = 0
+                }
+
+                label: qsTr("Active Region")
+                menu: ContextMenu {
+                    MenuItem {
+                        text: "Helsinki"
+                        onClicked: Storage.setSetting('api',"helsinki")
                     }
-                }
-
-                anchors.right: parent.right
-                Button {
-                    id: helsinki
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Helsinki")
-                    onClicked: Storage.setSetting('api', 'helsinki')
-                }
-                Button {
-                    id: tampere
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Tampere")
-                    onClicked: Storage.setSetting('api', 'tampere')
-                }
-            }
-
-            Separator {}
-
-            Row {
-                id: gps
-                anchors.right: parent.right
-                spacing: UIConstants.DEFAULT_MARGIN
-
-                function set_value(value) {
-                    if(value == "true")
-                        gps_switch.checked = true
-                    else if(value == "false")
-                        gps_switch.checked = false
-                    else {
-                        console.log("unknown value for gps")
-                        gps_switch.checked = true
-                    }
-                }
-                Label {
-                    text: qsTr("Enable positioning service")
-                }
-
-                Switch {
-                    id: gps_switch
-                    onCheckedChanged: {
-                        Storage.setSetting('gps', gps_switch.checked.toString())
-                        if(gps_switch.checked == false)
-                            appWindow.gpsEnabled = false
-                        else
-                            appWindow.gpsEnabled = true
+                    MenuItem {
+                       text: "Tampere"
+                        onClicked: Storage.setSetting('api',"tampere")
                     }
                 }
             }
-
-            SectionHeader {
-                text: qsTr("Used transports")
-            }
-
-            Column {
-                id: transports
-//                exclusive: false
-                function set_value(value) {
-                    if(value == "bus")
-                        bus.checked = false
-                    else if(value == "train")
-                        train.checked = false
-                    else if(value == "metro")
-                        metro.checked = false
-                    else if(value == "tram")
-                        tram.checked = false
+            TextSwitch {
+                id: gpsSwitch
+                function updateDescription() {
+                    if (gpsSwitch.checked)
+                        gpsSwitch.description = "GPS is in use"
                     else
-                        console.log("unknown value")
+                        gpsSwitch.description = "GPS will not be used"
                 }
 
-                anchors.right: parent.right
-
-                Button {
-                    id: bus
-                    text: qsTr("Bus")
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-//                    checkable: true
-//                    checked: true
-                    onClicked: Storage.setSetting('bus_disabled', (!checked).toString())
-                }
-                Button {
-                    id: train
-                    text: qsTr("Train")
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-//                    checkable: true
-//                    checked: true
-                    onClicked: Storage.setSetting('train_disabled', (!checked).toString())
-                }
-                Button {
-                    id: metro
-                    text: qsTr("Metro")
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-//                    checkable: true
-//                    checked: true
-                    onClicked: Storage.setSetting('metro_disabled', (!checked).toString())
-                }
-                Button {
-                    id: tram
-                    text: qsTr("Tram")
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-//                    checkable: true
-//                    checked: true
-                    onClicked: {
-                        Storage.setSetting('tram_disabled', (!checked).toString())
-                    }
-                }
-            }
-
-            SectionHeader {
-                text: qsTr("Change margin") + " (min)"
-            }
-
-            Row {
-                anchors.right: parent.right
-                Text {
-                    text: "0"
-                    font.pixelSize: UIConstants.FONT_XLARGE
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                    anchors.verticalCenter: parent.verticalCenter
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.2
-                }
-                Slider {
-                    id: change_margin
-                    maximumValue: 10
-                    minimumValue: 0
-                    stepSize: 1
-//                    valueIndicatorVisible: true
-
-                    function set_value(value) {
-                        if(value != "Unknown")
-                            change_margin.value = value
-                        else
-                            change_margin.value = 3
-                    }
-                    onValueChanged: {
-                        Storage.setSetting("change_margin", change_margin.value)
-                    }
-                }
-                Text {
-                    text: "10"
-                    font.pixelSize: UIConstants.FONT_XLARGE
-                    color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-                    anchors.verticalCenter: parent.verticalCenter
-                    lineHeightMode: Text.FixedHeight
-                    lineHeight: font.pixelSize * 1.2
-                }
-            }
-
-            SectionHeader {
-                text: qsTr("Optimize route by")
-            }
-
-            Column {
-                id: optimize
                 function set_value(value) {
-                    if(value == "default")
-                        def.checked = true
-                    else if(value == "fastest")
-                        fastest.checked = true
-                    else if(value == "least_transfers")
-                        transfers.checked = true
-                    else if(value == "least_walking")
-                        lwalking.checked = true
+                    var val = (value === "true")
+                    gpsSwitch.checked = val
+                    gpsSwitch.updateDescription()
                 }
-
-                anchors.right: parent.right
-                Button {
-                    id: def
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Default")
-                    onClicked: Storage.setSetting('optimize', 'default')
-                }
-                Button {
-                    id: fastest
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Fastest")
-                    onClicked: Storage.setSetting('optimize', 'fastest')
-                }
-                Button {
-                    id: transfers
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Least transfers")
-                    onClicked: Storage.setSetting('optimize', 'least_transfers')
-                }
-                Button {
-                    id: lwalking
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Least walking")
-                    onClicked: Storage.setSetting('optimize', 'least_walking')
+                text: "Toggle GPS Usage"
+                description: ""
+                onCheckedChanged: {
+                    var val = (checked?"true":"false")
+                    appWindow.gpsEnabled = checked
+                    Storage.setSetting("gps", val)
+                    gpsSwitch.updateDescription()
                 }
             }
 
             SectionHeader {
-                text: qsTr("Walking speed")
+                text: qsTr("Route search parameters")
             }
-            Column {
-                id: walking_speed
-                function set_value(value) {
-                    if(value == "70")
-                        walking.checked = true
-                    else if(value == "100")
-                        fwalking.checked = true
-                    else if(value == "120")
-                        vfwalking.checked = true
-                    else if(value == "150")
-                        running.checked = true
+            TextSwitch {
+                id: busSwitch
+                function updateDescription() {
+                    if (busSwitch.checked)
+                        busSwitch.description = "Route results will contain Buses"
+                    else
+                        busSwitch.description = "Route results will not contain Buses"
                 }
 
-                anchors.right: parent.right
-                Button {
-                    id: walking
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Walking")
-                    onClicked: Storage.setSetting('walking_speed', '70')
+                function set_value(value) {
+                    var val = !(value === "true")
+                    busSwitch.checked = val
+                    busSwitch.updateDescription()
                 }
-                Button {
-                    id: fwalking
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Fast walking")
-                    onClicked: Storage.setSetting('walking_speed', '100')
+                text: "Bus"
+                description: ""
+                onCheckedChanged: {
+                    Storage.setSetting("bus_disabled", (!checked).toString())
+                    busSwitch.updateDescription()
                 }
-                Button {
-                    id: vfwalking
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Very fast walking")
-                    onClicked: Storage.setSetting('walking_speed', '120')
+            }
+            TextSwitch {
+                id: tramSwitch
+                function updateDescription() {
+                    if (tramSwitch.checked)
+                        tramSwitch.description = "Route results will contain Trams"
+                    else
+                        tramSwitch.description = "Route results will not contain Trams"
                 }
-                Button {
-                    id: running
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Running")
-                    onClicked: Storage.setSetting('walking_speed', '150')
+
+                function set_value(value) {
+                    var val = !(value === "true")
+                    tramSwitch.checked = val
+                    tramSwitch.updateDescription()
+                }
+                text: "Tram"
+                description: ""
+                onCheckedChanged: {
+                    Storage.setSetting("tram_disabled", (!checked).toString())
+                    tramSwitch.updateDescription()
+                }
+            }
+            TextSwitch {
+                id: metroSwitch
+                function updateDescription() {
+                    if (metroSwitch.checked)
+                        metroSwitch.description = "Route results will contain Metro"
+                    else
+                        metroSwitch.description = "Route results will not contain Metro"
+                }
+
+                function set_value(value) {
+                    var val = !(value === "true")
+                    metroSwitch.checked = val
+                    metroSwitch.updateDescription()
+                }
+                text: "Metro"
+                description: ""
+                onCheckedChanged: {
+                    Storage.setSetting("metro_disabled", (!checked).toString())
+                    metroSwitch.updateDescription()
+                }
+            }
+            TextSwitch {
+                id: trainSwitch
+                function updateDescription() {
+                    if (trainSwitch.checked)
+                        trainSwitch.description = "Route results will contain Trains"
+                    else
+                        trainSwitch.description = "Route results will not contain Trains"
+                }
+
+                function set_value(value) {
+                    var val = !(value === "true")
+                    trainSwitch.checked = val
+                    trainSwitch.updateDescription()
+                }
+                text: "Train"
+                description: ""
+                onCheckedChanged: {
+                    Storage.setSetting("train_disabled", (!checked).toString())
+                    trainSwitch.updateDescription()
+                }
+            }
+
+            Slider {
+                id: changeMargin
+                function set_value(value) {
+                    changeMargin.value = value
+                    changeMargin.updateLabel()
+                }
+                function updateLabel() {
+                    changeMargin.label = "Change Margin (" + changeMargin.value + " minutes)"
+                }
+                width: parent.width
+                minimumValue: 0
+                maximumValue: 10
+                value: 5
+                stepSize: 1
+                handleVisible: true
+                onValueChanged: {
+                    Storage.setSetting("change_margin", changeMargin.value)
+                    changeMargin.updateLabel()
+                }
+            }
+
+            ComboBox {
+                id: optimizeRoute
+                function set_value(value) {
+                    var idx = {"default": 0, "fastest": 1, "least_transfers": 2, "least_walking": 3}[value]
+                    optimizeRoute.currentIndex = idx
+                }
+
+                label: qsTr("Optimize Route by")
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Default")
+                        onClicked: Storage.setSetting('optimize','default')
+                    }
+                    MenuItem {
+                        text: qsTr("Fastest")
+                        onClicked: Storage.setSetting('optimize','fastest')
+                    }
+                    MenuItem {
+                        text: qsTr("Least Transfers")
+                        onClicked: Storage.setSetting('optimize','least_transfers')
+                    }
+                    MenuItem {
+                        text: qsTr("Least Walking")
+                        onClicked: Storage.setSetting('optimize','least_walking')
+                    }
+                }
+            }
+
+            ComboBox {
+                id: walkingSpeed
+                function set_value(value) {
+                    var idx = {"70": 0, "100": 1, "120": 2, "150": 3}[value]
+                    walkingSpeed.currentIndex = idx
+                }
+
+                label: qsTr("Walking speed")
+                menu: ContextMenu {
+                    MenuItem {
+                        text: qsTr("Walking")
+                        onClicked: Storage.setSetting('walking_speed','70')
+                    }
+                    MenuItem {
+                        text: qsTr("Fast Walking")
+                        onClicked: Storage.setSetting('walking_speed','100')
+                    }
+                    MenuItem {
+                        text: qsTr("Very Fast Walking")
+                        onClicked: Storage.setSetting('walking_speed','120')
+                    }
+                    MenuItem {
+                        text: qsTr("Running")
+                        onClicked: Storage.setSetting('walking_speed','150')
+                    }
                 }
             }
         }

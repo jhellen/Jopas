@@ -292,50 +292,6 @@ Page {
                     onClicked: Storage.setSetting('walking_speed', '150')
                 }
             }
-
-            SectionHeader {
-                text: qsTr("Optimize cycling route by")
-            }
-
-            Column {
-                id: optimize_cycling
-                function set_value(value) {
-                    if(value == "kleroweighted")
-                        cyclingDefault.checked = true
-                    else if(value == "klerotarmac")
-                        cyclingTarmac.checked = true
-                    else if(value == "klerosand")
-                        cyclingGravel.checked = true
-                    else if(value == "kleroshortest")
-                        cyclingShortest.checked = true
-                }
-
-                anchors.right: parent.right
-                Button {
-                    id: cyclingDefault
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Default")
-                    onClicked: Storage.setSetting('optimize_cycling', 'kleroweighted')
-                }
-                Button {
-                    id: cyclingTarmac
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Tarmac")
-                    onClicked: Storage.setSetting('optimize_cycling', 'klerotarmac')
-                }
-                Button {
-                    id: cyclingGravel
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Gravel")
-                    onClicked: Storage.setSetting('optimize_cycling', 'klerosand')
-                }
-                Button {
-                    id: cyclingShortest
-//                    font.pixelSize: UIConstants.FONT_LSMALL * appWindow.scalingFactor
-                    text: qsTr("Shortest")
-                    onClicked: Storage.setSetting('optimize_cycling', 'kleroshortest')
-                }
-            }
         }
     }
 }

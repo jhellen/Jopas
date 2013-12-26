@@ -16,71 +16,6 @@ Page {
         id: favoritesModel
     }
 
-/*
-    Dialog {
-// TODO:
-        id: shortcut_dialog
-        property string name
-        property string coord
-        signal shortcutsChanged()
-
-        title: Text {
-            text: qsTr("Add to application menu?")
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Qt.AlignCenter
-            elide: Text.ElideNone
-            font.pixelSize: UIConstants.FONT_XLARGE * appWindow.scalingFactor
-            font.bold: true
-            font.family: UIConstants.FONT_FAMILY
-            color: Theme.theme[appWindow.colorscheme].COLOR_FOREGROUND
-        }
-
-        content:
-            Column {
-                spacing: UIConstants.DEFAULT_MARGIN
-                Spacing {}
-                Row {
-                    CheckBox {
-                        id: shortcut_route_checkbox
-                        Connections {
-                            target: shortcut_dialog
-                            onNameChanged: shortcut_route_checkbox.checked = Shortcut.checkIfExists(shortcut_dialog.name)
-                        }
-
-                        text: qsTr("Route search")
-                        onClicked: {
-                            Shortcut.toggleShortcut(shortcut_dialog.name, shortcut_dialog.coord)
-                            shortcut_dialog.shortcutsChanged()
-                            if(checked) {
-                                infoBanner.displayError(qsTr("Favorite added to application menu"))
-                            } else {
-                                infoBanner.displayError(qsTr("Favorite removed from application menu"))
-                            }
-                        }
-                    }
-                }
-            }
-        buttons: Column {
-            spacing: UIConstants.DEFAULT_MARGIN
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: button_save.width
-
-            Spacing {}
-
-            Button {
-                id: shortcut_close
-                text: qsTr("Close")
-                font.pixelSize: UIConstants.FONT_DEFAULT  * appWindow.scalingFactor
-                width: UIConstants.BUTTON_WIDTH * appWindow.scalingFactor
-                height: UIConstants.BUTTON_HEIGHT * appWindow.scalingFactor
-                onClicked: {
-                    shortcut_dialog.close()
-                }
-            }
-        }
-    }
-*/
-
     SilicaListView {
         id: list
         anchors.fill: parent
@@ -135,7 +70,6 @@ Page {
             function remove() {
                 remorse.execute(rootItem, "Deleting", function() {
                         Favorites.deleteFavorite(coord, favoritesModel)
-                        Shortcut.removeShortcut(modelData)
                 })
 
             }
@@ -160,45 +94,6 @@ Page {
             }
 
             RemorseItem { id: remorse }
-
-/*
-            MyButton {
-                id: shortcut_button
-                property bool toggled : false
-
-                Connections {
-                    target: shortcut_dialog
-                    onShortcutsChanged: shortcut_button.toggled = (Shortcut.checkIfExists(modelData))
-                }
-
-                imageSize: 40
-                Component.onCompleted: {
-                    toggled = (Shortcut.checkIfExists(modelData))
-                }
-                anchors.right: edit_button.left
-                source: toggled?
-                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-mark-inverse.png':'qrc:/images/home-mark.png' :
-                    Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/home-unmark-inverse.png':'qrc:/images/home-unmark.png'
-                mouseArea.onClicked: {
-                    shortcut_dialog.name = modelData
-                    shortcut_dialog.coord = coord
-                    shortcut_dialog.open()
-                }
-            }
-
-            MyButton {
-                id: edit_button
-                source: Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'image://theme/icon-m-toolbar-edit-white':'image://theme/icon-m-toolbar-edit'
-                anchors.right: remove_button.left
-                mouseArea.onClicked: {
-                    list.currentIndex = index
-                    edit_dialog.name = modelData
-                    edit_dialog.old_name = modelData
-                    edit_dialog.coord = coord
-                    edit_dialog.open()
-                }
-            }
-*/
         }
     }
 }

@@ -13,16 +13,8 @@ Dialog {
 
     onAccepted: {
         if("OK" == Favorites.updateFavorite(edit_dialog.name, edit_dialog.coord, favoritesModel)) {
-
-            /* update shortcuts, if exists */
-            if(Shortcut.checkIfExists(edit_dialog.old_name)) {
-                Shortcut.removeShortcut(edit_dialog.old_name)
-                Shortcut.toggleShortcut(edit_dialog.name, edit_dialog.coord)
-            }
-
             favoritesModel.clear()
             Favorites.getFavorites(favoritesModel)
-
         }
     }
 

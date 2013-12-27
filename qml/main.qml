@@ -4,7 +4,13 @@ import "storage.js" as Storage
 
 ApplicationWindow {
     id: appWindow
-    // cover: Qt.resolvedUrl("CoverPage.qml")
+    cover: CoverBackground {
+        CoverPlaceholder {
+            text: "Jopas"
+            // icon.source: "Jopas.png"
+        }
+    }
+
 
     InfoBanner {
         id: infoBanner

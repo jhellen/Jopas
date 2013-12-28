@@ -3,3 +3,4 @@
 Makefile
 .gitignore
 harbour-jopas.spec
+AboutDialog.qml

@@ -10,11 +10,13 @@ Sources:
 Description: "Journey planner for Helsinki & Tampere area - based on Meegopas. "
 Configure: none
 Builder: qtc5
+QMakeOptions:
+- VERSION=%{version}
 PkgConfigBR:
-- Qt5Quick
-- Qt5Qml
-- Qt5Core
 - sailfishapp >= 0.0.10
+- Qt5Core
+- Qt5Qml
+- Qt5Quick
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
 Files:

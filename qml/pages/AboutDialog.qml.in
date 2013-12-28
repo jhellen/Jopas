@@ -45,7 +45,7 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             font.bold: true
-            text: "Jopas v0.1"
+            text: "Jopas v@VERSION@ (@GIT_SHA@)"
         }
 
         Spacing {}

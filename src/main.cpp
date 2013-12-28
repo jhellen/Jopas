@@ -11,6 +11,8 @@
 * Other contributors:
 *   Jonni Rainisto <jonni.rainisto@gmail.com>
 *   Mohammed Samee <msameer@foolab.org>r
+*   Clovis Scotti <scotti@ieee.org>
+*   Benoit HERVIER <khertan@khertan.net>
 *
 * All assets contained within this project are copyrighted by their
 * respectful authors.
@@ -24,10 +26,7 @@
 *
 **********************************************************************/
 
-#ifdef QT_QML_DEBUG
 #include <QtQuick>
-#endif
-
 #include <sailfishapp.h>
 
 int main(int argc, char *argv[])

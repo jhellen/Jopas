@@ -15,7 +15,7 @@ Name:       harbour-jopas
 Summary:    Journey planner for Helsinki and Tampere area
 Version:    0.1.0
 Release:    1
-Group:      Applications
+Group:      Qt/Qt
 License:    GPLv3
 URL:        http://rasjani.github.io/Jopas/
 Source0:    %{name}-%{version}.tar.bz2

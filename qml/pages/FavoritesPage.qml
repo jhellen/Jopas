@@ -31,6 +31,7 @@ import Sailfish.Silica 1.0
 import "../js/UIConstants.js" as UIConstants
 import "../js/reittiopas.js" as Reittiopas
 import "../js/favorites.js" as Favorites
+import "../components"
 
 Page {
     id: favorites_page

@@ -29,6 +29,7 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import "../js/favorites.js" as Favorites
+import "../components"
 
 Dialog {
     id: edit_dialog

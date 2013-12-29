@@ -31,6 +31,7 @@ import Sailfish.Silica 1.0
 import "../js/UIConstants.js" as UIConstants
 import "../js/storage.js" as Storage
 import "../js/theme.js" as Theme
+import "../components"
 
 Page {
     SilicaFlickable {

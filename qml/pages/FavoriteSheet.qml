@@ -32,6 +32,7 @@ import "../js/UIConstants.js" as UIConstants
 import "../js/reittiopas.js" as Reittiopas
 import "../js/favorites.js" as Favorites
 import "../js/theme.js" as Theme
+import "../components"
 
 Dialog {
     id: add_dialog

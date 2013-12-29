@@ -4,3 +4,5 @@ Makefile
 .gitignore
 harbour-jopas.spec
 AboutDialog.qml
+rpm/harbour-jopas.yaml
+rpm/harbour-jopas.spec

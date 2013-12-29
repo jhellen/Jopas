@@ -203,12 +203,6 @@ Page {
     //         spacing: appWindow.inPortrait? UIConstants.DEFAULT_MARGIN : UIConstants.DEFAULT_MARGIN / 2
             width: parent.width
 
-            PageHeader {
-                title: qsTr("Jopas")
-            }
-
-            Spacing { height: appWindow.inPortrait? 20 : 0 }
-
             Item {
                 width: parent.width
                 height: from.height + to.height + UIConstants.DEFAULT_MARGIN

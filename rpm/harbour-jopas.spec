@@ -40,7 +40,8 @@ Journey planner for Helsinki & Tampere area - based on Meegopas.
 # >> build pre
 # << build pre
 
-%qtc_qmake5 
+%qtc_qmake5  \
+    VERSION=%{version}
 
 %qtc_make %{?_smp_mflags}
 

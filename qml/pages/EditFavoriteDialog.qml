@@ -84,7 +84,7 @@ Dialog {
             }
 
             Keys.onReturnPressed: {
-                editTextField.platformCloseSoftwareInputPanel()
+                editTextField.focus = false
                 parent.focus = true
             }
         }

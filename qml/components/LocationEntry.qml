@@ -334,7 +334,7 @@ Column {
             onClicked: {
                 if(suggestionModel.count > 1) {
                     query.open()
-                    textfield.platformCloseSoftwareInputPanel()
+                    textfield.focus = false
                 }
             }
         }
@@ -405,7 +405,7 @@ Column {
                 }
             }
             Keys.onReturnPressed: {
-                textfield.platformCloseSoftwareInputPanel()
+                textfield.focus = false
                 parent.focus = true
             }
         }

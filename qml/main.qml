@@ -83,13 +83,4 @@ ApplicationWindow {
     Label {
         id: banner
     }
-/*
-// TODO:
-    InfoBanner {
-        id: banner
-        property bool success : false
-        y: 40
-        iconSource: success ? 'qrc:/images/banner_green.png':'qrc:/images/banner_red.png'
-    }
-*/
 }

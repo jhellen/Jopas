@@ -10,7 +10,7 @@
 * Original author: Jukka Nousiainen <nousiaisenjukka@gmail.com>
 * Other contributors:
 *   Jonni Rainisto <jonni.rainisto@gmail.com>
-*   Mohammed Samee <msameer@foolab.org>r
+*   Mohammed Sameer <msameer@foolab.org>r
 *   Clovis Scotti <scotti@ieee.org>
 *   Benoit HERVIER <khertan@khertan.net>
 *
@@ -57,7 +57,15 @@ Dialog {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
-            text: "(c) Jukka Nousiainen 2011-2012\n\n" + qsTr("This application is free sofware licenced under the GNU Public License version 3") //  TODO: Fix copyright notices
+            text: "(c) Jani Mikkonen <jani.mikkonen@gmail.com>\n2013 - 2014\n" +
+                  qsTr("Original Author:") + "\nJukka Nousiainen.\n\n" +
+                  qsTr("Additional Credits:") + "\n" +
+                  "Mohammed Sameer\n" +
+                  "Clovis Scotti\n" +
+                  "Benoit HERVIER\n" +
+                  "Morpok\n\n" +
+                  qsTr("This application is free sofware licenced under the GNU Public License v3\n")  +
+                  qsTr("Some  parts of the code release under MIT License")
         }
     }
 }

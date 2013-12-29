@@ -14,6 +14,7 @@ OTHER_FILES += \
     qml/js/*.js \
     qml/pages/*.qml \
     qml/components/*.qml \
+    qml/pages/AboutDialog.qml.in \
     qml/main.qml \
     harbour-jopas.desktop \
     rpm/harbour-jopas.yaml \

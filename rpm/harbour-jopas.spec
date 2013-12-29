@@ -68,3 +68,8 @@ desktop-file-install --delete-original       \
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
 # >> files
 # << files
+
+%changelog
+* Sun Dec 29 2013 Jani Mikkonen <jani.mikkonen@gmail.com> 0.1.0-1
+- Initial release, see gitlog for changes
+

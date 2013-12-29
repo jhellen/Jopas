@@ -28,8 +28,8 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "reittiopas.js" as Reittiopas
-import "colors.js" as Colors
+import "../js/reittiopas.js" as Reittiopas
+import "../js/colors.js" as Colors
 
 BackgroundItem {
     id: routeDelegate
@@ -37,7 +37,7 @@ BackgroundItem {
     width: parent.width
 
     onClicked: {
-        pageStack.push(Qt.resolvedUrl("StopPage.qml"),{ leg_index: leg_number, leg_code: code })
+        pageStack.push(Qt.resolvedUrl("pages/StopPage.qml"),{ leg_index: leg_number, leg_code: code })
     }
 
     Label {

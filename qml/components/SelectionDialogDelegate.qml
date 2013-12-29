@@ -27,8 +27,8 @@
 **********************************************************************/
 
 import QtQuick 2.1
-import "UIConstants.js" as UI
-import "translations.js" as Translations
+import "../js/UIConstants.js" as UI
+import "../js/translations.js" as Translations
 Component {
     id: defaultDelegate
 

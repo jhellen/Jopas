@@ -30,11 +30,11 @@ import QtQuick 2.1
 import Sailfish.Silica 1.0
 import QtPositioning 5.0
 import QtQuick.XmlListModel 2.0
-import "UIConstants.js" as UIConstants
-import "reittiopas.js" as Reittiopas
-import "storage.js" as Storage
-import "favorites.js" as Favorites
-import "theme.js" as Theme
+import "../js/UIConstants.js" as UIConstants
+import "../js/reittiopas.js" as Reittiopas
+import "../js/storage.js" as Storage
+import "../js/favorites.js" as Favorites
+import "../js/theme.js" as Theme
 
 Column {
     property alias type : label.text

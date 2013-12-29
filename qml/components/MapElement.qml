@@ -29,10 +29,10 @@
 import QtQuick 2.1
 import QtLocation 5.0
 import QtPositioning 5.0
-import "reittiopas.js" as Reittiopas
-import "UIConstants.js" as UIConstants
-import "helper.js" as Helper
-import "theme.js" as Theme
+import "../js/reittiopas.js" as Reittiopas
+import "../js/UIConstants.js" as UIConstants
+import "../js/helper.js" as Helper
+import "../js/theme.js" as Theme
 
 Item {
     id: map_element

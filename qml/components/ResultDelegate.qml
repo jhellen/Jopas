@@ -38,7 +38,7 @@ Component {
         height: Theme.itemSizeLarge
 
         onClicked: {
-            pageStack.push(Qt.resolvedUrl("RoutePage.qml"), { route_index: index,
+            pageStack.push(Qt.resolvedUrl("pages/RoutePage.qml"), { route_index: index,
                                header: search_parameters.from_name + " - " + search_parameters.to_name,
                                duration: duration,
                                walking: Math.floor(walk/100)/10

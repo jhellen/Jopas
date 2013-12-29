@@ -27,10 +27,10 @@
 **********************************************************************/
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
-import "reittiopas.js" as Reittiopas
-import "helper.js" as Helper
-import "theme.js" as Theme
+import "../js/UIConstants.js" as UIConstants
+import "../js/reittiopas.js" as Reittiopas
+import "../js/helper.js" as Helper
+import "../js/theme.js" as Theme
 // TODO:
 Component {
     id: disruptionDelegate

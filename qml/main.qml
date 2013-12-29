@@ -28,7 +28,8 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "storage.js" as Storage
+import "js/storage.js" as Storage
+import "components"
 
 ApplicationWindow {
     id: appWindow
@@ -52,16 +53,16 @@ ApplicationWindow {
         var allowGps = Storage.getSetting("gps")
         var apiValue = Storage.getSetting("api")
         if (allowGps === "Unknown" || apiValue === "Unknown") {
-            var dialog = pageStack.push(Qt.resolvedUrl("StartupDialog.qml"))
+            var dialog = pageStack.push(Qt.resolvedUrl("pages/StartupDialog.qml"))
             dialog.onAccepted.connect(function() {
-                pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
+                pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"))
             })
             dialog.onRejected.connect(function() {
-                pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
+                pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"))
             })
         }
         else {
-            pageStack.push(Qt.resolvedUrl("MainPage.qml"))
+            pageStack.push(Qt.resolvedUrl("pages/MainPage.qml"))
         }
     }
 

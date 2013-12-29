@@ -28,10 +28,11 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "reittiopas.js" as Reittiopas
-import "storage.js" as Storage
-import "helper.js" as Helper
+import "../js/UIConstants.js" as UIConstants
+import "../js/reittiopas.js" as Reittiopas
+import "../js/storage.js" as Storage
+import "../js/helper.js" as Helper
+import "../components"
 
 Page {
     id: mainPage

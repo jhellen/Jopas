@@ -27,34 +27,55 @@
 **********************************************************************/
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
+import "../js/helper.js" as Helper
+import "../js/UIConstants.js" as UIConstants
+import "../js/theme.js" as Theme
 
 Item {
-    property int imageSize: 50
+    id: locationSwitch
+    state: "normal"
+    anchors.right: parent.right
+    anchors.top: from.bottom
     width: 50
     height: 50
-    property alias source : image.source
-    property alias mouseArea : mouseArea
-    property alias image : image
+
+    property variant from
+    property variant to
 
     Rectangle {
         anchors.fill: parent
         color: Theme.theme[appWindow.colorscheme].COLOR_BACKGROUND_CLICKED
         z: -1
-        visible: mouseArea.pressed
+        visible: locationSwitchMouseArea.pressed
     }
-
     Image {
-        id: image
         anchors.centerIn: parent
+        source: !Theme.theme[appWindow.colorscheme].BUTTONS_INVERTED?'qrc:/images/switch.png':'qrc:/images/switch-inverse.png'
         smooth: true
-        height: imageSize
-        width: imageSize
+        height: 50
+        width: height
     }
     MouseArea {
-        id: mouseArea
+        id: locationSwitchMouseArea
         anchors.fill: parent
+
+        onClicked: {
+            Helper.switch_locations(from,to)
+            locationSwitch.state = locationSwitch.state == "normal" ? "rotated" : "normal"
+        }
+    }
+    states: [
+        State {
+            name: "rotated"
+            PropertyChanges { target: locationSwitch; rotation: 180 }
+        },
+        State {
+            name: "normal"
+            PropertyChanges { target: locationSwitch; rotation: 0 }
+        }
+    ]
+    transitions: Transition {
+        RotationAnimation { duration: 500; direction: RotationAnimation.Clockwise; easing.type: Easing.InOutCubic }
     }
 }
 

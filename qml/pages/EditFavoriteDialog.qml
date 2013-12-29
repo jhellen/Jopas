@@ -28,22 +28,21 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "favorites.js" as Favorites
+import "../js/favorites.js" as Favorites
 
 Dialog {
-    id: add_dialog
-    property string coord: ''
+    id: edit_dialog
     property alias name: editTextField.text
+    property string coord
+    property string old_name: ""
     property variant favoritesModel
 
-    canAccept: add_dialog.coord != '' && name.text != ''
+    canAccept: name.text != ''
 
     onAccepted: {
-        if(add_dialog.name != '') {
-            if(("OK" == Favorites.addFavorite(add_dialog.name, coord))) {
-                favoritesModel.clear()
-                Favorites.getFavorites(favoritesModel)
-            }
+        if("OK" == Favorites.updateFavorite(edit_dialog.name, edit_dialog.coord, favoritesModel)) {
+            favoritesModel.clear()
+            Favorites.getFavorites(favoritesModel)
         }
     }
 
@@ -51,26 +50,11 @@ Dialog {
         anchors.fill: parent
 
         DialogHeader {
-            acceptText: qsTr("Add favorite")
+            acceptText: qsTr("Edit favorite")
         }
-
-        LocationEntry {
-            id: entry
-            anchors.bottomMargin: Theme.paddingSizeSmall
-            font.pixelSize: Theme.fontSizeMedium
-            label.anchors.horizontalCenter: entry.horizontalCenter
-            type: qsTr("Search for location")
-            disable_favorites: true
-            onLocationDone: {
-                add_dialog.name = name
-                add_dialog.coord = coord
-            }
-        }
-
-        Spacing {}
 
         Label {
-            text: qsTr("Enter name for the favorite")
+            text: qsTr("Edit favorite name")
             font.pixelSize: Theme.fontSizeMedium
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Qt.AlignCenter

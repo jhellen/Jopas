@@ -28,7 +28,7 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "reittiopas.js" as Reittiopas
+import "../js/reittiopas.js" as Reittiopas
 
 Page {
     property int route_index
@@ -54,7 +54,7 @@ Page {
         id: delegate
         Loader {
             width: parent.width
-            source: type == "station" ? "qrc:/qml/RouteStationDelegate.qml" : "qrc:/qml/RouteDelegate.qml"
+            source: type == "station" ? "components/RouteStationDelegate.qml" : "components/RouteDelegate.qml"
         }
     }
 

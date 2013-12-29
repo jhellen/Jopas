@@ -27,31 +27,48 @@
 **********************************************************************/
 
 import QtQuick 2.1
-import "UIConstants.js" as UIConstants
-import "theme.js" as Theme
+import Sailfish.Silica 1.0
+import "../js/reittiopas.js" as Reittiopas
 
 Item {
-    property alias text : header.text
-    height: header.height
-    anchors.margins: UIConstants.DEFAULT_MARGIN/2
-    width: parent.width
+    id: stationDelegate
+    height: Theme.itemSizeSmall
 
-    Rectangle {
-        height: 1
+    Column {
+        id: time_column
         anchors.left: parent.left
-        anchors.right: header.left
         anchors.verticalCenter: parent.verticalCenter
-        anchors.margins: UIConstants.DEFAULT_MARGIN / 2
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+        width: 100
+
+        Label {
+            text: Qt.formatTime(time, "hh:mm")
+            font.pixelSize: Theme.fontSizeMedium
+            color: Theme.primaryColor
+        }
     }
 
-    Text {
-        id: header
-        font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
-        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
+    Row {
+        height: parent.height
+        anchors.left: time_column.right
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        lineHeightMode: Text.FixedHeight
-        lineHeight: font.pixelSize * 1.2
+        layoutDirection: Qt.RightToLeft
+
+        Label {
+            text: name
+            horizontalAlignment: Qt.AlignRight
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: Theme.fontSizeMedium
+            color: Theme.primaryColor
+        }
+
+        Label {
+            id: station_code
+            horizontalAlignment: Qt.AlignRight
+            anchors.verticalCenter: parent.verticalCenter
+            text: shortCode ? "(" + shortCode + ")" : ""
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.secondaryColor
+        }
     }
 }

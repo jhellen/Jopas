@@ -8,21 +8,22 @@ PKGCONFIG     += qdeclarative5-boostable
 QML_IMPORT_PATH = qml
 
 OTHER_FILES += \
-    qml/* \
+    qml/js/*.js \
+    qml/pages/*.qml \
+    qml/components/*.qml \
+    qml/main.qml \
     harbour-jopas.desktop \
-    rpm/harbour-jopas.yaml
+    rpm/harbour-jopas.yaml \
+    rpm/harbour-jopas.spec
 
 RESOURCES += \
-    harmattan.qrc
+    jopas.qrc
 
 SOURCES += src/main.cpp
 
 INCLUDEPATH += \
-    src \
-    include
+    src 
 
-target.path = /usr/bin/
-icon.path = /usr/share/icons/hicolor/86x86/apps/
+
 icon.files = harbour-jopas.png
-desktop.path = /usr/share/applications
 desktop.files = harbour-jopas.desktop

@@ -29,9 +29,9 @@
 import QtQuick 2.1
 import QtPositioning 5.0
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "reittiopas.js" as Reittiopas
-import "theme.js" as Theme
+import "../js/UIConstants.js" as UIConstants
+import "../js/reittiopas.js" as Reittiopas
+import "../js/theme.js" as Theme
 
 Page {
     id: stop_page

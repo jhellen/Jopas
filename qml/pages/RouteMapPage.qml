@@ -28,45 +28,55 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "storage.js" as Storage
+import "../js/reittiopas.js" as Reittiopas
+import "../js/UIConstants.js" as UIConstants
 
-Dialog {
-    Column {
-        anchors.fill: parent
+Page {
+    backNavigation: false
+    anchors.fill: parent
 
-        DialogHeader {
-            acceptText: qsTr("Close")
+    MapElement {
+        id: map
+
+        anchors {
+            top: parent.top
+            left: parent.left
+            bottom: tools.top
+            right: parent.right
         }
 
-        ComboBox {
-            id: region
-            label: qsTr("Choose region")
-            menu: ContextMenu {
-                MenuItem { text: "Helsinki" }
-                MenuItem { text: "Tampere" }
-            }
-        }
-
-        TextSwitch {
-            width: parent.width
-            text: qsTr("Use location services")
-        }
-
-        Label {
-            x: Theme.paddingLarge
-            width: parent.width - Theme.paddingLarge * 2
-            text: qsTr("allow this application to use the phone location services to enhance the routing experience?\n\nThe setting can be later changed from the application preferences.")
-            wrapMode: Text.WordWrap
+        Component.onCompleted: {
+            initialize()
+            first_station()
         }
     }
 
-    onAccepted: {
-        Storage.setSetting('api', region.currentIndex == 0 ? "helsinki" : "tampere")
-        Storage.setSetting('gps', 'true')
-    }
+    Row {
+        id: tools
 
-    onRejected: {
-        Storage.setSetting('api', region.currentIndex == 0 ? "helsinki" : "tampere")
-        Storage.setSetting('gps', 'false')
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        height: back.height
+
+        IconButton {
+            id: back
+            icon.source: "image://theme/icon-m-back"
+            onClicked: pageStack.pop()
+        }
+
+        IconButton {
+            icon.source: "image://theme/icon-m-previous"
+            onClicked: map.previous_station()
+            enabled: !appWindow.followMode
+        }
+
+        IconButton {
+            icon.source: "image://theme/icon-m-next"
+            onClicked: map.next_station()
+            enabled: !appWindow.followMode
+        }
+
     }
 }
+

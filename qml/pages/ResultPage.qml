@@ -28,8 +28,8 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "reittiopas.js" as Reittiopas
-import "storage.js" as Storage
+import "../js/reittiopas.js" as Reittiopas
+import "../js/storage.js" as Storage
 
 Page {
     property variant search_parameters

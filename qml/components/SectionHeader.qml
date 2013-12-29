@@ -27,48 +27,31 @@
 **********************************************************************/
 
 import QtQuick 2.1
-import Sailfish.Silica 1.0
-import "reittiopas.js" as Reittiopas
+import "../js/UIConstants.js" as UIConstants
+import "../js/theme.js" as Theme
 
 Item {
-    id: stationDelegate
-    height: Theme.itemSizeSmall
+    property alias text : header.text
+    height: header.height
+    anchors.margins: UIConstants.DEFAULT_MARGIN/2
+    width: parent.width
 
-    Column {
-        id: time_column
+    Rectangle {
+        height: 1
         anchors.left: parent.left
+        anchors.right: header.left
         anchors.verticalCenter: parent.verticalCenter
-        width: 100
-
-        Label {
-            text: Qt.formatTime(time, "hh:mm")
-            font.pixelSize: Theme.fontSizeMedium
-            color: Theme.primaryColor
-        }
+        anchors.margins: UIConstants.DEFAULT_MARGIN / 2
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
     }
 
-    Row {
-        height: parent.height
-        anchors.left: time_column.right
+    Text {
+        id: header
+        font.pixelSize: UIConstants.FONT_DEFAULT * appWindow.scalingFactor
+        color: Theme.theme[appWindow.colorscheme].COLOR_SECONDARY_FOREGROUND
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        layoutDirection: Qt.RightToLeft
-
-        Label {
-            text: name
-            horizontalAlignment: Qt.AlignRight
-            anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: Theme.fontSizeMedium
-            color: Theme.primaryColor
-        }
-
-        Label {
-            id: station_code
-            horizontalAlignment: Qt.AlignRight
-            anchors.verticalCenter: parent.verticalCenter
-            text: shortCode ? "(" + shortCode + ")" : ""
-            font.pixelSize: Theme.fontSizeSmall
-            color: Theme.secondaryColor
-        }
+        lineHeightMode: Text.FixedHeight
+        lineHeight: font.pixelSize * 1.2
     }
 }

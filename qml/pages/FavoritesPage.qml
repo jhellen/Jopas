@@ -28,9 +28,9 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "reittiopas.js" as Reittiopas
-import "favorites.js" as Favorites
+import "../js/UIConstants.js" as UIConstants
+import "../js/reittiopas.js" as Reittiopas
+import "../js/favorites.js" as Favorites
 
 Page {
     id: favorites_page

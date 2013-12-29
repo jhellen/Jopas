@@ -28,9 +28,9 @@
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import "UIConstants.js" as UIConstants
-import "storage.js" as Storage
-import "theme.js" as Theme
+import "../js/UIConstants.js" as UIConstants
+import "../js/storage.js" as Storage
+import "../js/theme.js" as Theme
 
 Page {
     SilicaFlickable {

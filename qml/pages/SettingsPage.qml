@@ -70,18 +70,18 @@ Page {
                 id: currentApi
                 function set_value(value) {
                     var val = {"helsinki": 0, "tampere": 1}[value]
-                    currentApi.currentIndex = 0
+                    currentApi.currentIndex = val
                 }
 
                 label: qsTr("Active Region")
                 menu: ContextMenu {
                     MenuItem {
                         text: "Helsinki"
-                        onClicked: Storage.setSetting('api',"helsinki")
+                        onClicked: Storage.setSetting("api","helsinki")
                     }
                     MenuItem {
                        text: "Tampere"
-                        onClicked: Storage.setSetting('api',"tampere")
+                        onClicked: Storage.setSetting("api","tampere")
                     }
                 }
             }

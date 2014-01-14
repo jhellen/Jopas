@@ -19,6 +19,10 @@ PkgConfigBR:
 - Qt5Quick
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
+- qt5-qtdeclarative-import-location >= 5.1.0
+- qt5-qtdeclarative-import-positioning >= 5.1.0
+- qt5-qtdeclarative-import-qtquick2plugin >= 5.1.0
+- qt5-qtdeclarative-import-xmllistmodel >= 5.1.0
 Files:
 - '%{_bindir}/%{name}'
 - '%{_datadir}/%{name}/qml'

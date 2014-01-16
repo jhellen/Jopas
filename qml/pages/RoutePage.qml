@@ -55,7 +55,7 @@ Page {
         id: delegate
         Loader {
             width: parent.width
-            source: type == "station" ? "components/RouteStationDelegate.qml" : "components/RouteDelegate.qml"
+            source: type == "station" ?  "../components/RouteStationDelegate.qml" : "../components/RouteDelegate.qml"
         }
     }
 
